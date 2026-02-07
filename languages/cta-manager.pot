@@ -1,0 +1,238 @@
+# Copyright (C) 2026 TopDev America
+# This file is distributed under the same license as the Click-to-Call Button Manager plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Click-to-Call Button Manager 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-08 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+msgid "Click-to-Call Button Manager"
+msgstr ""
+
+#. Plugin Description of the plugin
+msgid "Add click-to-call buttons to your WordPress site with beautiful themes and analytics."
+msgstr ""
+
+#. Plugin menu items
+msgid "Click-to-Call"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "CTA Manager"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Getting Started"
+msgstr ""
+
+#. Dashboard and admin pages
+msgid "Welcome to Click-to-Call Button Manager"
+msgstr ""
+
+msgid "Total Clicks"
+msgstr ""
+
+msgid "This Week"
+msgstr ""
+
+msgid "This Month"
+msgstr ""
+
+msgid "Average Clicks Per Day"
+msgstr ""
+
+msgid "Recent Activity"
+msgstr ""
+
+msgid "Settings saved successfully!"
+msgstr ""
+
+msgid "Settings reset to defaults."
+msgstr ""
+
+msgid "Failed to save settings."
+msgstr ""
+
+msgid "Failed to reset settings."
+msgstr ""
+
+msgid "An error occurred while saving settings."
+msgstr ""
+
+msgid "An error occurred while resetting settings."
+msgstr ""
+
+#. Settings form labels
+msgid "Phone Number"
+msgstr ""
+
+msgid "Button Text"
+msgstr ""
+
+msgid "Button Color"
+msgstr ""
+
+msgid "Button Size"
+msgstr ""
+
+msgid "Button Theme"
+msgstr ""
+
+msgid "Enable Animation"
+msgstr ""
+
+msgid "Visibility"
+msgstr ""
+
+msgid "Mobile Devices Only"
+msgstr ""
+
+msgid "All Devices"
+msgstr ""
+
+msgid "Show Phone Icon"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+#. Button theme options
+msgid "Classic"
+msgstr ""
+
+msgid "Modern"
+msgstr ""
+
+msgid "Minimal"
+msgstr ""
+
+#. Validation and error messages
+msgid "Click-to-Call Button Manager requires PHP %1$s or higher. You are running PHP %2$s."
+msgstr ""
+
+msgid "Click-to-Call Button Manager requires WordPress %1$s or higher. You are running WordPress %2$s."
+msgstr ""
+
+msgid "Phone number is required."
+msgstr ""
+
+msgid "Phone number must be at least 10 digits."
+msgstr ""
+
+msgid "Button text is required."
+msgstr ""
+
+msgid "Please correct the errors below."
+msgstr ""
+
+#. Export/Import
+msgid "Export Settings"
+msgstr ""
+
+msgid "Download JSON"
+msgstr ""
+
+msgid "Import Settings"
+msgstr ""
+
+msgid "Confirm Import"
+msgstr ""
+
+msgid "Settings exported successfully!"
+msgstr ""
+
+msgid "Settings imported successfully!"
+msgstr ""
+
+msgid "Failed to export settings."
+msgstr ""
+
+msgid "Failed to import settings."
+msgstr ""
+
+msgid "An error occurred during export."
+msgstr ""
+
+msgid "An error occurred during import."
+msgstr ""
+
+msgid "An error occurred during validation."
+msgstr ""
+
+msgid "Please select a valid JSON file."
+msgstr ""
+
+msgid "Please select a file to import."
+msgstr ""
+
+msgid "Invalid JSON file format."
+msgstr ""
+
+msgid "File size exceeds 1MB. Please choose a smaller file."
+msgstr ""
+
+msgid "Invalid settings format"
+msgstr ""
+
+#. Shortcode
+msgid "[click-to-call] shortcode requires phone number to be configured in settings."
+msgstr ""
+
+msgid "Please configure the Click-to-Call Button plugin settings."
+msgstr ""
+
+#. Pro features
+msgid "Pro Feature"
+msgstr ""
+
+msgid "Upgrade to Pro"
+msgstr ""
+
+msgid "This feature is only available in the Pro version."
+msgstr ""
+
+msgid "Multiple Buttons"
+msgstr ""
+
+msgid "Custom CSS"
+msgstr ""
+
+msgid "Analytics Export"
+msgstr ""
+
+msgid "Schedule Buttons"
+msgstr ""
+
+msgid "A/B Testing"
+msgstr ""
+
+msgid "Custom Themes"
+msgstr ""
+
+#. Rate limiting and tracking
+msgid "Rate limited"
+msgstr ""
+
+msgid "Invalid nonce"
+msgstr ""
+
+msgid "Failed to track"
+msgstr ""
