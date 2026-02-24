@@ -1,17 +1,12 @@
 <?php
 /**
- * Error Alert Partial
+ * Admin Partial Template - Error Alert
  *
- * Displays an error message with an icon.
+ * Handles markup rendering for the error alert admin partial template.
  *
- * Variables:
- * - $error_id (required) - Unique ID for the error element
- * - $error_message (required) - The error message to display
- * - $show (optional) - Whether to show the error initially (default: false)
- * - $icon (optional) - Dashicon name without 'dashicons-' prefix (default: 'warning')
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

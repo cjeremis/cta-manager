@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Pro Toggle Row
+ * Admin Partial Template - Pro Toggle Row
  *
- * Renders a toggle with optional Pro badge and status labels.
+ * Handles markup rendering for the pro toggle row admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,16 +1,12 @@
 <?php
 /**
- * Form Section Header Partial
+ * Admin Partial Template - Form Section Header
  *
- * Displays a section header with an icon for form sections.
+ * Handles markup rendering for the form section header admin partial template.
  *
- * Variables:
- * - $icon (required) - Dashicon name without 'dashicons-' prefix
- * - $title (required) - Section title text
- * - $show_pro_badge (optional) - Whether to show Pro badge after title (default: false)
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

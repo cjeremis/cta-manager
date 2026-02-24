@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Info Box Component
+ * Admin Partial Template - Info Box
  *
- * Drop-in helper for contextual information blocks.
+ * Handles markup rendering for the info box admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

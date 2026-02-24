@@ -1,13 +1,12 @@
 <?php
 /**
- * Settings Page Template
+ * Admin Page Template - Settings
  *
- * Global plugin settings for CTA Manager.
- * CTA-specific settings are managed in the CTA Manager page.
+ * Handles markup rendering for the settings admin page template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly
@@ -366,6 +365,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 			<?php endif; ?>
 		</div>
 
+		<!-- Analytics Version (Temporary Toggle) -->
 		<!-- Data Management -->
 		<div class="cta-section" style="margin-bottom: var(--cta-spacing-xl);">
 			<?php

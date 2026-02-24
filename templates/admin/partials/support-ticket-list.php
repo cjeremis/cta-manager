@@ -1,14 +1,12 @@
 <?php
 /**
- * Support Ticket List
+ * Admin Partial Template - Support Ticket List
  *
- * Displays all support tickets for the current user.
+ * Handles markup rendering for the support ticket list admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
- *
- * @var array $user_tickets Array of ticket objects
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

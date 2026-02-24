@@ -1,10 +1,12 @@
 <?php
 /**
- * Global CTA form modal
+ * Admin Partial Template - Global Cta Form Modal
  *
- * Reuses the CTA Manager form so it can be launched from any admin page.
+ * Handles markup rendering for the global cta form modal admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

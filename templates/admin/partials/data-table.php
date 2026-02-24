@@ -1,23 +1,12 @@
 <?php
 /**
- * Generic Data Table Partial
+ * Admin Partial Template - Data Table
  *
- * Reusable table structure for displaying data with pagination.
+ * Handles markup rendering for the data table admin partial template.
  *
- * Variables:
- * - $headers (required) - Array of column headers with label and optional class
- *                        Format: [['label' => 'Column', 'class' => 'optional-class'], ...]
- *                        OR raw HTML string for custom header rows
- * - $tbody_id (required) - ID for tbody element
- * - $tbody_content (optional) - Pre-rendered HTML for tbody rows. If provided, renders instead of loading placeholder
- * - $table_class (optional) - Additional CSS classes for table (default: 'widefat striped')
- * - $table_id (optional) - ID for table element
- * - $pagination_id (optional) - ID for pagination element (if null, no pagination shown)
- * - $loading_colspan (optional) - Colspan for loading row (auto-calculated if not provided)
- * - $table_section_class (optional) - Additional CSS classes for table section wrapper
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

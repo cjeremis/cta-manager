@@ -1,11 +1,12 @@
 <?php
 /**
- * Required Field Marker
+ * Admin Partial Template - Required Marker
  *
- * Displays a red asterisk (*) to indicate required form fields.
+ * Handles markup rendering for the required marker admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

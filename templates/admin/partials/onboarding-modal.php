@@ -1,13 +1,12 @@
 <?php
 /**
- * Get Started / Onboarding Modal
+ * Admin Partial Template - Onboarding Modal
  *
- * Global onboarding wizard modal available on all plugin admin pages.
- * Uses the shared modal.php wrapper for consistent styling and behavior.
+ * Handles markup rendering for the onboarding modal admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

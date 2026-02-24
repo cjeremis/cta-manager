@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA Support Tickets - Database Operations
+ * Support Tickets Handler
  *
- * Handles all database interactions for support tickets.
+ * Handles support ticket data storage and ticket retrieval operations.
  *
- * @package CTA_Manager
- * @subpackage Core
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

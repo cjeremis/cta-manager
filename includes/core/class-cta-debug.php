@@ -1,12 +1,12 @@
 <?php
 /**
- * Debug logging utility
+ * Debug Logging Handler
  *
- * Provides centralized debug logging for PHP when debug mode is enabled.
- * Logs to WordPress debug.log file.
+ * Handles debug logging operations for CTA Manager runtime diagnostics.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

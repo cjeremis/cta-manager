@@ -1,9 +1,12 @@
 <?php
 /**
- * Click tracking handler
+ * Click Tracker Handler
+ *
+ * Handles public click tracking and analytics event submission.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -246,36 +249,12 @@ class CTA_Click_Tracker {
 	}
 
 	/**
-	 * Get or create visitor ID (anonymous fingerprint stored in cookie)
+	 * Get visitor ID using CTA_Visitor service
 	 *
-	 * @return string
+	 * @return int|null
 	 */
-	private function get_visitor_id(): string {
-		$cookie_name = 'cta_visitor_id';
-
-		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
-			return sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) );
-		}
-
-		// Generate new visitor ID
-		$visitor_id = 'v_' . bin2hex( random_bytes( 16 ) );
-
-		// Set cookie for 1 year (non-PII, anonymous identifier)
-		if ( ! headers_sent() ) {
-			setcookie(
-				$cookie_name,
-				$visitor_id,
-				[
-					'expires'  => time() + YEAR_IN_SECONDS,
-					'path'     => '/',
-					'secure'   => is_ssl(),
-					'httponly' => true,
-					'samesite' => 'Lax',
-				]
-			);
-		}
-
-		return $visitor_id;
+	private function get_visitor_id(): ?int {
+		return CTA_Visitor::get_instance()->get_visitor_id();
 	}
 
 	/**

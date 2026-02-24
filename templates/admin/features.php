@@ -1,13 +1,12 @@
 <?php
 /**
- * Pro Features Coming Soon Template
+ * Admin Page Template - Features
  *
- * Showcases upcoming Pro features and upgrade information.
- * Includes upgrade call-to-action and feature list.
+ * Handles markup rendering for the features admin page template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

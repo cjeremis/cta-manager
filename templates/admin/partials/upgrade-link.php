@@ -1,16 +1,12 @@
 <?php
 /**
- * Upgrade Link Partial
+ * Admin Partial Template - Upgrade Link
  *
- * Displays a link with an icon for upgrading to Pro.
+ * Handles markup rendering for the upgrade link admin partial template.
  *
- * Variables:
- * - $text (required) - Link text
- * - $url (required) - Link URL
- * - $icon (optional) - Dashicon name without 'dashicons-' prefix (default: 'star-filled')
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

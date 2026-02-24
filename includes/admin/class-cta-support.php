@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA Support Page - Priority Support Interface
+ * Support Page Handler
  *
- * Renders the customer-facing priority support ticket interface.
+ * Handles rendering and setup for the CTA Manager support page.
  *
- * @package CTA_Manager
- * @subpackage Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

@@ -1,15 +1,12 @@
 <?php
 /**
- * CTA Form - Action Tab
+ * Admin Tab Partial Template - Tab Action
  *
- * Contains: CTA Type, Phone Number, Email To, Link URL
+ * Handles markup rendering for the tab action admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
- * @var bool $is_pro Whether Pro is enabled
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,9 +1,12 @@
 <?php
 /**
- * Plugin activation handler
+ * Plugin Activation Handler
+ *
+ * Handles activation tasks and initialization operations for CTA Manager.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

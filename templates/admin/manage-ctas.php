@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA Manager Template
+ * Admin Page Template - Manage Ctas
  *
- * Manage multiple call-to-action buttons with CRUD operations.
+ * Handles markup rendering for the manage ctas admin page template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

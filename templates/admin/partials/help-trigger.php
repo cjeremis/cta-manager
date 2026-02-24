@@ -1,19 +1,12 @@
 <?php
 /**
- * Help Trigger Partial
+ * Admin Partial Template - Help Trigger
  *
- * Renders a help trigger link or button that opens a modal.
+ * Handles markup rendering for the help trigger admin partial template.
  *
- * Variables:
- * - $modal_target (required) - Modal selector (e.g., '#modal-id')
- * - $text (optional) - Trigger text (default: '?')
- * - $variant (optional) - Style variant: 'link' or 'button' (default: 'link')
- * - $icon (optional) - Dashicon name (default: 'editor-help')
- * - $extra_class (optional) - Additional CSS classes
- * - $attrs (optional) - Additional HTML attributes
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

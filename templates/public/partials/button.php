@@ -1,10 +1,12 @@
 <?php
 /**
- * CTA button partial
+ * Public Partial Template - Button
  *
- * Renders a CTA anchor with data attributes for front-end behaviors.
+ * Handles markup rendering for the button public partial template.
  *
- * @var array $cta_context Contextual data for rendering
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

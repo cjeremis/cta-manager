@@ -1,13 +1,12 @@
 <?php
 /**
- * CTA Manager Filters Partial
+ * Admin Partial Template - Cta Manager Filters
  *
- * Filter form for the CTA Manager list page with free and Pro options.
- * Filters with only 1 option are hidden since there's nothing to filter.
- * Field order matches the Create CTA form.
+ * Handles markup rendering for the cta manager filters admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

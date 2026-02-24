@@ -1,17 +1,12 @@
 <?php
 /**
- * CTA Form - Button Tab
+ * Admin Tab Partial Template - Tab Button
  *
- * Contains: Button Text, Icon, Animations
+ * Handles markup rendering for the tab button admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
- * @var bool $is_pro Whether Pro is enabled
- * @var string $current_button_animation Current button animation
- * @var string $current_icon_animation Current icon animation
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

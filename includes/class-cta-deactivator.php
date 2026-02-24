@@ -1,9 +1,12 @@
 <?php
 /**
- * Plugin deactivation handler
+ * Plugin Deactivation Handler
+ *
+ * Handles deactivation tasks and cleanup operations for CTA Manager.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

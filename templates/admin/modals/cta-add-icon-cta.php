@@ -1,8 +1,12 @@
 <?php
 /**
- * CTA Manager - Add Custom Icon (CTA context) Modal Body
+ * Admin Modal Template - Cta Add Icon Cta
  *
- * @package CTA_Manager
+ * Handles markup rendering for the cta add icon cta admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

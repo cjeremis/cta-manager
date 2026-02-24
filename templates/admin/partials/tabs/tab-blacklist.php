@@ -1,16 +1,12 @@
 <?php
 /**
- * CTA Form - Blacklist Tab
+ * Admin Tab Partial Template - Tab Blacklist
  *
- * Contains: Blacklist URL management
+ * Handles markup rendering for the tab blacklist admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
- * @var bool $is_pro Whether Pro is enabled
- * @var array $blacklist_urls Blacklist URL patterns
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

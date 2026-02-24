@@ -1,9 +1,12 @@
 <?php
 /**
- * Global footer partial for CTA Manager admin pages.
+ * Admin Partial Template - Footer
  *
- * @package CTA_Manager
+ * Handles markup rendering for the footer admin partial template.
+ *
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

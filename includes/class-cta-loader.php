@@ -1,9 +1,12 @@
 <?php
 /**
- * Core loader class - orchestrates all plugin hooks
+ * Core Loader Handler
+ *
+ * Handles registration of plugin hooks and bootstrapping logic.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,9 +60,9 @@ class CTA_Loader {
 		$admin = CTA_Manager_Enqueue::get_instance();
 
 		$this->add_action( 'admin_menu', [ CTA_Admin_Menu::get_instance(), 'register_menus' ] );
+		$this->add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_admin_bar_styles' ], 1 );
 		$this->add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		$this->add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
-		$this->add_action( 'rest_api_init', [ CTA_Analytics_API::get_instance(), 'register_routes' ] );
 		$this->add_action( 'admin_init', [ CTA_Manager::get_instance(), 'handle_form_submission' ] );
 
 		// AJAX handlers
@@ -119,6 +122,9 @@ class CTA_Loader {
 	 */
 	private function define_global_hooks(): void {
 		$this->add_action( 'admin_bar_menu', [ CTA_Admin_Menu::get_instance(), 'register_admin_bar_menu' ], 100 );
+
+		// Initialize visitor tracking
+		$this->add_action( 'init', [ CTA_Visitor::get_instance(), 'init' ] );
 	}
 
 	/**

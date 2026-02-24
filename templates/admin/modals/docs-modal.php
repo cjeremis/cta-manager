@@ -1,11 +1,12 @@
 <?php
 /**
- * Documentation Modal Body
+ * Admin Modal Template - Docs Modal
  *
- * Dynamically renders sidebar and content using the centralized features data.
+ * Handles markup rendering for the docs modal admin modal template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Modals
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

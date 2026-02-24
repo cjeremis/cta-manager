@@ -1,15 +1,12 @@
 <?php
 /**
- * FAQ Item Partial
+ * Admin Partial Template - Faq Item
  *
- * Displays a single FAQ question and answer.
+ * Handles markup rendering for the faq item admin partial template.
  *
- * Variables:
- * - $question (required) - The FAQ question
- * - $answer (required) - The FAQ answer
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

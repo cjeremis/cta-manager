@@ -1,20 +1,12 @@
 <?php
 /**
- * Page Wrapper Start
+ * Admin Partial Template - Page Wrapper Start
  *
- * Unified template wrapper that provides consistent header, navigation, and container structure
- * across all CTA Manager admin pages. Enables multi-plugin compatibility.
+ * Handles markup rendering for the page wrapper start admin partial template.
  *
  * @package CTAManager
  * @since 1.0.0
- *
- * Required Variables:
- * @var string $current_page Current page identifier for navigation highlighting (e.g., '', 'analytics', 'settings', 'cta', 'tools')
- * @var string $header_title Page title displayed in header
- * @var string $header_description Page description displayed below title
- *
- * Optional Variables:
- * @var array $topbar_actions Array of HTML strings for action buttons in topbar (default: [])
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,14 +1,12 @@
 <?php
 /**
- * Notifications Panel
+ * Admin Partial Template - Notifications Panel
  *
- * Slide-in panel showing user notifications with dismiss functionality.
- * Initial notifications are loaded server-side for instant display.
- * AJAX is used to refresh notifications when panel is re-opened.
+ * Handles markup rendering for the notifications panel admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

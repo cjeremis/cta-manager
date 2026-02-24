@@ -1,9 +1,12 @@
 <?php
 /**
- * Settings page handler
+ * Settings Page Handler
+ *
+ * Handles settings page rendering and settings AJAX operations.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

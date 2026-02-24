@@ -1,15 +1,12 @@
 <?php
 /**
- * CTA Form - Display Tab
+ * Admin Tab Partial Template - Tab Display
  *
- * Contains: Layout, Visibility
+ * Handles markup rendering for the tab display admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
- * @var bool $is_pro Whether Pro is enabled
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

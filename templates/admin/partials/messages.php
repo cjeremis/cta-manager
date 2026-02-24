@@ -1,10 +1,12 @@
 <?php
 /**
- * Global messages partial for CTA Manager admin pages.
+ * Admin Partial Template - Messages
  *
- * Displays success/error notices based on the `message` query parameter.
+ * Handles markup rendering for the messages admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

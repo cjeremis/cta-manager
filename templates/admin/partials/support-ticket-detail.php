@@ -1,15 +1,12 @@
 <?php
 /**
- * Support Ticket Detail View
+ * Admin Partial Template - Support Ticket Detail
  *
- * Displays full ticket information with conversation thread.
+ * Handles markup rendering for the support ticket detail admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
- *
- * @var object $ticket Ticket object
- * @var array $replies Array of reply objects
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

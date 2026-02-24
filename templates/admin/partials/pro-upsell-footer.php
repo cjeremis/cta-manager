@@ -1,13 +1,12 @@
 <?php
 /**
- * Pro Upsell Footer Partial
+ * Admin Partial Template - Pro Upsell Footer
  *
- * Reusable Pro upgrade section that appears at the bottom of all CTA Manager pages.
- * Shows different messages based on Pro plugin installation/activation status.
+ * Handles markup rendering for the pro upsell footer admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

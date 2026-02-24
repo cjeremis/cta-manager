@@ -1,11 +1,12 @@
 <?php
 /**
- * Features Modal Body
+ * Admin Modal Template - Features Modal
  *
- * Displays feature cards and integrations with left sidebar navigation.
- * Uses shared sidebar-modal-layout classes for consistent styling.
+ * Handles markup rendering for the features modal admin modal template.
  *
- * @var array $context Modal context with all_features and integrations
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,13 +1,12 @@
 <?php
 /**
- * Minimal Theme Button Template
+ * Public Template - Button Minimal
  *
- * Public-facing template for rendering the minimal style cta-manager button.
- * Simple and elegant design with subtle styling.
+ * Handles markup rendering for the button minimal public template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Public
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

@@ -1,9 +1,12 @@
 <?php
 /**
- * Data access layer for all plugin data
+ * Data Access Handler
+ *
+ * Handles core data access operations across CTA Manager repositories.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -422,7 +425,7 @@ class CTA_Data {
 				'ip_address'    => isset( $event['ip_address'] ) ? sanitize_text_field( $event['ip_address'] ) : null,
 				'user_agent'    => isset( $event['user_agent'] ) ? sanitize_text_field( substr( $event['user_agent'], 0, 512 ) ) : null,
 				'session_id'    => isset( $event['session_id'] ) ? sanitize_text_field( $event['session_id'] ) : null,
-				'visitor_id'    => isset( $event['visitor_id'] ) ? sanitize_text_field( $event['visitor_id'] ) : null,
+				'visitor_id'    => isset( $event['visitor_id'] ) && $event['visitor_id'] ? absint( $event['visitor_id'] ) : null,
 				'experiment_key'=> isset( $event['experiment_key'] ) ? sanitize_text_field( $event['experiment_key'] ) : null,
 				'variant'       => isset( $event['variant'] ) ? sanitize_text_field( $event['variant'] ) : null,
 				'value'         => isset( $event['value'] ) ? (float) $event['value'] : null,
@@ -1016,6 +1019,9 @@ class CTA_Data {
 			];
 		}, $raw_events );
 
+		// Get visitors
+		$visitors = $this->export_visitors();
+
 		// Get settings and remove internal tracking fields
 		$settings = $this->get_settings();
 		$settings = $this->sanitize_settings_for_export( $settings );
@@ -1032,6 +1038,7 @@ class CTA_Data {
 			'site_url'     => get_site_url(),
 			'settings'     => $settings,
 			'ctas'         => $ctas,
+			'visitors'     => $visitors,
 			'analytics'    => $analytics,
 			'custom_icons' => $this->get_custom_icons(),
 		];
@@ -1083,6 +1090,41 @@ class CTA_Data {
 		return array_map( function( $row ) {
 			$row['actions'] = ! empty( $row['actions'] ) ? json_decode( $row['actions'], true ) : [];
 			return $row;
+		}, $rows );
+	}
+
+	/**
+	 * Export visitors from the visitors table
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return array Array of visitor records
+	 */
+	private function export_visitors(): array {
+		$table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
+		if ( ! CTA_Database::table_exists( $table ) ) {
+			return [];
+		}
+
+		$rows = CTA_Database::query( "SELECT * FROM {$table}" );
+		if ( empty( $rows ) ) {
+			return [];
+		}
+
+		return array_map( function( $row ) {
+			return [
+				'id'          => (int) ( $row['id'] ?? 0 ),
+				'wp_user_id'  => isset( $row['wp_user_id'] ) ? (int) $row['wp_user_id'] : null,
+				'ip_address'  => $row['ip_address'] ?? null,
+				'user_agent'  => $row['user_agent'] ?? null,
+				'country'     => $row['country'] ?? null,
+				'region'      => $row['region'] ?? null,
+				'city'        => $row['city'] ?? null,
+				'first_seen'  => $row['first_seen'] ?? '',
+				'last_seen'   => $row['last_seen'] ?? '',
+				'visit_count' => (int) ( $row['visits'] ?? 1 ),
+				'meta_json'   => ! empty( $row['meta_json'] ) ? json_decode( $row['meta_json'], true ) : null,
+			];
 		}, $rows );
 	}
 
@@ -1165,6 +1207,11 @@ class CTA_Data {
 			$cta_id_map = $this->import_ctas( $data['ctas'], $merge );
 		}
 
+		// Import visitors (must happen before analytics events since events reference visitors)
+		if ( isset( $data['visitors'] ) && is_array( $data['visitors'] ) ) {
+			$this->import_visitors( $data['visitors'], $merge );
+		}
+
 		// Import analytics events
 		if ( isset( $data['analytics']['events'] ) && is_array( $data['analytics']['events'] ) ) {
 			$this->import_analytics_events( $data['analytics']['events'], $cta_id_map, $merge );
@@ -1241,6 +1288,60 @@ class CTA_Data {
 	}
 
 	/**
+	 * Import visitors
+	 *
+	 * @param array $visitors Visitors to import
+	 * @param bool  $merge    Whether to merge
+	 */
+	private function import_visitors( array $visitors, bool $merge ): void {
+		$table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
+		if ( ! CTA_Database::table_exists( $table ) ) {
+			return;
+		}
+
+		if ( ! $merge ) {
+			CTA_Database::truncate( $table );
+		}
+
+		global $wpdb;
+		foreach ( $visitors as $visitor ) {
+			$first_seen = isset( $visitor['first_seen'] ) ? $this->parse_relative_datetime( $visitor['first_seen'] ) : current_time( 'mysql' );
+			$last_seen  = isset( $visitor['last_seen'] ) ? $this->parse_relative_datetime( $visitor['last_seen'] ) : current_time( 'mysql' );
+
+			$visitor_data = [
+				'wp_user_id'  => isset( $visitor['wp_user_id'] ) ? absint( $visitor['wp_user_id'] ) : null,
+				'ip_address'  => isset( $visitor['ip_address'] ) ? sanitize_text_field( $visitor['ip_address'] ) : null,
+				'user_agent'  => isset( $visitor['user_agent'] ) ? sanitize_text_field( substr( $visitor['user_agent'], 0, 512 ) ) : null,
+				'country'     => isset( $visitor['country'] ) ? sanitize_text_field( $visitor['country'] ) : null,
+				'region'      => isset( $visitor['region'] ) ? sanitize_text_field( $visitor['region'] ) : null,
+				'city'        => isset( $visitor['city'] ) ? sanitize_text_field( $visitor['city'] ) : null,
+				'first_seen'  => $first_seen,
+				'last_seen'   => $last_seen,
+				'visits'      => isset( $visitor['visit_count'] ) ? absint( $visitor['visit_count'] ) : 1,
+				'meta_json'   => isset( $visitor['meta_json'] ) && is_array( $visitor['meta_json'] ) ? wp_json_encode( $visitor['meta_json'] ) : null,
+			];
+
+			// In merge mode, check if visitor with same id exists and update
+			// In replace mode, just insert all visitors
+			if ( $merge && isset( $visitor['id'] ) ) {
+				$visitor_id = absint( $visitor['id'] );
+				$existing   = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE id = %d", $visitor_id ) );
+
+				if ( $existing ) {
+					$wpdb->update( $table, $visitor_data, [ 'id' => $visitor_id ] );
+					continue;
+				} else {
+					$visitor_data['id'] = $visitor_id;
+				}
+			} elseif ( isset( $visitor['id'] ) ) {
+				$visitor_data['id'] = absint( $visitor['id'] );
+			}
+
+			$wpdb->insert( $table, $visitor_data );
+		}
+	}
+
+	/**
 	 * Import analytics events with CTA ID mapping
 	 *
 	 * @param array $events     Events to import
@@ -1281,7 +1382,7 @@ class CTA_Data {
 				'referrer'       => esc_url_raw( $event['referrer'] ?? '' ),
 				'device'         => sanitize_text_field( $event['device'] ?? 'desktop' ),
 				'session_id'     => isset( $event['session_id'] ) ? sanitize_text_field( $event['session_id'] ) : null,
-				'visitor_id'     => isset( $event['visitor_id'] ) ? sanitize_text_field( $event['visitor_id'] ) : null,
+				'visitor_id'     => isset( $event['visitor_id'] ) ? absint( $event['visitor_id'] ) : null,
 				'user_id'        => isset( $event['user_id'] ) ? absint( $event['user_id'] ) : null,
 				'experiment_key' => isset( $event['experiment_key'] ) ? sanitize_text_field( $event['experiment_key'] ) : null,
 				'variant'        => isset( $event['variant'] ) ? sanitize_text_field( $event['variant'] ) : null,
@@ -1676,6 +1777,21 @@ class CTA_Data {
 			}
 		}
 
+		// Get last seen date for most seen CTA
+		$most_seen_last_date = '';
+		if ( $most_seen_id > 0 ) {
+			$last_event = $events_repo->get_events( [
+				'cta_id'     => $most_seen_id,
+				'event_type' => 'impression',
+				'order_by'   => 'occurred_at',
+				'order'      => 'DESC',
+				'limit'      => 1,
+			] );
+			if ( ! empty( $last_event[0]['occurred_at'] ) ) {
+				$most_seen_last_date = human_time_diff( strtotime( $last_event[0]['occurred_at'] ), current_time( 'timestamp' ) ) . ' ago';
+			}
+		}
+
 		// Calculate average CTR
 		$avg_ctr = $total_impressions > 0
 			? round( ( $total_clicks / $total_impressions ) * 100, 1 )
@@ -1796,6 +1912,7 @@ class CTA_Data {
 			'today_impressions'            => $today_impressions,
 			'most_seen_name'               => $most_seen_name,
 			'most_seen_id'                 => $most_seen_id,
+			'most_seen_last_date'          => $most_seen_last_date,
 			'most_clicked_name'            => $most_clicked_name,
 			'most_clicked_id'              => $most_clicked_id,
 			'impressions_7d'               => $total_impressions,
@@ -2044,6 +2161,7 @@ class CTA_Data {
 
 		// Reset Analytics
 		if ( $reset_analytics ) {
+			global $wpdb;
 			$events_repo  = CTA_Events_Repository::get_instance();
 			$events_table = CTA_Events_Repository::get_table_name();
 			if ( CTA_Database::table_exists( $events_table ) ) {
@@ -2056,7 +2174,6 @@ class CTA_Data {
 					$events_repo->truncate();
 				} else {
 					// Delete events NOT associated with demo CTAs
-					global $wpdb;
 					$placeholders = implode( ',', array_fill( 0, count( $demo_cta_ids ), '%d' ) );
 					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					$wpdb->query(
@@ -2066,6 +2183,20 @@ class CTA_Data {
 						)
 					);
 				}
+			}
+
+			// Delete non-demo visitors (preserve demo visitors 1-12)
+			$visitors_table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
+			if ( CTA_Database::table_exists( $visitors_table ) ) {
+				// Delete all visitors except demo visitors (IDs 1-12)
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->query(
+					$wpdb->prepare(
+						"DELETE FROM {$visitors_table} WHERE id < %d OR id > %d",
+						1,
+						12
+					)
+				);
 			}
 		}
 

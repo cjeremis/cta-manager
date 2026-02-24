@@ -1,8 +1,12 @@
 <?php
 /**
- * CTA Manager Form Partial
+ * Admin Partial Template - Cta Manager Form
  *
- * Duplicate of the Manage CTAs form for re-use in global contexts.
+ * Handles markup rendering for the cta manager form admin partial template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

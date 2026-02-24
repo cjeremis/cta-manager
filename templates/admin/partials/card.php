@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Card Component
+ * Admin Partial Template - Card
  *
- * Generic card wrapper with optional header icon and title.
+ * Handles markup rendering for the card admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

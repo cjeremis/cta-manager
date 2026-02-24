@@ -1,18 +1,12 @@
 <?php
 /**
- * Pricing Card Partial
+ * Admin Partial Template - Pricing Card
  *
- * Displays a pricing plan card.
+ * Handles markup rendering for the pricing card admin partial template.
  *
- * Variables:
- * - $plan_name (required) - Plan name
- * - $price_display (required) - Price display text (can include HTML)
- * - $features (required) - Array of feature strings
- * - $cta_url (required) - Call-to-action URL
- * - $cta_text (required) - Call-to-action button text
- * - $is_featured (optional) - Whether this is the featured plan (default: false)
- * - $badge_text (optional) - Badge text (only shown if set)
- * - $price_type (optional) - Price type class: 'price', 'free' (default: 'price')
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

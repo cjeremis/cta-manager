@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Info Card Component
+ * Admin Partial Template - Info Card
  *
- * Lightweight card with title and body content.
+ * Handles markup rendering for the info card admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

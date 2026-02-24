@@ -1,6 +1,12 @@
 <?php
 /**
- * Delete icon confirmation modal body
+ * Admin Modal Template - Delete Icon
+ *
+ * Handles markup rendering for the delete icon admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

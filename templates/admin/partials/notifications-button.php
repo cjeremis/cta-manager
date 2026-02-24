@@ -1,13 +1,12 @@
 <?php
 /**
- * Notifications Button
+ * Admin Partial Template - Notifications Button
  *
- * Renders the megaphone icon button for the topbar that opens the notifications panel.
- * Styled to match other support toolbar icons.
+ * Handles markup rendering for the notifications button admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,13 +1,12 @@
 <?php
 /**
- * Pro CTA Partial Template
+ * Admin Partial Template - Pro Cta
  *
- * Reusable upgrade call-to-action component.
- * Used to prompt users to upgrade to Pro version throughout the interface.
+ * Handles markup rendering for the pro cta admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

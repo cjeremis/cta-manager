@@ -1,26 +1,12 @@
 <?php
 /**
- * Chart Card Partial
+ * Admin Partial Template - Chart Card
  *
- * Renders a chart container with canvas and legend.
+ * Handles markup rendering for the chart card admin partial template.
  *
- * Variables:
- * - $title (required) - Chart title
- * - $canvas_id (required) - Canvas element ID for Chart.js
- * - $legend_id (required) - Legend element ID
- * - $full_width (optional) - Whether chart should be full width (default: false)
- * - $is_donut (optional) - Whether this is a donut chart (default: false)
- * - $card_id (optional) - Card container ID
- * - $canvas_height (optional) - Canvas height attribute (default: '120')
- * - $chart_type (optional) - Chart type for additional classes
- * - $extra_class (optional) - Additional CSS classes
- * - $show_empty_state (optional) - Whether to show empty state immediately (default: false)
- * - $empty_icon (optional) - Dashicon name for empty state (default: 'chart-bar')
- * - $empty_title (optional) - Title for empty state
- * - $empty_description (optional) - Description for empty state
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

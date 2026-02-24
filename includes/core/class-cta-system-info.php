@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA System Info - Auto-collect System Metadata
+ * System Info Handler
  *
- * Collects WordPress, PHP, theme, and plugin information for support tickets.
+ * Handles collection of environment and system metadata for support flows.
  *
- * @package CTA_Manager
- * @subpackage Core
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

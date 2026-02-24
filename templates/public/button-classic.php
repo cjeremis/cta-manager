@@ -1,13 +1,12 @@
 <?php
 /**
- * Classic Theme Button Template
+ * Public Template - Button Classic
  *
- * Public-facing template for rendering the classic style cta-manager button.
- * Professional and traditional design suitable for most websites.
+ * Handles markup rendering for the button classic public template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Public
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

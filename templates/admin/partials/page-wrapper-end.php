@@ -1,12 +1,12 @@
 <?php
 /**
- * Page Wrapper End
+ * Admin Partial Template - Page Wrapper End
  *
- * Closes the page wrapper container and includes the footer.
- * Pairs with page-wrapper-start.php to provide consistent structure.
+ * Handles markup rendering for the page wrapper end admin partial template.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

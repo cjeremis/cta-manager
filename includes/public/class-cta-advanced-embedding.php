@@ -2,10 +2,11 @@
 /**
  * Advanced Embedding Handler
  *
- * Handles wrapper IDs, wrapper classes, CTA IDs, CTA classes, and data attributes
+ * Handles advanced embedding attributes and wrapper rendering behavior.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

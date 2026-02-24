@@ -1,6 +1,12 @@
 <?php
 /**
- * Add custom icon modal body
+ * Admin Modal Template - Add Icon
+ *
+ * Handles markup rendering for the add icon admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

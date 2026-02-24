@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable CTA list card
+ * Admin Partial Template - Cta Card Item
  *
- * Displays CTA summary with actions and details.
+ * Handles markup rendering for the cta card item admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

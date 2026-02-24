@@ -1,12 +1,12 @@
 <?php
 /**
- * Settings Repository - Database-backed settings storage
+ * Settings Repository Handler
  *
- * Provides CRUD operations for the wp_cta_manager_settings table.
- * Supports autoloading and grouping.
+ * Handles settings storage and settings retrieval operations.
  *
  * @package CTAManager
- * @since 1.1.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

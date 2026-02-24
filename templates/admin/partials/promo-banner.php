@@ -1,20 +1,12 @@
 <?php
 /**
- * Reusable promo banner template.
+ * Admin Partial Template - Promo Banner
  *
- * Variables expected:
- * - $config: array with:
- *   - icon_html: string (HTML/SVG)
- *   - title: string
- *   - description: string
- *   - button_text: string
- *   - button_url: string
- *   - button_target: string (_self|_blank)
- *   - button_icon: string (dashicon class)
- *   - badge: string (optional)
- *   - classes: array|string (optional extra classes)
+ * Handles markup rendering for the promo banner admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

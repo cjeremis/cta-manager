@@ -1,9 +1,12 @@
 <?php
 /**
- * Gutenberg block registration for CTA Manager
+ * Gutenberg Block Registration
+ *
+ * Handles block registration and editor assets for CTA Manager.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +30,7 @@ class CTA_Block {
 		$handle = 'cta-manager-block-editor';
 		wp_register_script(
 			$handle,
-			CTA_PLUGIN_URL . 'assets/js/admin/blocks/cta-block.js',
+			CTA_PLUGIN_URL . 'assets/js/admin/modules/blocks/cta-block.js',
 			[
 				'wp-blocks',
 				'wp-element',

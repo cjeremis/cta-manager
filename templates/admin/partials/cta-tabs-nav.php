@@ -1,27 +1,12 @@
 <?php
 /**
- * CTA Form Tabs Navigation
+ * Admin Partial Template - Cta Tabs Nav
  *
- * Reusable tab navigation component for CTA forms
+ * Handles markup rendering for the cta tabs nav admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array $tabs Array of tab configurations
- * @var string $editing_cta Current editing CTA data
- * @var bool $is_pro Whether Pro is enabled
- *
- * Tab array structure:
- * [
- *   'id' => 'tab-id',
- *   'label' => 'Tab Label',
- *   'icon' => 'dashicon-name',
- *   'is_active' => true|false,
- *   'requires_pro' => true|false,
- *   'conditional' => true|false (optional - for conditional display)
- *   'show_condition' => callback (optional - function to determine if tab should show)
- * ]
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

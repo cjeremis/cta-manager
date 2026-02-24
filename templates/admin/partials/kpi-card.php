@@ -1,15 +1,12 @@
 <?php
 /**
- * KPI Metric Card Partial
+ * Admin Partial Template - Kpi Card
  *
- * Displays a KPI metric card with label and value.
+ * Handles markup rendering for the kpi card admin partial template.
  *
- * Variables:
- * - $label (required) - KPI label text
- * - $value (required) - KPI value to display
- * - $value_id (optional) - ID for value element (for JS updates)
- * - $extra_class (optional) - Additional CSS classes
- * - $format (optional) - Value format: 'number', 'percentage', 'currency' (default: 'number')
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

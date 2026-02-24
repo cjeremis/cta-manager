@@ -1,13 +1,12 @@
 <?php
 /**
- * Priority Support Page Template
+ * Admin Page Template - Support
  *
- * Main template for customer support ticket management.
- * Tickets are loaded via AJAX from the TopDevAmerica API.
+ * Handles markup rendering for the support admin page template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

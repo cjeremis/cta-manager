@@ -1,8 +1,12 @@
 <?php
 /**
- * CTA Preview modal body
+ * Admin Modal Template - Cta Preview
  *
- * @var array $context
+ * Handles markup rendering for the cta preview admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

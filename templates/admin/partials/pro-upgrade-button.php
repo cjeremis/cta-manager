@@ -1,11 +1,12 @@
 <?php
 /**
- * Pro Upgrade Button Partial
+ * Admin Partial Template - Pro Upgrade Button
  *
- * Drop-in upgrade button component that stays consistent across admin pages.
+ * Handles markup rendering for the pro upgrade button admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

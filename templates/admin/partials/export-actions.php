@@ -1,18 +1,12 @@
 <?php
 /**
- * Export Action Buttons Partial
+ * Admin Partial Template - Export Actions
  *
- * Renders a group of export action buttons.
+ * Handles markup rendering for the export actions admin partial template.
  *
- * Variables:
- * - $export_types (required) - Array of button configs
- *   Format: [
- *     ['id' => 'btn-id', 'text' => 'Button Text', 'icon' => 'dashicon-name', 'class' => 'btn-class', 'attrs' => 'extra attributes'],
- *   ]
- * - $wrapper_class (optional) - Additional wrapper CSS classes
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

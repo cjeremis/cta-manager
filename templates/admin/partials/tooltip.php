@@ -1,14 +1,12 @@
 <?php
 /**
- * Tooltip Partial
+ * Admin Partial Template - Tooltip
  *
- * Displays an empty tooltip container for JavaScript-populated tooltips.
+ * Handles markup rendering for the tooltip admin partial template.
  *
- * Variables:
- * - $tooltip_id (required) - Unique ID for the tooltip element
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,9 +1,12 @@
 <?php
 /**
- * Singleton trait for consistent instance management
+ * Singleton Trait
+ *
+ * Handles shared singleton instance behavior for CTA Manager classes.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

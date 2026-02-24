@@ -1,6 +1,12 @@
 <?php
 /**
- * CTA Blacklist modal body
+ * Admin Modal Template - Cta Blacklist
+ *
+ * Handles markup rendering for the cta blacklist admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

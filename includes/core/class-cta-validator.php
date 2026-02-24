@@ -1,9 +1,12 @@
 <?php
 /**
- * Input validation utilities
+ * Validator Handler
+ *
+ * Handles validation of CTA Manager input and import data.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

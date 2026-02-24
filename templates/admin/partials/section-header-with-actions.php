@@ -1,17 +1,12 @@
 <?php
 /**
- * Section Header with Actions Partial
+ * Admin Partial Template - Section Header With Actions
  *
- * Displays a section header with title and action buttons.
+ * Handles markup rendering for the section header with actions admin partial template.
  *
- * Variables:
- * - $title (required) - Section title text (plain string)
- * - $title_raw (optional) - If provided, rendered without escaping (use sanitized/known-safe HTML)
- * - $actions_html (optional) - HTML for action buttons
- * - $title_tag (optional) - HTML tag for title (default: 'h2')
- * - $extra_class (optional) - Additional CSS classes
- * - $help_modal_target (optional) - Modal ID to link help icon to (e.g., '#my-help-modal')
- * - $help_icon_label (optional) - Aria label for help icon (default: 'View help')
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,9 +1,12 @@
 <?php
 /**
- * Upgrade to Pro page handler
+ * Upgrade Page Handler
+ *
+ * Handles rendering for the CTA Manager upgrade page.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

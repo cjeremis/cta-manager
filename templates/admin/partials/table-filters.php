@@ -1,20 +1,12 @@
 <?php
 /**
- * Table Filters Partial
+ * Admin Partial Template - Table Filters
  *
- * Renders a row of filter controls for data tables.
+ * Handles markup rendering for the table filters admin partial template.
  *
- * Variables:
- * - $filters (required) - Array of filter configs
- *   Format: [
- *     ['type' => 'text', 'id' => 'search', 'placeholder' => 'Search...', 'class' => 'cta-input'],
- *     ['type' => 'select', 'id' => 'filter', 'options' => [...], 'class' => 'cta-select'],
- *   ]
- * - $actions_html (optional) - Additional action buttons HTML
- * - $wrapper_class (optional) - Additional wrapper CSS classes
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

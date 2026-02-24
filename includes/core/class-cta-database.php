@@ -1,11 +1,12 @@
 <?php
 /**
- * Centralized Database Manager (Free)
+ * Database Handler
  *
- * Handles CTA Manager table definitions, creation, and CRUD operations for the CTA Manager plugin.
+ * Handles database schema, table setup, and database utility operations.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,8 +34,9 @@ class CTA_Database {
 	const TABLE_NOTIFICATIONS = 'cta_manager_notifications';
 	const TABLE_SETTINGS      = 'cta_manager_settings';
 	const TABLE_CTA_MANAGER   = 'cta_manager';
+	const TABLE_VISITORS      = 'cta_manager_visitors';
 
-	
+
 	/**
 	 * Get full table name with prefix
 	 *
@@ -58,6 +60,7 @@ class CTA_Database {
 			'notifications' => self::table( self::TABLE_NOTIFICATIONS ),
 			'settings'      => self::table( self::TABLE_SETTINGS ),
 			'cta_manager'   => self::table( self::TABLE_CTA_MANAGER ),
+			'visitors'      => self::table( self::TABLE_VISITORS ),
 		);
 	}
 
@@ -76,6 +79,7 @@ class CTA_Database {
 		self::create_notifications_table();
 		self::create_settings_table();
 		self::create_cta_table();
+		self::create_visitors_table();
 		self::create_events_table();
 	}
 
@@ -237,6 +241,39 @@ class CTA_Database {
 	}
 
 	/**
+	 * Create visitors table
+	 *
+	 * @return void
+	 */
+	private static function create_visitors_table(): void {
+		global $wpdb;
+
+		$table           = self::table( self::TABLE_VISITORS );
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE {$table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			wp_user_id bigint(20) unsigned DEFAULT NULL,
+			ip_address varchar(45) DEFAULT NULL,
+			user_agent varchar(512) DEFAULT NULL,
+			country varchar(2) DEFAULT NULL,
+			region varchar(100) DEFAULT NULL,
+			city varchar(100) DEFAULT NULL,
+			first_seen datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			last_seen datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			visits int unsigned NOT NULL DEFAULT 1,
+			meta_json longtext DEFAULT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY wp_user_id (wp_user_id),
+			KEY ip_address (ip_address),
+			KEY first_seen (first_seen),
+			KEY last_seen (last_seen)
+		) {$charset_collate};";
+
+		dbDelta( $sql );
+	}
+
+	/**
 	 * Create events table
 	 *
 	 * @return void
@@ -259,7 +296,7 @@ class CTA_Database {
 			referrer varchar(2048) DEFAULT NULL,
 			device varchar(20) DEFAULT NULL,
 			session_id varchar(64) DEFAULT NULL,
-			visitor_id varchar(64) DEFAULT NULL,
+			visitor_id bigint(20) unsigned DEFAULT NULL,
 			user_id bigint(20) unsigned DEFAULT NULL,
 			experiment_key varchar(100) DEFAULT NULL,
 			variant varchar(50) DEFAULT NULL,
@@ -275,7 +312,8 @@ class CTA_Database {
 			KEY idx_type_occurred (event_type, occurred_at),
 			KEY idx_cta_type_occurred (cta_id, event_type, occurred_at),
 			KEY idx_page_hash_type (page_url_hash, event_type),
-			KEY idx_visitor_occurred (visitor_id, occurred_at)
+			KEY idx_visitor_occurred (visitor_id, occurred_at),
+			KEY visitor_id (visitor_id)
 		) {$charset_collate};";
 
 		dbDelta( $sql );

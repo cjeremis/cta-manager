@@ -1,16 +1,12 @@
 <?php
 /**
- * CTA Form - Advanced Tab
+ * Admin Tab Partial Template - Tab Advanced
  *
- * Contains: IDs, Classes, Data Attributes, Pro Numbers
+ * Handles markup rendering for the tab advanced admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
- * @var bool $is_pro Whether Pro is enabled
- * @var array $pro_numbers Pro phone numbers
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

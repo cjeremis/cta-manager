@@ -1,21 +1,12 @@
 <?php
 /**
- * Feature Card Partial
+ * Admin Partial Template - Feature Card
  *
- * Displays a single feature with icon, title, description, and optional features list.
- * Matches the integration card layout for visual consistency.
+ * Handles markup rendering for the feature card admin partial template.
  *
- * Expected variables:
- * - string $icon        Icon or emoji
- * - string $title       Feature title
- * - string $description Feature description
- * - array  $features    Optional array of feature bullet points
- * - string $badge       Optional badge variant (e.g., 'primary', 'warning', 'success')
- * - string $badge_text  Optional badge text (defaults to badge variant name)
- * - bool   $is_pro      Optional flag to show PRO badge (only if no other badge)
- * - bool   $is_implemented Optional flag for green available state
- *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,6 +1,12 @@
 <?php
 /**
- * Pro upgrade modal body
+ * Admin Modal Template - Pro Upgrade
+ *
+ * Handles markup rendering for the pro upgrade admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

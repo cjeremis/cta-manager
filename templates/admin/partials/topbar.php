@@ -1,16 +1,12 @@
 <?php
 /**
- * CTA Manager Topbar
+ * Admin Partial Template - Topbar
  *
- * Provides navigation across plugin pages and a right-side action slot.
+ * Handles markup rendering for the topbar admin partial template.
  *
- * Expected variables:
- * - string $current_page   Page slug ('' for dashboard, 'cta', 'settings', 'tools', etc.)
- * - array  $topbar_actions Array of HTML strings to render on the right
- *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,10 +44,11 @@ const CTA_TOPBAR_MENU_CONFIG = [
 		'classes' => [ 'cta-topbar-link' ],
 	],
 	[
-		'type'    => 'link',
-		'slug'    => 'analytics',
-		'label'   => 'Analytics',
-		'classes' => [ 'cta-topbar-link' ],
+		'type'      => 'link',
+		'slug'      => 'analytics',
+		'label'     => 'Analytics',
+		'classes'   => [ 'cta-topbar-link' ],
+		'condition' => 'requires_pro',
 	],
 	[
 		'type'    => 'link',
@@ -76,6 +73,9 @@ foreach ( CTA_TOPBAR_MENU_CONFIG as $item ) {
 			continue;
 		}
 		if ( $item['condition'] === 'show_pro_badge' && ! $is_pro_active ) {
+			continue;
+		}
+		if ( $item['condition'] === 'requires_pro' && ! $is_pro_active ) {
 			continue;
 		}
 	}

@@ -1,14 +1,12 @@
 <?php
 /**
- * CTA Form - General Tab
+ * Admin Tab Partial Template - Tab General
  *
- * Contains: CTA Name, Schedule
+ * Handles markup rendering for the tab general admin tab partial.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * @var array|null $editing_cta Current CTA data
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

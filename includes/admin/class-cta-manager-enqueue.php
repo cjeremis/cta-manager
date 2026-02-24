@@ -1,9 +1,12 @@
 <?php
 /**
- * Admin controller class
+ * Admin Assets Enqueue Handler
+ *
+ * Handles admin script and style enqueueing for CTA Manager pages.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,6 +16,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 class CTA_Manager_Enqueue {
 
 	use CTA_Singleton;
+
+	/**
+	 * Enqueue admin bar and global styles
+	 *
+	 * Loads on all admin pages to ensure admin bar styling is applied.
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_bar_styles(): void {
+		// Only enqueue on admin pages
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		// Load shared styles (admin bar, animations, etc.) on all admin pages
+		wp_enqueue_style(
+			'cta-shared-admin-bar',
+			CTA_PLUGIN_URL . 'assets/css/minimized/shared/shared.min.css',
+			[],
+			CTA_VERSION,
+			'all'
+		);
+
+		// Enqueue admin bar responsive JavaScript to prevent WordPress from hiding it
+		wp_enqueue_script(
+			'cta-admin-bar-responsive',
+			CTA_PLUGIN_URL . 'assets/js/shared/admin-bar-responsive.js',
+			[],
+			CTA_VERSION,
+			true
+		);
+	}
 
 	/**
 	 * Enqueue admin styles
@@ -50,14 +85,16 @@ class CTA_Manager_Enqueue {
 			'all'
 		);
 
-		// Load dashboard page-specific styles (preview/filters modals, features page)
-		wp_enqueue_style(
-			'cta-dashboard',
-			CTA_PLUGIN_URL . 'assets/css/minimized/admin/dashboard.min.css',
-			[ 'cta-global' ],
-			CTA_VERSION,
-			'all'
-		);
+		// Load dashboard page-specific styles
+		if ( 'cta-manager' === $page ) {
+			wp_enqueue_style(
+				'cta-dashboard',
+				CTA_PLUGIN_URL . 'assets/css/minimized/admin/dashboard.min.css',
+				[ 'cta-global' ],
+				CTA_VERSION,
+				'all'
+			);
+		}
 
 		// Manage CTAs page styles (minimized - compiled from SCSS)
 		// Includes: manage_ctas page-specific styles
@@ -65,17 +102,6 @@ class CTA_Manager_Enqueue {
 			wp_enqueue_style(
 				'cta-manage-ctas',
 				CTA_PLUGIN_URL . 'assets/css/minimized/admin/manage_ctas.min.css',
-				[ 'cta-global' ],
-				CTA_VERSION,
-				'all'
-			);
-		}
-
-		// Analytics dashboard styles
-		if ( 'cta-manager-analytics' === $page ) {
-			wp_enqueue_style(
-				'cta-analytics',
-				CTA_PLUGIN_URL . 'assets/css/minimized/admin/analytics.min.css',
 				[ 'cta-global' ],
 				CTA_VERSION,
 				'all'
@@ -249,35 +275,6 @@ JS
 					'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 					'currentSettings' => $data->get_settings(),
 				]
-			);
-		}
-
-
-		// Analytics dashboard bundle
-		if ( 'cta-manager-analytics' === $page ) {
-			$chart_script_path = CTA_PLUGIN_DIR . 'assets/js/lib/chart.js';
-			$chart_script_url  = CTA_PLUGIN_URL . 'assets/js/lib/chart.js';
-			if ( ! file_exists( $chart_script_path ) ) {
-				$chart_script_url = 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js';
-			}
-
-			$analytics_script_path = CTA_PLUGIN_DIR . 'assets/js/minimized/admin/analytics.min.js';
-			$analytics_script_ver  = file_exists( $analytics_script_path ) ? (string) filemtime( $analytics_script_path ) : CTA_VERSION;
-
-			wp_enqueue_script(
-				'chart-js',
-				$chart_script_url,
-				[],
-				'3.9.1',
-				true
-			);
-
-			wp_enqueue_script(
-				'cta-analytics',
-				CTA_PLUGIN_URL . 'assets/js/minimized/admin/analytics.min.js',
-				[ 'jquery', 'chart-js', 'cta-admin' ],
-				$analytics_script_ver,
-				true
 			);
 		}
 

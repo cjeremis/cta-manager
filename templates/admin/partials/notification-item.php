@@ -1,15 +1,12 @@
 <?php
 /**
- * Single Notification Item
+ * Admin Partial Template - Notification Item
  *
- * Renders a single notification item for the notifications panel.
+ * Handles markup rendering for the notification item admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
- *
- * Expected variables:
- * - object $notification    Notification object with id, title, message, icon, actions
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,13 +1,12 @@
 <?php
 /**
- * Modern Theme Button Template
+ * Public Template - Button Modern
  *
- * Public-facing template for rendering the modern style cta-manager button.
- * Contemporary design with gradient effects and smooth animations.
+ * Handles markup rendering for the button modern public template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Public
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

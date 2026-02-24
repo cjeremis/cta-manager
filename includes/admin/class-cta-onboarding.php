@@ -1,17 +1,12 @@
 <?php
 /**
- * Onboarding system
+ * Onboarding Handler
  *
- * Handles the onboarding wizard modal that guides users through initial setup.
- *
- * Steps:
- * 1. Welcome - Introduction to CTA Manager
- * 2. Import Data - Optional import of existing CTA data
- * 3. Demo Data - Optional import of demo CTAs and analytics
- * 4. Support Overview - Explanation of support toolbar icons
+ * Handles onboarding wizard behavior and onboarding-related AJAX actions.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

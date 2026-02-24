@@ -1,13 +1,12 @@
 <?php
 /**
- * Pro Feature Gate
+ * Pro Feature Gate Handler
  *
- * Provides Pro feature detection for the CTA Manager plugin.
- * Pro features are enabled via license validation or the cta_manager_pro_enabled filter.
- * When Pro plugin is active, this class is overridden by the Pro version.
+ * Handles Pro feature access checks and feature gate logic.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

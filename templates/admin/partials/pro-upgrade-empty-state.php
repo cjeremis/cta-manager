@@ -1,19 +1,12 @@
 <?php
 /**
- * Pro Upgrade Empty State Component
+ * Admin Partial Template - Pro Upgrade Empty State
  *
- * Reusable empty state that promotes Pro features with intelligent
- * status-aware messaging based on plugin/license status.
+ * Handles markup rendering for the pro upgrade empty state admin partial template.
  *
- * Parameters:
- * - $icon        (string)  Dashicon name for the feature (default: 'star-filled')
- * - $title       (string)  Feature title (e.g., 'Advanced Event Logging')
- * - $description (string)  Feature description
- * - $extra_class (string)  Additional CSS classes
- *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

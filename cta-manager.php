@@ -2,14 +2,15 @@
 /**
  * CTA Manager
  *
- * Add cta-manager buttons to your WordPress site with beautiful themes and analytics.
+ * Add robust CTAs to your WordPress site with beautiful themes and analytics.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  *
  * Plugin Name: CTA Manager
  * Plugin URI: https://topdevamerica.com/plugins/cta-manager
- * Description: Add cta-manager buttons to your WordPress site with beautiful themes and analytics.
+ * Description: Add robust CTAs to your WordPress site with beautiful themes and analytics.
  * Version: 1.0.0
  * Requires at least: 6.0
  * Requires PHP: 8.0
@@ -108,6 +109,11 @@ function cta_init() {
 	// Initialize loader
 	$loader = CTA_Loader::get_instance();
 	$loader->run();
+
+	// Initialize visitor tracking
+	if ( class_exists( 'CTA_Visitor' ) ) {
+		add_action( 'init', array( CTA_Visitor::get_instance(), 'init' ) );
+	}
 }
 add_action( 'plugins_loaded', 'cta_init' );
 

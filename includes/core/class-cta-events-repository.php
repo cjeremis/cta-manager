@@ -1,11 +1,12 @@
 <?php
 /**
- * Events Repository - Database-backed analytics events storage
+ * Events Repository Handler
  *
- * Provides CRUD operations for the cta_manager_events table.
+ * Handles analytics event storage and retrieval operations.
  *
  * @package CTAManager
- * @since 1.2.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -116,7 +117,7 @@ class CTA_Events_Repository {
 			'referrer'       => isset( $event_data['referrer'] ) ? esc_url_raw( $event_data['referrer'] ) : null,
 			'device'         => isset( $event_data['device'] ) ? sanitize_text_field( $event_data['device'] ) : null,
 			'session_id'     => isset( $event_data['session_id'] ) ? sanitize_text_field( $event_data['session_id'] ) : null,
-			'visitor_id'     => isset( $event_data['visitor_id'] ) ? sanitize_text_field( $event_data['visitor_id'] ) : null,
+			'visitor_id'     => isset( $event_data['visitor_id'] ) && $event_data['visitor_id'] ? absint( $event_data['visitor_id'] ) : null,
 			'user_id'        => isset( $event_data['user_id'] ) ? absint( $event_data['user_id'] ) : null,
 			'experiment_key' => isset( $event_data['experiment_key'] ) ? sanitize_text_field( $event_data['experiment_key'] ) : null,
 			'variant'        => isset( $event_data['variant'] ) ? sanitize_text_field( $event_data['variant'] ) : null,

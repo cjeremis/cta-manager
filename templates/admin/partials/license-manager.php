@@ -1,24 +1,12 @@
 <?php
 /**
- * License Key Management Section Partial
+ * Admin Partial Template - License Manager
  *
- * Displays a complete license management interface with status badge, input field, and action buttons.
+ * Handles markup rendering for the license manager admin partial template.
  *
- * Variables:
- * - $license_key (optional) - Current license key value (default: '')
- * - $license_status (optional) - License status: 'active', 'inactive', etc. (default: 'inactive')
- * - $is_license_active (optional) - Whether license is currently active (default: false)
- * - $has_saved_license (optional) - Whether a saved license exists (default: false)
- * - $license_key_min_length (optional) - Minimum license key length (default: 19)
- * - $section_id (optional) - Section ID attribute (default: 'cta-inline-license')
- * - $section_title (optional) - Section heading text (default: 'Pro License')
- * - $input_id (optional) - Input field ID (default: 'cta-pro-license-key')
- * - $input_name (optional) - Input field name (default: 'cta_pro_license_key')
- * - $activate_button_id (optional) - ID for activate button (default: 'cta-license-activate')
- * - $deactivate_button_id (optional) - ID for deactivate button (default: 'cta-license-deactivate')
- *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

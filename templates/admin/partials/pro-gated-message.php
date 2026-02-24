@@ -1,14 +1,12 @@
 <?php
 /**
- * Pro-gated inline message + badge link
+ * Admin Partial Template - Pro Gated Message
  *
- * Expected variables:
- * - string $error_id       Required. ID for the error element (controls show/hide).
- * - string $error_message  Required. Message text.
- * - string $badge_id       Required. ID for the badge element (controls show/hide).
- * - string $features_url Optional. Upgrade URL (defaults to Pro features page).
+ * Handles markup rendering for the pro gated message admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

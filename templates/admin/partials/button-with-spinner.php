@@ -1,16 +1,12 @@
 <?php
 /**
- * Button with Spinner Partial
+ * Admin Partial Template - Button With Spinner
  *
- * Displays a button with loading spinner for async operations.
+ * Handles markup rendering for the button with spinner admin partial template.
  *
- * Variables:
- * - $button_text (required) - Button text content
- * - $button_class (optional) - Button CSS class (default: 'cta-button-primary')
- * - $button_id (optional) - Button ID attribute
- * - $button_type (optional) - Button type attribute (default: 'button')
- * - $extra_attrs (optional) - Additional HTML attributes as string
- * - $button_icon (optional) - Additional icon class list (e.g., 'dashicons dashicons-yes-alt')
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

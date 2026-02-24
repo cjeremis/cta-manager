@@ -1,8 +1,12 @@
 <?php
 /**
- * CTA Global Form modal body
+ * Admin Modal Template - Cta Global Form
  *
- * @var array $context
+ * Handles markup rendering for the cta global form admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

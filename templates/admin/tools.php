@@ -1,8 +1,12 @@
 <?php
 /**
- * Tools Template
+ * Admin Page Template - Tools
  *
- * @package CTA_Manager
+ * Handles markup rendering for the tools admin page template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

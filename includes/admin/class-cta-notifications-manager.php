@@ -1,11 +1,12 @@
 <?php
 /**
- * Notifications Manager - Handles internal notification triggers
+ * Notifications Manager
  *
- * Manages notification rules based on plugin events and Pro plugin status.
+ * Handles internal notification triggers and notification lifecycle events.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,13 +1,12 @@
 <?php
 /**
- * FAQ Accordion
+ * Admin Partial Template - Faq Accordion
  *
- * Renders a collection of FAQ items as an accordion.
+ * Handles markup rendering for the faq accordion admin partial template.
  *
- * Expected variables:
- * - array $faq_items Array of ['question' => string, 'answer' => string]
- *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

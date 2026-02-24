@@ -1,11 +1,12 @@
 <?php
 /**
- * Notifications Database Handler
+ * Notifications Storage Handler
  *
- * Manages all database operations for the notifications system.
+ * Handles notification storage and notification retrieval operations.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

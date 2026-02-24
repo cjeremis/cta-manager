@@ -1,6 +1,12 @@
 <?php
 /**
- * CTA text formatting modal body
+ * Admin Modal Template - Cta Format
+ *
+ * Handles markup rendering for the cta format admin modal template.
+ *
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

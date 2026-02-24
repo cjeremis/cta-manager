@@ -1,9 +1,12 @@
 <?php
 /**
- * Main dashboard page
+ * Dashboard Page Handler
+ *
+ * Handles rendering for the CTA Manager dashboard admin page.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

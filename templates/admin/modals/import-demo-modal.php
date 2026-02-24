@@ -1,12 +1,12 @@
 <?php
 /**
- * Import Demo Modal Body Template
+ * Admin Modal Template - Import Demo Modal
  *
- * Modal body content for selective demo data import.
- * Contains toggle switches for Settings, CTAs, Analytics, and Notifications.
+ * Handles markup rendering for the import demo modal admin modal template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Modals
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA Features Registry
+ * Features Registry Handler
  *
- * Centralized registry for all CTA Manager features and integrations.
- * Used by features modal, documentation modal, and features page.
+ * Handles feature registry definitions and feature metadata operations.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -596,7 +596,7 @@ class CTA_Features {
 						__( 'Performance reports', 'cta-manager' ),
 					],
 					'plan'        => self::PLAN_PRO,
-					'implemented' => false,
+					'implemented' => true,
 					'docs_page'   => 'feature-analytics-advanced',
 				],
 			],
@@ -1156,6 +1156,20 @@ class CTA_Features {
 
 		return array_filter( $all_features, function ( $feature ) use ( $plan ) {
 			return $feature['plan'] === $plan;
+		} );
+	}
+
+	/**
+	 * Get integrations by plan
+	 *
+	 * @param string $plan Plan type (free or pro)
+	 * @return array Integrations for the specified plan
+	 */
+	public static function get_integrations_by_plan( string $plan ): array {
+		$all_integrations = self::get_integrations_flat();
+
+		return array_filter( $all_integrations, function ( $integration ) use ( $plan ) {
+			return isset( $integration['plan'] ) && $integration['plan'] === $plan;
 		} );
 	}
 

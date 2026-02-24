@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Empty State Component
+ * Admin Partial Template - Empty State
  *
- * Simple empty state with icon, title, description, and optional action link.
+ * Handles markup rendering for the empty state admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,24 +1,12 @@
 <?php
 /**
- * File Input Wrapper Partial
+ * Admin Partial Template - File Input Wrapper
  *
- * Custom styled file input with selected file display.
+ * Handles markup rendering for the file input wrapper admin partial template.
  *
- * Variables:
- * - $input_id (required) - ID for file input element
- * - $input_name (optional) - Name attribute for file input (default: 'file')
- * - $accept_types (optional) - Accepted file types (default: '.json')
- * - $label_text (optional) - Label text for file chooser (default: 'Choose file...')
- * - $wrapper_id (optional) - ID for wrapper element
- * - $selected_id (optional) - ID for selected file container
- * - $file_name_id (optional) - ID for file name span
- * - $file_size_id (optional) - ID for file size span
- * - $remove_button_id (optional) - ID for remove button
- * - $show_file_icon (optional) - Show file icon (default: true)
- * - $file_icon_class (optional) - Icon class for file (default: 'dashicons-media-code')
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

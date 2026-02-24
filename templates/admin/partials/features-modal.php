@@ -1,11 +1,12 @@
 <?php
 /**
- * Features Modal
+ * Admin Partial Template - Features Modal
  *
- * Displays all CTA Manager features and integrations in a tabbed modal interface.
- * Triggered by the awards icon in the support toolbar.
+ * Handles markup rendering for the features modal admin partial template.
  *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

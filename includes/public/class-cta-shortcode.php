@@ -1,9 +1,12 @@
 <?php
 /**
- * Shortcode handler
+ * Shortcode Handler
+ *
+ * Handles shortcode registration and shortcode rendering behavior.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

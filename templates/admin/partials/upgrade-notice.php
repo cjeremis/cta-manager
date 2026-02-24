@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Upgrade Notice Component
+ * Admin Partial Template - Upgrade Notice
  *
- * Displays a Pro upsell with icon, title, body, and button.
+ * Handles markup rendering for the upgrade notice admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

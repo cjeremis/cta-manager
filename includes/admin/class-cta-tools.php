@@ -1,8 +1,12 @@
 <?php
 /**
- * Tools page handler
+ * Tools Page Handler
+ *
+ * Handles rendering and actions for CTA Manager tools features.
  *
  * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

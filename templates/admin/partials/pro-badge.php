@@ -1,13 +1,12 @@
 <?php
 /**
- * Pro Badge Partial Template
+ * Admin Partial Template - Pro Badge
  *
- * Reusable badge component to indicate Pro-only features.
- * Used throughout admin interface to mark premium functionality.
+ * Handles markup rendering for the pro badge admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

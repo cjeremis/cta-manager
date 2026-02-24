@@ -1,16 +1,12 @@
 <?php
 /**
- * CTA Manager Header Partial
+ * Admin Partial Template - Header
  *
- * Reusable header section that appears at the top of all CTA Manager admin pages.
+ * Handles markup rendering for the header admin partial template.
  *
- * Expected variables:
- * - string $header_title       Page title for the h1
- * - string $header_description Page description for the paragraph
- *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 // Exit if accessed directly

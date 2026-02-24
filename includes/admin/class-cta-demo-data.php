@@ -1,8 +1,12 @@
 <?php
 /**
- * Demo Data Import/Delete handler
+ * Demo Data Handler
+ *
+ * Handles demo data import and cleanup operations.
  *
  * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -159,6 +163,9 @@ class CTA_Demo_Data {
 					$events_repo->delete_by_cta_ids( $demo_cta_ids );
 				}
 			}
+
+			// Delete all demo visitors (visitors 1-12 from demo data)
+			$this->delete_demo_visitors();
 		}
 
 		// Delete demo notifications (types prefixed with 'demo_')
@@ -244,6 +251,11 @@ class CTA_Demo_Data {
 		// Import CTAs if enabled
 		if ( $import_ctas && isset( $demo_data['ctas'] ) ) {
 			$counts['ctas'] = $this->import_demo_ctas( $demo_data['ctas'], $is_pro );
+		}
+
+		// Import visitors if analytics is enabled (visitors are required for analytics)
+		if ( $import_analytics && isset( $demo_data['visitors'] ) ) {
+			$this->import_demo_visitors( $demo_data['visitors'] );
 		}
 
 		// Import analytics if enabled
@@ -505,6 +517,79 @@ class CTA_Demo_Data {
 	}
 
 	/**
+	 * Delete demo visitors (IDs 1-12 from demo data)
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return bool True on success
+	 */
+	private function delete_demo_visitors(): bool {
+		$visitors_table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
+		if ( ! CTA_Database::table_exists( $visitors_table ) ) {
+			return false;
+		}
+
+		global $wpdb;
+		// Delete demo visitors (IDs 1-12)
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$visitors_table} WHERE id >= %d AND id <= %d", 1, 12 ) );
+
+		return true;
+	}
+
+	/**
+	 * Import visitors from demo data
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $visitors_data Array of visitor records
+	 *
+	 * @return int Count of visitors imported
+	 */
+	private function import_demo_visitors( array $visitors_data ): int {
+		if ( empty( $visitors_data ) || ! is_array( $visitors_data ) ) {
+			return 0;
+		}
+
+		// Check if visitors table exists
+		$visitors_table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
+		if ( ! CTA_Database::table_exists( $visitors_table ) ) {
+			return 0;
+		}
+
+		$count = 0;
+
+		foreach ( $visitors_data as $visitor ) {
+			// Parse relative datetime for first_seen and last_seen
+			$first_seen = isset( $visitor['first_seen'] ) ? $this->parse_relative_datetime( $visitor['first_seen'] ) : current_time( 'mysql' );
+			$last_seen  = isset( $visitor['last_seen'] ) ? $this->parse_relative_datetime( $visitor['last_seen'] ) : current_time( 'mysql' );
+
+			$visitor_data = [
+				'id'          => isset( $visitor['id'] ) ? absint( $visitor['id'] ) : null,
+				'wp_user_id'  => isset( $visitor['wp_user_id'] ) ? absint( $visitor['wp_user_id'] ) : null,
+				'ip_address'  => isset( $visitor['ip_address'] ) ? sanitize_text_field( $visitor['ip_address'] ) : null,
+				'user_agent'  => isset( $visitor['user_agent'] ) ? sanitize_text_field( substr( $visitor['user_agent'], 0, 512 ) ) : null,
+				'country'     => isset( $visitor['country'] ) ? sanitize_text_field( $visitor['country'] ) : null,
+				'region'      => isset( $visitor['region'] ) ? sanitize_text_field( $visitor['region'] ) : null,
+				'city'        => isset( $visitor['city'] ) ? sanitize_text_field( $visitor['city'] ) : null,
+				'first_seen'  => $first_seen,
+				'last_seen'   => $last_seen,
+				'visits'      => isset( $visitor['visit_count'] ) ? absint( $visitor['visit_count'] ) : 1,
+				'meta_json'   => isset( $visitor['meta_json'] ) ? wp_json_encode( $visitor['meta_json'] ) : null,
+			];
+
+			// Use replace to handle conflicts with existing IDs
+			global $wpdb;
+			$result = $wpdb->replace( $visitors_table, $visitor_data );
+
+			if ( $result ) {
+				$count++;
+			}
+		}
+
+		return $count;
+	}
+
+	/**
 	 * Import analytics events from demo data
 	 *
 	 * @since 1.3.0
@@ -570,6 +655,10 @@ class CTA_Demo_Data {
 				'page_title'  => sanitize_text_field( $event['page_title'] ?? '' ),
 				'referrer'    => esc_url_raw( $event['referrer'] ?? '' ),
 				'device'      => sanitize_text_field( $event['device'] ?? 'desktop' ),
+				'visitor_id'  => isset( $event['visitor_id'] ) ? absint( $event['visitor_id'] ) : null,
+				'session_id'  => isset( $event['session_id'] ) ? sanitize_text_field( $event['session_id'] ) : null,
+				'ip_address'  => isset( $event['ip_address'] ) ? sanitize_text_field( $event['ip_address'] ) : null,
+				'user_agent'  => isset( $event['user_agent'] ) ? sanitize_text_field( substr( $event['user_agent'], 0, 512 ) ) : null,
 				'occurred_at' => $occurred_at,
 			];
 		}

@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Shortcode Example Box
+ * Admin Partial Template - Shortcode Example
  *
- * Presents a shortcode with copy-to-clipboard button.
+ * Handles markup rendering for the shortcode example admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

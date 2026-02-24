@@ -1,15 +1,12 @@
 <?php
 /**
- * Icon Preview Box Partial
+ * Admin Partial Template - Icon Preview Box
  *
- * Displays a preview box for custom icons.
+ * Handles markup rendering for the icon preview box admin partial template.
  *
- * Variables:
- * - $preview_id (required) - Unique ID for the preview container
- * - $label (optional) - Label text (default: 'Preview')
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

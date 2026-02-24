@@ -1,9 +1,12 @@
 <?php
 /**
- * CTA Management Dashboard
+ * CTA Manager Core Handler
+ *
+ * Handles core admin-side CTA management and form processing logic.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

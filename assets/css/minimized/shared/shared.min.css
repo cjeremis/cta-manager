@@ -1,4 +1,11 @@
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./assets/scss/shared/components/shared.scss ***!
-  \********************************************************************************************************************************************************************************************/
-@keyframes cta-glow-warm{0%,100%{color:#667eea;filter:drop-shadow(0 0 2px rgba(102, 126, 234, 0.4))}50%{color:#764ba2;filter:drop-shadow(0 0 8px rgba(118, 75, 162, 0.6))}}@keyframes cta-glow-warm-slow{0%,100%{color:#667eea;filter:drop-shadow(0 0 2px rgba(102, 126, 234, 0.4))}50%{color:#764ba2;filter:drop-shadow(0 0 8px rgba(118, 75, 162, 0.6))}}@keyframes cta-glow-warm-compact{0%,100%{color:#667eea;filter:drop-shadow(0 0 1px rgba(102, 126, 234, 0.3))}50%{color:#764ba2;filter:drop-shadow(0 0 4px rgba(118, 75, 162, 0.5))}}.cta-glow-warm{animation:cta-glow-warm 2s ease-in-out infinite}.cta-glow-warm-slow{animation:cta-glow-warm-slow 3s ease-in-out infinite}.cta-glow-warm-compact{animation:cta-glow-warm-compact 2s ease-in-out infinite}
+/*!
+ * CTA Manager - Shared Styles
+ *
+ * Shared styles used by both admin and public interfaces.
+ *
+ * @package    CTA_Manager
+ * @version    1.0.0
+ * @copyright  2026 TopDevAmerica
+ * @license    GPL-2.0+
+ */
+@keyframes cta-glow-warm{0%,100%{color:#667eea;filter:drop-shadow(0 0 2px rgba(102, 126, 234, 0.4))}50%{color:#764ba2;filter:drop-shadow(0 0 8px rgba(118, 75, 162, 0.6))}}@keyframes cta-glow-warm-slow{0%,100%{color:#667eea;filter:drop-shadow(0 0 2px rgba(102, 126, 234, 0.4))}50%{color:#764ba2;filter:drop-shadow(0 0 8px rgba(118, 75, 162, 0.6))}}@keyframes cta-glow-warm-compact{0%,100%{color:#667eea;filter:drop-shadow(0 0 1px rgba(102, 126, 234, 0.3))}50%{color:#764ba2;filter:drop-shadow(0 0 4px rgba(118, 75, 162, 0.5))}}.cta-glow-warm{animation:cta-glow-warm 2s ease-in-out infinite}.cta-glow-warm-slow{animation:cta-glow-warm-slow 3s ease-in-out infinite}.cta-glow-warm-compact{animation:cta-glow-warm-compact 2s ease-in-out infinite}#wp-admin-bar-cta-manager{display:block !important;visibility:visible !important;opacity:1 !important}@media(max-width: 782px){#wp-admin-bar-cta-manager .ab-label{display:none !important;margin:0 !important;width:0 !important}#wp-admin-bar-cta-manager .ab-icon{margin-right:0 !important}#wp-admin-bar-cta-manager-dashboard,#wp-admin-bar-cta-manager-manage,#wp-admin-bar-cta-manager-add-new,#wp-admin-bar-cta-manager-settings,#wp-admin-bar-cta-manager-tools{display:list-item !important;visibility:visible !important}}@media(min-width: 783px){#wp-admin-bar-cta-manager .ab-label{display:inline !important;margin:0 4px 0 0 !important;width:auto !important}#wp-admin-bar-cta-manager .ab-icon{margin-right:6px !important}}

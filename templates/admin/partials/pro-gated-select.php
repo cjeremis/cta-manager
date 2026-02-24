@@ -1,24 +1,12 @@
 <?php
 /**
- * Pro-gated select partial
+ * Admin Partial Template - Pro Gated Select
  *
- * Renders a select element that marks Pro-only options with a badge and error message.
+ * Handles markup rendering for the pro gated select admin partial template.
  *
- * Expected variables:
- * - $select_id (required)     : Select element ID
- * - $select_name (optional)   : Select element name (defaults to $select_id)
- * - $options (required)       : Array of option/optgroup configs
- * - $selected_value (optional): Currently selected value
- * - $error_message (optional) : Error message to show for Pro-only selections
- * - $error_id (optional)      : ID for the error element (defaults to {$select_id}-pro-error)
- * - $badge_id (optional)      : ID for the badge element (defaults to {$select_id}-pro-badge)
- * - $is_pro (optional)        : Whether the current user has Pro (default: false)
- * - $show_badge (optional)    : Whether to render the badge (default: true)
- * - $select_class (optional)  : CSS classes for the select (default: 'cta-select')
- * - $select_attrs (optional)  : Extra raw attributes for the select
- * - $wrapper_class (optional) : Extra wrapper classes
- *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

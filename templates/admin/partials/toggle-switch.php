@@ -1,22 +1,12 @@
 <?php
 /**
- * Toggle Switch Partial
+ * Admin Partial Template - Toggle Switch
  *
- * Displays a toggle switch for boolean settings.
+ * Handles markup rendering for the toggle switch admin partial template.
  *
- * Variables:
- * - $input_name (required) - Input name attribute
- * - $label (required) - Toggle label text
- * - $checked (optional) - Whether toggle is checked (default: false)
- * - $input_id (optional) - Input ID attribute
- * - $input_value (optional) - Input value (default: '1')
- * - $extra_class (optional) - Additional CSS classes
- * - $on_text (optional) - Text for "on" state (default: 'On')
- * - $off_text (optional) - Text for "off" state (default: 'Off')
- * - $input_attrs (optional) - Additional attributes for the input element
- * - $wrapper_attrs (optional) - Additional attributes for the label element
- * - $size (optional) - 'regular' or 'small' (default: 'regular')
- * - $show_status (optional) - Whether to render status text (default: true)
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,16 +1,12 @@
 <?php
 /**
- * Button with Icon Partial
+ * Admin Partial Template - Button With Icon
  *
- * Displays a button with a dashicon.
+ * Handles markup rendering for the button with icon admin partial template.
  *
- * Variables:
- * - $button_text (required) - Button text content
- * - $icon (required) - Dashicon name without 'dashicons-' prefix
- * - $button_class (optional) - Button CSS class (default: 'cta-button-primary')
- * - $button_id (optional) - Button ID attribute
- * - $button_type (optional) - Button type attribute (default: 'button')
- * - $extra_attrs (optional) - Additional HTML attributes as string
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

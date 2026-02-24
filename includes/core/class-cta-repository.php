@@ -1,12 +1,12 @@
 <?php
 /**
- * CTA Repository - Database-backed CTA storage
+ * CTA Repository Handler
  *
- * Provides CRUD operations for the wp_cta_manager table.
- * Handles JSON packing/unpacking for flexible feature groups.
+ * Handles CTA record CRUD and persistence operations.
  *
  * @package CTAManager
- * @since 1.2.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

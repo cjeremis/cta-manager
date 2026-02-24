@@ -1,18 +1,12 @@
 <?php
 /**
- * Status Badge Partial
+ * Admin Partial Template - Status Badge
  *
- * Displays a colored badge for status indicators (no icons).
+ * Handles markup rendering for the status badge admin partial template.
  *
- * Variables:
- * - $variant (required) - Badge style: 'primary', 'secondary', 'success', 'warning', 'danger', 'inactive'
- * - $text (required) - Badge text content
- * - $pulse_class (optional) - Pulse animation class (e.g., 'cta-pulse-warning')
- * - $extra_styles (optional) - Additional inline styles
- * - $extra_attrs (optional) - Additional HTML attributes
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

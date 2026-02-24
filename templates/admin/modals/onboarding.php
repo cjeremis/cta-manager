@@ -1,14 +1,12 @@
 <?php
 /**
- * Onboarding modal body
+ * Admin Modal Template - Onboarding
  *
- * Steps:
- * 1. Welcome - Introduction to CTA Manager
- * 2. Import Data - Optional import of existing CTA data from JSON file
- * 3. Demo Data - Optional import of demo CTAs and analytics
- * 4. Support Overview - Explanation of support toolbar icons
+ * Handles markup rendering for the onboarding admin modal template.
  *
- * @var array $context Contains onboarding state and completed steps
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

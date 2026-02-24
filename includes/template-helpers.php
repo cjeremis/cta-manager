@@ -1,12 +1,12 @@
 <?php
 /**
- * Template Helper Functions
+ * Template Helpers
  *
- * Reusable functions for loading partial templates.
- * These functions are designed to be used across multiple plugins.
+ * Handles reusable template helper functions for CTA Manager rendering.
  *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

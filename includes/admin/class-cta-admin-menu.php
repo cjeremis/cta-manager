@@ -1,9 +1,12 @@
 <?php
 /**
- * Admin menu registration
+ * Admin Menu Registration
+ *
+ * Handles admin menu and submenu registration for CTA Manager.
  *
  * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,15 +55,6 @@ class CTA_Admin_Menu {
 			self::REQUIRED_CAP,
 			self::MENU_SLUG . '-cta',
 			[ CTA_Manager::get_instance(), 'render' ]
-		);
-
-		add_submenu_page(
-			self::MENU_SLUG,
-			__( 'CTA Manager Analytics', 'cta-manager' ),
-			__( 'Analytics', 'cta-manager' ),
-			self::REQUIRED_CAP,
-			self::MENU_SLUG . '-analytics',
-			[ CTA_Analytics_Dashboard::get_instance(), 'render' ]
 		);
 
 		add_submenu_page(
@@ -226,13 +220,6 @@ class CTA_Admin_Menu {
 			'parent' => 'cta-manager',
 			'title'  => __( 'Add New CTA', 'cta-manager' ),
 			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta&action=new' ),
-		] );
-
-		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-analytics',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Analytics', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-analytics' ),
 		] );
 
 		$wp_admin_bar->add_node( [

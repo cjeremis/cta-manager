@@ -1,15 +1,12 @@
 <?php
 /**
- * Date Input Partial
+ * Admin Partial Template - Date Input
  *
- * Displays a date input field with label.
+ * Handles markup rendering for the date input admin partial template.
  *
- * Variables:
- * - $input_id (required) - Input ID attribute
- * - $input_name (required) - Input name attribute
- * - $label (required) - Label text
- * - $value (optional) - Input value (default: '')
- * - $extra_attrs (optional) - Additional HTML attributes
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

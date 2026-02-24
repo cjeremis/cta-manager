@@ -1,12 +1,12 @@
 <?php
 /**
- * Support Ticket Submission Form
+ * Admin Partial Template - Support Ticket Form
  *
- * Modal form for creating new support tickets.
+ * Handles markup rendering for the support ticket form admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

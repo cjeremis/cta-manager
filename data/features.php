@@ -236,6 +236,25 @@ $all_features = [
 			'implemented' => true,
 		],
 		[
+			'icon'        => '🎯',
+			'title'       => __( 'Custom Content CTA', 'cta-manager' ),
+			'description' => __( 'Display any shortcode content in a popup modal', 'cta-manager' ),
+			'features'    => [
+				__( 'Embed shortcodes in popup body', 'cta-manager' ),
+				__( 'Support for forms, calendars, and custom content', 'cta-manager' ),
+				__( 'Uses existing title, tagline, and body fields', 'cta-manager' ),
+			],
+			'details'     => __( 'The Custom Content CTA extends the popup modal functionality by allowing you to embed any WordPress shortcode directly in the body content area. This powerful feature enables you to display dynamic content from other plugins — such as Fluent Forms, contact forms, booking calendars, pricing tables, or any custom shortcode — within a beautifully styled popup modal. Unlike the standard Popup CTA which uses static content, this feature processes shortcodes in real-time, giving you unlimited flexibility to integrate third-party plugins and custom functionality. You can still use the title, tagline, and body content fields to create a complete experience, with the shortcode rendering seamlessly within your popup design. This is perfect for lead generation forms, appointment bookings, surveys, or any interactive content that benefits from modal presentation.', 'cta-manager' ),
+			'instructions'=> [
+				__( 'Create a new CTA and select "Custom Content" as your CTA type in the General tab to access shortcode-enabled content fields.', 'cta-manager' ),
+				__( 'Add your popup title and tagline as normal, then paste your shortcode (e.g., [fluentform id="1"]) into the body content field.', 'cta-manager' ),
+				__( 'Customize the popup appearance using styling options in the Display tab; the shortcode will be processed and rendered when the popup opens.', 'cta-manager' ),
+				__( 'Configure scheduling, targeting, and device visibility as needed; the popup will display your dynamic shortcode content with full functionality.', 'cta-manager' ),
+			],
+			'plan'        => 'pro',
+			'implemented' => false,
+		],
+		[
 			'icon'        => '🛠️',
 			'title'       => __( 'Custom CTA Type', 'cta-manager' ),
 			'description' => __( 'Build fully custom CTA behaviors', 'cta-manager' ),
@@ -243,6 +262,13 @@ $all_features = [
 				__( 'Custom HTML templates', 'cta-manager' ),
 				__( 'JavaScript hooks', 'cta-manager' ),
 				__( 'API integrations', 'cta-manager' ),
+			],
+			'details'     => __( 'The Custom CTA Type feature provides developers with complete control over CTA behavior and presentation through custom HTML templates, JavaScript hooks, and API integrations. This advanced feature enables you to create entirely unique CTA experiences that go beyond the built-in types, allowing you to implement custom interactions, third-party service integrations, and specialized business logic. With access to the full JavaScript event lifecycle and PHP filter hooks, you can build sophisticated CTAs that integrate seamlessly with external APIs, trigger custom workflows, or implement unique visual effects. This feature is designed for developers who need maximum flexibility to create specialized call-to-action experiences tailored to specific business requirements that cannot be achieved with standard CTA types.', 'cta-manager' ),
+			'instructions'=> [
+				__( 'Define your custom CTA template using the template override system in your theme or child theme directory.', 'cta-manager' ),
+				__( 'Use JavaScript hooks to attach custom behaviors and event handlers to your CTA lifecycle events.', 'cta-manager' ),
+				__( 'Leverage PHP filters to modify CTA output, data, and behavior before rendering.', 'cta-manager' ),
+				__( 'Integrate with external APIs using AJAX endpoints and custom handler functions for dynamic content.', 'cta-manager' ),
 			],
 			'plan'        => 'pro',
 			'implemented' => false,
@@ -622,20 +648,20 @@ $all_features = [
 	__( 'Analytics', 'cta-manager' ) => [
 		[
 			'icon'        => '📊',
-			'title'       => __( 'Analytics (Up to 1 week)', 'cta-manager' ),
-			'description' => __( 'Track impressions and clicks for up to 1 day', 'cta-manager' ),
+			'title'       => __( 'Advanced Analytics', 'cta-manager' ),
+			'description' => __( 'Detailed charts, trends, and performance insights', 'cta-manager' ),
 			'features'    => [
-				__( 'Impression tracking', 'cta-manager' ),
-				__( 'Click analytics', 'cta-manager' ),
-				__( 'Basic reporting', 'cta-manager' ),
+				__( 'Interactive charts', 'cta-manager' ),
+				__( 'Performance trends', 'cta-manager' ),
+				__( 'Detailed reporting', 'cta-manager' ),
 			],
-			'details'     => __( 'Stores a rolling window of impressions and clicks (cleanup scheduled daily) so you can see which CTAs are performing without needing external trackers.', 'cta-manager' ),
+			'details'     => __( 'Advanced Analytics provides comprehensive tracking and visualization of CTA performance with interactive charts, trend analysis, and detailed metrics. Track impressions, clicks, and conversions over time with filterable date ranges and export capabilities.', 'cta-manager' ),
 			'instructions'=> [
-				__( 'Keep the default analytics enabled; every CTA render and click is logged automatically.', 'cta-manager' ),
-				__( 'Open the Analytics tab in Plugin CP to view counts for the last week and identify top performers.', 'cta-manager' ),
-				__( 'Use exports in Tools if you need to share the report or archive it.', 'cta-manager' ),
+				__( 'Navigate to Analytics page from the admin menu to view comprehensive performance data.', 'cta-manager' ),
+				__( 'Use date filters to analyze trends over different time periods.', 'cta-manager' ),
+				__( 'Export analytics data for external reporting and analysis.', 'cta-manager' ),
 			],
-			'plan'        => 'free',
+			'plan'        => 'pro',
 			'implemented' => true,
 		],
 		[
@@ -1506,6 +1532,7 @@ $integrations = [
 				__( 'View CTA events in GA4 by navigating to Reports > Engagement > Events; click any event to see count over time and parameter data, or use Explore section to create custom reports with Free Form explorations.', 'cta-manager' ),
 				__( 'Configure GA4 Conversions by going to Admin > Events, finding your conversion event (cta_conversion), and marking it as a conversion for conversion reporting and attribution analysis; create Custom Dimensions for frequently-filtered parameters.', 'cta-manager' ),
 			],
+			'plan'        => 'pro',
 			'implemented' => true,
 		],
 		[

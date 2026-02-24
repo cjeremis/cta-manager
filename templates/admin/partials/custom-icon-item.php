@@ -1,17 +1,12 @@
 <?php
 /**
- * Custom Icon Item Partial
+ * Admin Partial Template - Custom Icon Item
  *
- * Renders a single custom icon grid item with preview and delete button.
+ * Handles markup rendering for the custom icon item admin partial template.
  *
- * Variables:
- * - $icon_id (required) - Icon ID
- * - $icon_name (required) - Icon name/label
- * - $svg_content (required) - SVG content to display
- * - $extra_class (optional) - Additional CSS classes
- *
- * @package CTA_Manager
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

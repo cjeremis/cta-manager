@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Modal Shell
+ * Admin Partial Template - Modal
  *
- * Renders a modal with overlay, header, body, and optional footer.
+ * Handles markup rendering for the modal admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

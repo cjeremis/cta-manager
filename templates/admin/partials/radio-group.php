@@ -1,15 +1,12 @@
 <?php
 /**
- * Radio Group Partial
+ * Admin Partial Template - Radio Group
  *
- * Displays a group of radio button options with labels and descriptions.
+ * Handles markup rendering for the radio group admin partial template.
  *
- * Variables:
- * - $name (required) - Input name attribute (shared by all options)
- * - $options (required) - Array of option arrays with keys: 'value', 'label', 'description'
- *   Optional keys: 'class' (input class string), 'attributes' (extra raw attributes)
- * - $selected_value (optional) - Currently selected value
- * - $extra_class (optional) - Additional CSS classes for the group
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

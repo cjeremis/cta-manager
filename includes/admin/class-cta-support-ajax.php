@@ -1,13 +1,12 @@
 <?php
 /**
- * CTA Support AJAX - Handle Support Ticket AJAX Requests
+ * Support AJAX Handler
  *
- * Handles AJAX operations for customer support tickets via external API.
- * All ticket data is stored on TopDevAmerica's servers, not locally.
+ * Handles AJAX requests for support tickets and support API operations.
  *
- * @package CTA_Manager
- * @subpackage Admin
+ * @package CTAManager
  * @since 1.0.0
+ * @version 1.0.0
  */
 
 if (!defined('ABSPATH')) {

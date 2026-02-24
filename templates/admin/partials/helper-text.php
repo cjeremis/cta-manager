@@ -1,11 +1,12 @@
 <?php
 /**
- * Reusable Helper Text Component
+ * Admin Partial Template - Helper Text
  *
- * Small hint block with optional icon and inline/stacked variants.
+ * Handles markup rendering for the helper text admin partial template.
  *
- * @package CTA_Manager
- * @subpackage Templates/Admin/Partials
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

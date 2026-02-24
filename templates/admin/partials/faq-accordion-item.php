@@ -1,16 +1,12 @@
 <?php
 /**
- * FAQ Accordion Item
+ * Admin Partial Template - Faq Accordion Item
  *
- * Renders a single FAQ accordion entry.
+ * Handles markup rendering for the faq accordion item admin partial template.
  *
- * Expected variables:
- * - string $question  Question text
- * - string $answer    Answer text
- * - int    $index     Numeric index for IDs/aria
- * - bool   $is_open   Whether this item starts expanded (optional, default false)
- *
- * @package CTA_Manager
+ * @package CTAManager
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
