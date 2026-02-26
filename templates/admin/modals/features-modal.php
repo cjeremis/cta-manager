@@ -173,6 +173,7 @@ $labels = CTA_Features::get_labels();
 						$features       = $feature['features'] ?? [];
 						$details        = $feature['details'] ?? '';
 						$instructions   = $feature['instructions'] ?? [];
+						$docs_page      = $feature['docs_page'] ?? '';
 						$plan           = $feature['plan'] ?? 'free';
 						$is_implemented = ! empty( $feature['implemented'] );
 						$is_pro         = 'pro' === $plan;
@@ -180,7 +181,7 @@ $labels = CTA_Features::get_labels();
 						$badge_text     = '';
 
 						include CTA_PLUGIN_DIR . 'templates/admin/partials/feature-card.php';
-						unset( $icon, $title, $hook_name, $hook_type, $description, $features, $details, $instructions, $badge, $badge_text, $is_pro, $is_implemented, $plan );
+						unset( $icon, $title, $hook_name, $hook_type, $description, $features, $details, $instructions, $docs_page, $badge, $badge_text, $is_pro, $is_implemented, $plan );
 					endforeach;
 					?>
 				</div>
@@ -249,7 +250,7 @@ $labels = CTA_Features::get_labels();
 									<?php endif; ?>
 									<?php if ( ! empty( $integration['details'] ) || ! empty( $integration['instructions'] ) ) : ?>
 										<div class="cta-integration-learn-more">
-											<button type="button" class="cta-learn-more-button" data-feature-title="<?php echo esc_attr( $integration['title'] ); ?>" data-category-type="integration">
+											<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $integration['docs_page'] ?? '' ); ?>" data-feature-title="<?php echo esc_attr( $integration['title'] ); ?>" data-category-type="integration">
 												<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 											</button>
 										</div>
@@ -303,8 +304,7 @@ $labels = CTA_Features::get_labels();
 		const learnMoreBtn = e.target.closest('.cta-learn-more-button');
 		if (!learnMoreBtn) return;
 
-		const featureTitle = learnMoreBtn.dataset.featureTitle;
-		const categoryType = learnMoreBtn.dataset.categoryType || 'feature';
+		const docsPage = learnMoreBtn.dataset.docsPage;
 
 		// Close features modal
 		const featuresModal = document.querySelector('[data-modal="features"]');
@@ -312,10 +312,10 @@ $labels = CTA_Features::get_labels();
 			window.CTAManager.closeModal('features');
 		}
 
-		// Open documentation modal with specific feature
+		// Open documentation modal to specific page
 		setTimeout(function() {
-			if (window.CTAManager && window.CTAManager.openDocumentationModal) {
-				window.CTAManager.openDocumentationModal(featureTitle, categoryType);
+			if (window.CTAManager && window.CTAManager.openDocumentationModalToPage) {
+				window.CTAManager.openDocumentationModalToPage(docsPage || 'welcome');
 			}
 		}, 300); // Small delay to allow features modal to close
 	});

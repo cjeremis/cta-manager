@@ -204,6 +204,11 @@ class CTA_Visitor {
 			return;
 		}
 
+		// Don't attempt to set cookies if headers already sent (e.g., during wp-cron)
+		if ( headers_sent() ) {
+			return;
+		}
+
 		// Only set cookie if not already set or different
 		if ( ! isset( $_COOKIE[ self::COOKIE_NAME ] ) || (int) $_COOKIE[ self::COOKIE_NAME ] !== $this->visitor_id ) {
 			setcookie(

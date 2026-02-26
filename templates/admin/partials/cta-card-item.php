@@ -223,40 +223,6 @@ $filter_search = strtolower( implode( ' ', array_filter( $searchable_parts ) ) )
 			endif;
 			?>
 		</h3>
-			<div class="cta-cta-actions">
-				<?php
-				$button_text  = '';
-				$icon         = 'visibility';
-				$button_class = 'cta-button-link cta-preview-cta-btn cta-card-action';
-				$button_type  = 'button';
-				$extra_attrs  = 'data-cta-id="' . esc_attr( $cta['id'] ?? 0 ) . '" data-cta-data="' . esc_attr( wp_json_encode( $cta ) ) . '"';
-				include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
-				unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
-				?>
-				<?php
-				$button_text  = '';
-				$icon         = 'edit';
-				$button_class = 'cta-button-link cta-card-action cta-edit-trigger';
-				$button_type  = 'button';
-				$extra_attrs  = 'data-open-modal="#cta-global-form-modal" data-cta-id="' . esc_attr( $cta['id'] ?? 0 ) . '" data-cta-data="' . esc_attr( wp_json_encode( $cta ) ) . '" aria-label="' . esc_attr__( 'Edit', 'cta-manager' ) . '"';
-				include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
-				unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
-				?>
-				<form method="post" style="display: inline;" onsubmit="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this CTA?', 'cta-manager' ); ?>');">
-					<?php wp_nonce_field( 'cta_cta_action', 'cta_cta_nonce' ); ?>
-					<input type="hidden" name="cta_action" value="delete" />
-					<input type="hidden" name="cta_id" value="<?php echo esc_attr( $cta['id'] ?? 0 ); ?>" />
-					<?php
-					$button_text  = '';
-					$icon         = 'trash';
-					$button_class = 'cta-button-link cta-button-danger cta-card-action';
-					$button_type  = 'submit';
-					$extra_attrs  = 'aria-label="' . esc_attr__( 'Delete', 'cta-manager' ) . '"';
-					include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
-					unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
-					?>
-				</form>
-			</div>
 	</div>
 	<?php
 	$countdown_target = null;
@@ -308,6 +274,40 @@ $filter_search = strtolower( implode( ' ', array_filter( $searchable_parts ) ) )
 				</button>
 			</span>
 		</div>
+	</div>
+	<div class="cta-cta-actions">
+		<?php
+		$button_text  = '';
+		$icon         = 'visibility';
+		$button_class = 'cta-button-link cta-preview-cta-btn cta-card-action';
+		$button_type  = 'button';
+		$extra_attrs  = 'data-cta-id="' . esc_attr( $cta['id'] ?? 0 ) . '" data-cta-data="' . esc_attr( wp_json_encode( $cta ) ) . '"';
+		include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
+		unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
+		?>
+		<?php
+		$button_text  = '';
+		$icon         = 'edit';
+		$button_class = 'cta-button-link cta-card-action cta-edit-trigger';
+		$button_type  = 'button';
+		$extra_attrs  = 'data-open-modal="#cta-global-form-modal" data-cta-id="' . esc_attr( $cta['id'] ?? 0 ) . '" data-cta-data="' . esc_attr( wp_json_encode( $cta ) ) . '" aria-label="' . esc_attr__( 'Edit', 'cta-manager' ) . '"';
+		include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
+		unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
+		?>
+		<form method="post" style="display: inline;" onsubmit="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this CTA?', 'cta-manager' ); ?>');">
+			<?php wp_nonce_field( 'cta_cta_action', 'cta_cta_nonce' ); ?>
+			<input type="hidden" name="cta_action" value="delete" />
+			<input type="hidden" name="cta_id" value="<?php echo esc_attr( $cta['id'] ?? 0 ); ?>" />
+			<?php
+			$button_text  = '';
+			$icon         = 'trash';
+			$button_class = 'cta-button-link cta-button-danger cta-card-action';
+			$button_type  = 'submit';
+			$extra_attrs  = 'aria-label="' . esc_attr__( 'Delete', 'cta-manager' ) . '"';
+			include CTA_PLUGIN_DIR . 'templates/admin/partials/button-with-icon.php';
+			unset( $button_text, $icon, $button_class, $button_type, $extra_attrs );
+			?>
+		</form>
 	</div>
 	<div class="cta-cta-dates">
 		<div class="cta-cta-dates-left">

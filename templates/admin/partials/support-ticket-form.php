@@ -81,9 +81,6 @@ if (!defined('ABSPATH')) {
         </div>
 
         <div class="cta-modal-footer">
-            <button type="button" class="cta-button-secondary cta-modal-close">
-                <?php esc_html_e('Cancel', 'cta-manager'); ?>
-            </button>
             <button type="submit" form="cta-support-ticket-form" class="cta-button-primary" id="cta-submit-ticket-btn">
                 <?php esc_html_e('Submit Ticket', 'cta-manager'); ?>
             </button>

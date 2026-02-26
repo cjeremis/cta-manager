@@ -78,3 +78,43 @@
 
   CTA_ADMIN_BAR.init();
 })();
+
+// Admin bar shortcode copy handler
+(function() {
+  'use strict';
+
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.cta-ab-copy');
+    if (!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    var shortcode = btn.getAttribute('data-cta-shortcode');
+    if (!shortcode) return;
+
+    var icon = btn.querySelector('.dashicons');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shortcode).then(function() {
+        if (icon) {
+          icon.className = 'dashicons dashicons-yes';
+          setTimeout(function() { icon.className = 'dashicons dashicons-clipboard'; }, 1500);
+        }
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = shortcode;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (icon) {
+        icon.className = 'dashicons dashicons-yes';
+        setTimeout(function() { icon.className = 'dashicons dashicons-clipboard'; }, 1500);
+      }
+    }
+  });
+})();

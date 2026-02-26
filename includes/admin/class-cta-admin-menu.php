@@ -216,13 +216,6 @@ class CTA_Admin_Menu {
 		] );
 
 		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-add-new',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Add New CTA', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta&action=new' ),
-		] );
-
-		$wp_admin_bar->add_node( [
 			'id'     => 'cta-manager-settings',
 			'parent' => 'cta-manager',
 			'title'  => __( 'Settings', 'cta-manager' ),
@@ -235,6 +228,51 @@ class CTA_Admin_Menu {
 			'title'  => __( 'Tools', 'cta-manager' ),
 			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-tools' ),
 		] );
+
+		$pro_config = self::get_pro_menu_config();
+		if ( $pro_config ) {
+			$wp_admin_bar->add_node( [
+				'id'     => 'cta-manager-pro',
+				'parent' => 'cta-manager',
+				'title'  => '<span class="dashicons dashicons-' . esc_attr( $pro_config['icon'] ) . '" style="font-family: dashicons; font-size: 16px; line-height: 1; margin-right: 4px; vertical-align: middle; color: #f0b849;"></span><span style="color: #f0b849;">' . esc_html( $pro_config['label'] ) . '</span>',
+				'href'   => $pro_config['target_url'],
+			] );
+		}
+
+		// Active CTAs submenu
+		$active_ctas = CTA_Data::get_instance()->get_active_ctas();
+		if ( ! empty( $active_ctas ) ) {
+			$manage_url = admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta' );
+
+			$wp_admin_bar->add_node( [
+				'id'     => 'cta-manager-active-ctas',
+				'parent' => 'cta-manager',
+				'title'  => '<span class="dashicons dashicons-admin-site-alt3" style="font-family: dashicons; font-size: 16px; line-height: 1; margin-right: 4px; vertical-align: middle;"></span>' . __( 'Active CTAs', 'cta-manager' ),
+				'href'   => $manage_url,
+			] );
+
+			foreach ( $active_ctas as $cta ) {
+				$cta_id       = (int) ( $cta['id'] ?? 0 );
+				$cta_name     = $cta['name'] ?? __( 'Untitled CTA', 'cta-manager' );
+				$shortcode    = '[cta id="' . $cta_id . '"]';
+				$edit_url     = esc_url( $manage_url . '&edit_id=' . $cta_id );
+
+				$wp_admin_bar->add_node( [
+					'id'     => 'cta-manager-cta-' . $cta_id,
+					'parent' => 'cta-manager-active-ctas',
+					'title'  => '<span class="cta-ab-cta-row">'
+						. '<span class="cta-ab-cta-name">' . esc_html( $cta_name ) . '</span>'
+						. '<a href="' . $edit_url . '" target="_blank" class="cta-ab-icon cta-ab-edit" title="' . esc_attr__( 'Edit CTA', 'cta-manager' ) . '">'
+						. '<span class="dashicons dashicons-edit"></span>'
+						. '</a>'
+						. '<button type="button" class="cta-ab-icon cta-ab-copy" data-cta-shortcode="' . esc_attr( $shortcode ) . '" title="' . esc_attr__( 'Copy shortcode', 'cta-manager' ) . '">'
+						. '<span class="dashicons dashicons-clipboard"></span>'
+						. '</button>'
+						. '</span>',
+					'href'   => false,
+				] );
+			}
+		}
 	}
 
 }

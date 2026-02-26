@@ -21,6 +21,7 @@ $description    = $description ?? '';
 $features       = $features ?? [];
 $details        = $details ?? '';
 $instructions   = $instructions ?? [];
+$docs_page      = $docs_page ?? '';
 $badge          = $badge ?? '';
 $badge_text     = $badge_text ?? '';
 $is_pro         = $is_pro ?? false;
@@ -75,7 +76,7 @@ if ( $badge ) {
 	<?php endif; ?>
 	<?php if ( ! empty( $details ) || ! empty( $instructions ) ) : ?>
 		<div class="cta-feature-learn-more">
-			<button type="button" class="cta-learn-more-button" data-feature-title="<?php echo esc_attr( $title ); ?>">
+			<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $docs_page ); ?>" data-feature-title="<?php echo esc_attr( $title ); ?>">
 				<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 			</button>
 		</div>
