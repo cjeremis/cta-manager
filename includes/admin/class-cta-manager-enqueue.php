@@ -25,25 +25,20 @@ class CTA_Manager_Enqueue {
 	 * @return void
 	 */
 	public function enqueue_admin_bar_styles(): void {
-		// Only enqueue on admin pages
-		if ( ! is_admin() ) {
-			return;
-		}
-
-		// Load shared styles (admin bar, animations, etc.) on all admin pages
+		// Load shared styles (admin bar, animations, etc.) on all pages (admin + frontend)
 		wp_enqueue_style(
 			'cta-shared-admin-bar',
-			CTA_PLUGIN_URL . 'assets/css/minimized/shared/shared.min.css',
+			CTA_PLUGIN_URL . 'assets/minimized/css/shared/shared.min.css',
 			[],
 			CTA_VERSION,
 			'all'
 		);
 
-		// Enqueue admin bar responsive JavaScript to prevent WordPress from hiding it
+		// Enqueue site-wide minimized admin bundle; includes admin-bar-responsive module.
 		wp_enqueue_script(
-			'cta-admin-bar-responsive',
-			CTA_PLUGIN_URL . 'assets/js/shared/admin-bar-responsive.js',
-			[],
+			'cta-admin',
+			CTA_PLUGIN_URL . 'assets/minimized/js/admin/admin.min.js',
+			[ 'jquery' ],
 			CTA_VERSION,
 			true
 		);
@@ -65,7 +60,7 @@ class CTA_Manager_Enqueue {
 		// Includes: variables, mixins, reset, buttons, forms, toggles, info-box, toast, empty-state, modals, badges, card, tabs, elements, support, components, help-icon, notifications
 		wp_enqueue_style(
 			'cta-global',
-			CTA_PLUGIN_URL . 'assets/css/minimized/admin/global.min.css',
+			CTA_PLUGIN_URL . 'assets/minimized/css/admin/global.min.css',
 			[],
 			CTA_VERSION,
 			'all'
@@ -79,7 +74,7 @@ class CTA_Manager_Enqueue {
 		// Load shared animations CSS
 		wp_enqueue_style(
 			'cta-shared',
-			CTA_PLUGIN_URL . 'assets/css/minimized/shared/shared.min.css',
+			CTA_PLUGIN_URL . 'assets/minimized/css/shared/shared.min.css',
 			[],
 			CTA_VERSION,
 			'all'
@@ -89,7 +84,7 @@ class CTA_Manager_Enqueue {
 		if ( 'cta-manager' === $page ) {
 			wp_enqueue_style(
 				'cta-dashboard',
-				CTA_PLUGIN_URL . 'assets/css/minimized/admin/dashboard.min.css',
+				CTA_PLUGIN_URL . 'assets/minimized/css/admin/dashboard.min.css',
 				[ 'cta-global' ],
 				CTA_VERSION,
 				'all'
@@ -101,7 +96,7 @@ class CTA_Manager_Enqueue {
 		if ( 'cta-manager-cta' === $page ) {
 			wp_enqueue_style(
 				'cta-manage-ctas',
-				CTA_PLUGIN_URL . 'assets/css/minimized/admin/manage_ctas.min.css',
+				CTA_PLUGIN_URL . 'assets/minimized/css/admin/manage_ctas.min.css',
 				[ 'cta-global' ],
 				CTA_VERSION,
 				'all'
@@ -113,7 +108,7 @@ class CTA_Manager_Enqueue {
 		if ( 'cta-manager-settings' === $page ) {
 			wp_enqueue_style(
 				'cta-settings',
-				CTA_PLUGIN_URL . 'assets/css/minimized/admin/settings.min.css',
+				CTA_PLUGIN_URL . 'assets/minimized/css/admin/settings.min.css',
 				[ 'cta-global' ],
 				CTA_VERSION,
 				'all'
@@ -125,7 +120,7 @@ class CTA_Manager_Enqueue {
 		if ( 'cta-manager-tools' === $page ) {
 			wp_enqueue_style(
 				'cta-tools',
-				CTA_PLUGIN_URL . 'assets/css/minimized/admin/tools.min.css',
+				CTA_PLUGIN_URL . 'assets/minimized/css/admin/tools.min.css',
 				[ 'cta-global' ],
 				CTA_VERSION,
 				'all'
@@ -147,10 +142,10 @@ class CTA_Manager_Enqueue {
 			return;
 		}
 
-		// Global admin bundle - includes: tabs, modals, toast, notifications, onboarding, pro-upsell, docs-modal
+		// Global admin bundle - includes: tabs, modals, toast, notifications, onboarding, pro-upsell, docs-modal, admin-bar-responsive
 		wp_enqueue_script(
 			'cta-admin',
-			CTA_PLUGIN_URL . 'assets/js/minimized/admin/admin.min.js',
+			CTA_PLUGIN_URL . 'assets/minimized/js/admin/admin.min.js',
 			[ 'jquery' ],
 			CTA_VERSION,
 			true
@@ -248,7 +243,7 @@ JS
 		if ( 'cta-manager-cta' === $page ) {
 			wp_enqueue_script(
 				'cta-manage-ctas',
-				CTA_PLUGIN_URL . 'assets/js/minimized/admin/manage-ctas.min.js',
+				CTA_PLUGIN_URL . 'assets/minimized/js/admin/manage-ctas.min.js',
 				[ 'jquery', 'cta-admin' ],
 				CTA_VERSION,
 				true
@@ -259,7 +254,7 @@ JS
 		if ( 'cta-manager-settings' === $page ) {
 			wp_enqueue_script(
 				'cta-settings',
-				CTA_PLUGIN_URL . 'assets/js/minimized/admin/settings.min.js',
+				CTA_PLUGIN_URL . 'assets/minimized/js/admin/settings.min.js',
 				[ 'jquery', 'cta-admin' ],
 				CTA_VERSION,
 				true
@@ -280,12 +275,12 @@ JS
 
 		// Tools page bundle
 		if ( 'cta-manager-tools' === $page ) {
-			$tools_script_path = CTA_PLUGIN_DIR . 'assets/js/minimized/admin/tools.min.js';
+			$tools_script_path = CTA_PLUGIN_DIR . 'assets/minimized/js/admin/tools.min.js';
 			$tools_script_ver  = file_exists( $tools_script_path ) ? (string) filemtime( $tools_script_path ) : CTA_VERSION;
 
 			wp_enqueue_script(
 				'cta-tools',
-				CTA_PLUGIN_URL . 'assets/js/minimized/admin/tools.min.js',
+				CTA_PLUGIN_URL . 'assets/minimized/js/admin/tools.min.js',
 				[ 'jquery', 'cta-admin' ],
 				$tools_script_ver,
 				true
@@ -336,11 +331,22 @@ JS
 			);
 		}
 
+		// Features page bundle
+		if ( 'cta-manager-features' === $page ) {
+			wp_enqueue_script(
+				'cta-features',
+				CTA_PLUGIN_URL . 'assets/minimized/js/admin/features.min.js',
+				[ 'jquery', 'cta-admin' ],
+				CTA_VERSION,
+				true
+			);
+		}
+
 		// Support page bundle
 		if ( 'cta-manager-support' === $page ) {
 			wp_enqueue_script(
 				'cta-support',
-				CTA_PLUGIN_URL . 'assets/js/minimized/admin/support.min.js',
+				CTA_PLUGIN_URL . 'assets/minimized/js/admin/support.min.js',
 				[ 'jquery', 'cta-admin' ],
 				CTA_VERSION,
 				true
@@ -362,23 +368,54 @@ JS
 	}
 
 	/**
-	 * Add action links to plugin page
+	 * Add action links to plugin page.
 	 *
-	 * @param array $links Action links
+	 * Reads submenu items dynamically so the links stay in sync with the
+	 * registered admin menu. The Pro upgrade / license link is appended last
+	 * (before the WP-provided Deactivate link) with the same gold colour used
+	 * in the admin sidebar.
 	 *
+	 * @param array $links Existing action links (contains Deactivate).
 	 * @return array
 	 */
 	public function add_action_links( array $links ): array {
-		$new_links = [];
+		global $submenu;
 
+		$new_links  = [];
+		$parent     = CTA_Admin_Menu::MENU_SLUG;
+		$pro_slug   = CTA_Admin_Menu::PRO_MENU_SLUG;
 		$pro_config = CTA_Admin_Menu::get_pro_menu_config();
+
+		// Shorter labels for the Plugins page action links row.
+		$label_overrides = [
+			'Manage CTAs' => 'Manage',
+		];
+
+		// Build links from the live submenu — same order as the WP admin sidebar.
+		if ( ! empty( $submenu[ $parent ] ) ) {
+			foreach ( $submenu[ $parent ] as $item ) {
+				$item_slug  = $item[2] ?? '';
+				$item_label = strip_tags( $item[0] ?? '' );
+
+				// Skip empty, missing capability, or the Pro placeholder page.
+				if ( ! $item_slug || ! $item_label || $item_slug === $pro_slug ) {
+					continue;
+				}
+
+				$item_label = $label_overrides[ $item_label ] ?? $item_label;
+
+				$new_links[] = sprintf(
+					'<a href="%s">%s</a>',
+					esc_url( admin_url( 'admin.php?page=' . $item_slug ) ),
+					esc_html( $item_label )
+				);
+			}
+		}
+
+		// Pro upgrade / license link — bold, gold to match the admin sidebar colour.
 		if ( $pro_config ) {
 			$link_classes = [ 'cta-pro-action-link' ];
-			if ( 'add_license' === $pro_config['type'] ) {
-				$link_classes[] = 'cta-add-api-key-button';
-			} else {
-				$link_classes[] = 'cta-upgrade-button';
-			}
+			$link_classes[] = 'add_license' === $pro_config['type'] ? 'cta-add-api-key-button' : 'cta-upgrade-button';
 
 			$data_attrs = '';
 			if ( ! empty( $pro_config['scroll_to'] ) ) {
@@ -388,21 +425,18 @@ JS
 				$data_attrs .= ' data-focus-field="' . esc_attr( $pro_config['focus_field'] ) . '"';
 			}
 
+			$pro_label = 'add_license' === $pro_config['type']
+				? __( 'Add License', 'cta-manager' )
+				: $pro_config['label'];
+
 			$new_links[] = sprintf(
-				'<a href="%s" class="%s"%s>%s</a>',
+				'<a href="%s" class="%s" style="color:#f0b849;font-weight:bold;"%s>%s</a>',
 				esc_url( $pro_config['target_url'] ),
 				esc_attr( implode( ' ', $link_classes ) ),
 				$data_attrs,
-				esc_html( $pro_config['label'] )
+				esc_html( $pro_label )
 			);
 		}
-
-		$settings_link = sprintf(
-			'<a href="%s">%s</a>',
-			esc_url( CTA_Admin_Menu::get_admin_url( 'settings' ) ),
-			esc_html__( 'Settings', 'cta-manager' )
-		);
-		$new_links[] = $settings_link;
 
 		return array_merge( $new_links, $links );
 	}

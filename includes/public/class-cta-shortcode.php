@@ -54,6 +54,7 @@ class CTA_Shortcode {
 	public function render_button_only( string $html, array $cta ): string {
 		$type        = $cta['type'] ?? 'phone';
 		$button_text = $cta['button_text'] ?: __( 'Call Now', 'cta-manager' );
+		$pro_active  = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
 
 		$href = '#';
 		$attr = [];
@@ -80,9 +81,9 @@ class CTA_Shortcode {
 
 		$button_classes = [ 'cta-button' ];
 
-		// Add custom CTA classes if provided
-		if ( ! empty( $cta['cta_classes'] ) ) {
-			$custom_classes = preg_split( '/\s*,\s*/', trim( $cta['cta_classes'] ) );
+		// Add custom CTA classes if provided (Pro only)
+		if ( $pro_active && ! empty( $cta['cta_classes'] ) ) {
+			$custom_classes = preg_split( '/[\s,]+/', trim( $cta['cta_classes'] ) );
 			foreach ( $custom_classes as $custom_class ) {
 				$custom_class = sanitize_html_class( $custom_class );
 				if ( '' !== $custom_class ) {
@@ -101,18 +102,34 @@ class CTA_Shortcode {
 		$button_styles = $this->generate_button_styles( $cta );
 		$text_styles = $this->generate_text_styles( $cta );
 
+		// Get icon HTML via Pro plugin filter
+		$icon_value   = $cta['icon'] ?? 'none';
+		$icon_html    = '';
+		$icon_classes = [];
+
+		if ( 'none' !== $icon_value && ! empty( $icon_value ) ) {
+			$icon_html = apply_filters( 'cta_pro_icon_html', '', $cta );
+			if ( ! empty( $icon_html ) ) {
+				$icon_classes = [ 'cta-button__icon' ];
+				$icon_classes = apply_filters( 'cta_pro_icon_classes', $icon_classes, $cta );
+			}
+		}
+
+		// Allow Pro plugin to add animation classes to button
+		$button_classes = apply_filters( 'cta_pro_button_classes', $button_classes, $cta );
+
 		return $this->render_partial_template(
 			'button',
 			[
 				'href'    => $href,
 				'classes' => $button_classes,
-				'id'      => ! empty( $cta['cta_html_id'] ) ? sanitize_html_class( $cta['cta_html_id'] ) : '',
+				'id'      => ( $pro_active && ! empty( $cta['cta_html_id'] ) ) ? sanitize_html_class( $cta['cta_html_id'] ) : '',
 				'label'   => $button_text,
 				'attr'    => $attr,
 				'data'    => $data_attributes,
 				'extra_data_attributes' => '',
-				'icon_html' => '',
-				'icon_classes' => [],
+				'icon_html' => $icon_html,
+				'icon_classes' => $icon_classes,
 				'button_styles' => $button_styles,
 				'text_styles' => $text_styles,
 			]
@@ -153,6 +170,12 @@ class CTA_Shortcode {
 
 		if ( ! $cta ) {
 			return $this->render_admin_debug_notice( 'No CTA found for this shortcode.' );
+		}
+
+		// Allow Pro campaign runtime to replace the resolved CTA with the assigned test variant CTA.
+		$cta = apply_filters( 'cta_shortcode_resolved_cta', $cta, $atts );
+		if ( ! is_array( $cta ) || empty( $cta ) ) {
+			return $this->render_admin_debug_notice( 'CTA unavailable after variant resolution.' );
 		}
 
 		// Check URL targeting (blacklist)
@@ -241,6 +264,9 @@ class CTA_Shortcode {
 			'data-cta-link'     => $cta['link_url'] ?? '',
 			'data-cta-schedule' => $is_schedule_closed ? 'closed' : 'open',
 			'data-cta-label'    => $button_text,
+			'data-cta-experiment' => isset( $cta['experiment_key'] ) ? (string) $cta['experiment_key'] : '',
+			'data-cta-variant'    => isset( $cta['variant'] ) ? (string) $cta['variant'] : '',
+			'data-cta-test-id'    => isset( $cta['ab_test_id'] ) ? (string) absint( $cta['ab_test_id'] ) : '',
 		];
 
 		// Add advanced attributes (wrapper ID, classes, data attributes)
@@ -259,6 +285,12 @@ class CTA_Shortcode {
 		if ( isset( $data_attributes['classes'] ) && is_array( $data_attributes['classes'] ) ) {
 			$cta_custom_classes = $data_attributes['classes'];
 			unset( $data_attributes['classes'] );
+		}
+
+		// Ensure Pro-only advanced embedding attributes never render in free.
+		if ( ! $pro_active ) {
+			$cta_html_id = '';
+			$cta_custom_classes = [];
 		}
 
 		switch ( $type ) {
@@ -296,6 +328,22 @@ class CTA_Shortcode {
 		$button_styles = $this->generate_button_styles( $cta );
 		$text_styles = $this->generate_text_styles( $cta );
 
+		// Get icon HTML via Pro plugin filter
+		$icon_value   = $cta['icon'] ?? 'none';
+		$icon_html    = '';
+		$icon_classes = [];
+
+		if ( 'none' !== $icon_value && ! empty( $icon_value ) ) {
+			$icon_html = apply_filters( 'cta_pro_icon_html', '', $cta );
+			if ( ! empty( $icon_html ) ) {
+				$icon_classes = [ 'cta-button__icon' ];
+				$icon_classes = apply_filters( 'cta_pro_icon_classes', $icon_classes, $cta );
+			}
+		}
+
+		// Allow Pro plugin to add animation classes to button
+		$button_classes = apply_filters( 'cta_pro_button_classes', $button_classes, $cta );
+
 		$button = $this->render_partial_template(
 			'button',
 			[
@@ -306,8 +354,8 @@ class CTA_Shortcode {
 				'attr'    => $attr,
 				'data'    => $data_attributes,
 				'extra_data_attributes' => '',
-				'icon_html' => '',
-				'icon_classes' => [],
+				'icon_html' => $icon_html,
+				'icon_classes' => $icon_classes,
 				'button_styles' => $button_styles,
 				'text_styles' => $text_styles,
 			]
@@ -319,14 +367,18 @@ class CTA_Shortcode {
 		// Simple button layout
 		if ( 'button' === $layout ) {
 			// Check if wrapper attributes are provided
-			$wrapper_id = ! empty( $cta['wrapper_id'] ) ? sanitize_html_class( trim( $cta['wrapper_id'] ) ) : '';
-			$wrapper_classes_raw = trim( $cta['wrapper_classes'] ?? '' );
+			$wrapper_id = '';
+			$wrapper_classes_raw = '';
+			if ( $pro_active ) {
+				$wrapper_id = ! empty( $cta['wrapper_id'] ) ? sanitize_html_class( trim( $cta['wrapper_id'] ) ) : '';
+				$wrapper_classes_raw = trim( $cta['wrapper_classes'] ?? '' );
+			}
 
 			// If wrapper attributes exist, wrap the button in a div
 			if ( '' !== $wrapper_id || '' !== $wrapper_classes_raw ) {
 				$wrapper_classes = [];
 				if ( '' !== $wrapper_classes_raw ) {
-					$wrapper_classes_list = preg_split( '/\s*,\s*/', $wrapper_classes_raw );
+					$wrapper_classes_list = preg_split( '/[\s,]+/', $wrapper_classes_raw );
 					foreach ( $wrapper_classes_list as $wrapper_class ) {
 						$wrapper_class = sanitize_html_class( $wrapper_class );
 						if ( '' !== $wrapper_class ) {
@@ -363,7 +415,7 @@ class CTA_Shortcode {
 	private function render_admin_notice(): string {
 		return sprintf(
 			'<div class="cta-admin-notice"><strong>%s</strong> %s <a href="%s">%s</a></div>',
-			esc_html__( 'CTA Manager:', 'cta-manager' ),
+			esc_html( $this->get_frontend_brand_prefix() ),
 			esc_html__( 'No CTA configured.', 'cta-manager' ),
 			esc_url( CTA_Admin_Menu::get_admin_url( 'cta' ) ),
 			esc_html__( 'Create a CTA', 'cta-manager' )
@@ -387,9 +439,19 @@ class CTA_Shortcode {
 
 		return sprintf(
 			'<div class="cta-admin-notice"><strong>%s</strong> %s</div>',
-			esc_html__( 'CTA Manager:', 'cta-manager' ),
+			esc_html( $this->get_frontend_brand_prefix() ),
 			esc_html( $reason )
 		);
+	}
+
+	/**
+	 * Get the brand prefix used in frontend notices.
+	 *
+	 * @return string
+	 */
+	private function get_frontend_brand_prefix(): string {
+		$is_pro_active = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+		return $is_pro_active ? __( 'CTA Manager Pro:', 'cta-manager' ) : __( 'CTA Manager:', 'cta-manager' );
 	}
 
 	/**

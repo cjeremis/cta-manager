@@ -18,6 +18,64 @@ class CTA_Notifications_AJAX {
 	use CTA_Singleton;
 
 	/**
+	 * Check whether Pro live support reply sync is enabled.
+	 *
+	 * @return bool
+	 */
+	private function is_live_sync_enabled(): bool {
+		$is_pro = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+		if ( ! $is_pro ) {
+			return false;
+		}
+
+		$settings = CTA_Data::get_instance()->get_settings();
+		if ( isset( $settings['support']['live_notifications_enabled'] ) ) {
+			return (bool) $settings['support']['live_notifications_enabled'];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add one local release/update notification per version.
+	 *
+	 * @param int $user_id User ID.
+	 * @return void
+	 */
+	private function maybe_add_version_notification( int $user_id ): void {
+		$meta_key     = 'cta_last_seen_plugin_version';
+		$seen_version = (string) get_user_meta( $user_id, $meta_key, true );
+
+		if ( $seen_version === CTA_VERSION ) {
+			return;
+		}
+
+		$privacy_page_id = (int) get_option( 'tda_shared_privacy_page_id' );
+		$terms_page_id   = (int) get_option( 'tda_shared_terms_page_id' );
+		$privacy_url     = $privacy_page_id ? get_permalink( $privacy_page_id ) : '';
+		$terms_url       = $terms_page_id ? get_permalink( $terms_page_id ) : '';
+		$actions         = [];
+
+		if ( $privacy_url ) {
+			$actions[] = [ 'label' => __( 'Privacy Policy', 'cta-manager' ), 'url' => $privacy_url ];
+		}
+		if ( $terms_url ) {
+			$actions[] = [ 'label' => __( 'Terms', 'cta-manager' ), 'url' => $terms_url ];
+		}
+
+		CTA_Notifications::get_instance()->add_notification(
+			'plugin_update_' . sanitize_key( str_replace( '.', '_', CTA_VERSION ) ),
+			sprintf( __( 'CTA Manager Updated to %s', 'cta-manager' ), CTA_VERSION ),
+			__( 'New release notes and policy disclosures are available in your settings.', 'cta-manager' ),
+			'update',
+			$actions,
+			$user_id
+		);
+
+		update_user_meta( $user_id, $meta_key, CTA_VERSION );
+	}
+
+	/**
 	 * Get user notifications
 	 *
 	 * AJAX handler for fetching user notifications.
@@ -34,56 +92,23 @@ class CTA_Notifications_AJAX {
 			wp_send_json_error( [ 'message' => 'Invalid nonce' ], 403 );
 		}
 
-		// Sync remote support replies into local notifications before returning
-		if ( class_exists( 'CTA_Support_AJAX' ) ) {
-			CTA_Support_AJAX::get_instance()->sync_notifications_for_user( get_current_user_id() );
+		$user_id = get_current_user_id();
+		$this->maybe_add_version_notification( $user_id );
+
+		// Reply sync is Pro-only and user-controllable via settings.
+		if ( $this->is_live_sync_enabled()
+			&& class_exists( 'CTA_Pro_Extended_Support' )
+			&& class_exists( 'CTA_Pro_Feature_Gate' )
+			&& CTA_Pro_Feature_Gate::is_pro_enabled()
+		) {
+			CTA_Pro_Extended_Support::get_instance()->sync_notifications_for_user( get_current_user_id() );
 		}
 
 		$notifications_db = CTA_Notifications::get_instance();
 		$notifications    = $notifications_db->get_user_notifications();
 
-		// Check if Pro is fully enabled (installed, active, AND licensed)
-		$is_pro_enabled = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
-
-		// Check if we should show the hardcoded license CTA
-		$show_license_cta = false;
-		if ( ! $is_pro_enabled ) {
-			$pro_plugin_file  = 'cta-manager-pro/cta-manager-pro.php';
-			$pro_plugin_path  = WP_PLUGIN_DIR . '/' . $pro_plugin_file;
-			$is_pro_installed = file_exists( $pro_plugin_path );
-
-			if ( ! function_exists( 'is_plugin_active' ) ) {
-				include_once ABSPATH . 'wp-admin/includes/plugin.php';
-			}
-			$is_pro_active = $is_pro_installed && is_plugin_active( $pro_plugin_file );
-
-			// Show license CTA if Pro is active but not fully enabled (missing license)
-			$show_license_cta = $is_pro_active;
-		}
-
 		// Format notifications for JSON response
 		$formatted_notifications = [];
-
-		// Add hardcoded license CTA first if needed
-		if ( $show_license_cta ) {
-			$formatted_notifications[] = [
-				'id'        => 'license-cta',
-				'type'      => 'pro_api_key_missing',
-				'title'     => __( 'Pro Plugin Installed', 'cta-manager' ),
-				'message'   => __( 'Enter your CTA Manager Pro license key to unlock all premium features.', 'cta-manager' ),
-				'icon'      => 'star-filled',
-				'actions'   => [
-					[
-						'label'      => __( 'Add License Key', 'cta-manager' ),
-						'url'        => admin_url( 'admin.php?page=cta-manager-settings#cta-pro-license-key' ),
-						'class'      => 'cta-add-api-key-button',
-						'scrollTo'   => 'cta-pro-license-key',
-						'focusField' => 'cta_pro_license_key',
-					],
-				],
-				'deletable' => false,
-			];
-		}
 
 		foreach ( $notifications as $notification ) {
 			// Skip pro_api_key_missing from DB since it's now hardcoded
@@ -103,18 +128,10 @@ class CTA_Notifications_AJAX {
 			];
 		}
 
-		// Count only database notifications (don't count the license CTA)
-		$count = count( $notifications );
-		foreach ( $notifications as $notification ) {
-			if ( 'pro_api_key_missing' === $notification['type'] ) {
-				$count--;
-			}
-		}
-
 		wp_send_json_success(
 			[
 				'notifications' => $formatted_notifications,
-				'count'         => $count,
+				'count'         => count( $formatted_notifications ),
 			]
 		);
 	}
@@ -192,8 +209,15 @@ class CTA_Notifications_AJAX {
 			wp_send_json_error( [ 'message' => 'Invalid nonce' ], 403 );
 		}
 
-		if ( class_exists( 'CTA_Support_AJAX' ) ) {
-			CTA_Support_AJAX::get_instance()->sync_notifications_for_user( get_current_user_id() );
+		$user_id = get_current_user_id();
+		$this->maybe_add_version_notification( $user_id );
+
+		if ( $this->is_live_sync_enabled()
+			&& class_exists( 'CTA_Pro_Extended_Support' )
+			&& class_exists( 'CTA_Pro_Feature_Gate' )
+			&& CTA_Pro_Feature_Gate::is_pro_enabled()
+		) {
+			CTA_Pro_Extended_Support::get_instance()->sync_notifications_for_user( get_current_user_id() );
 		}
 
 		$notifications_db = CTA_Notifications::get_instance();

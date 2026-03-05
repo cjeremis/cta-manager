@@ -16,6 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Set defaults for optional variables
 $topbar_actions = $topbar_actions ?? [];
 
+// Check if user has Pro enabled
+$topbar_has_pro = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+$features_tooltip = $topbar_has_pro ? esc_attr__( 'CTA Manager Pro Features', 'cta-manager' ) : esc_attr__( 'CTA Manager Features', 'cta-manager' );
+
 ?>
 <div class="cta-admin-container">
 	<?php
@@ -23,11 +27,11 @@ $topbar_actions = $topbar_actions ?? [];
 	?>
 	<div class="cta-support-toolbar">
 		<?php if ( CTA_Onboarding::should_show() ) : ?>
-			<a class="cta-support-link cta-help-trigger" href="#cta-dashboard-help-modal" data-target="#cta-dashboard-help-modal" title="<?php esc_attr_e( 'Get Started', 'cta-manager' ); ?>">
+			<a class="cta-support-link cta-help-trigger" href="#" data-target="#cta-dashboard-help-modal" title="<?php esc_attr_e( 'Get Started', 'cta-manager' ); ?>">
 				<span class="dashicons dashicons-lightbulb cta-glow-warm-slow"></span>
 			</a>
 		<?php endif; ?>
-		<a class="cta-support-link" href="#cta-features-modal" data-open-modal="#cta-features-modal" title="<?php esc_attr_e( 'CTA Manager Features', 'cta-manager' ); ?>">
+		<a class="cta-support-link" href="#" data-open-modal="#cta-features-modal" title="<?php echo $features_tooltip; ?>">
 			<span class="dashicons dashicons-awards"></span>
 		</a>
 		<?php
@@ -47,10 +51,10 @@ $topbar_actions = $topbar_actions ?? [];
 		}
 		include __DIR__ . '/notifications-button.php';
 		?>
-		<a class="cta-support-link" href="#cta-new-ticket-modal" data-open-modal="#cta-new-ticket-modal" title="<?php esc_attr_e( 'Support', 'cta-manager' ); ?>">
+		<a class="cta-support-link" href="#" data-open-modal="#cta-new-ticket-modal" title="<?php esc_attr_e( 'Support', 'cta-manager' ); ?>">
 			<span class="dashicons dashicons-phone"></span>
 		</a>
-		<a class="cta-support-link" href="#cta-docs-modal" data-open-docs-modal title="<?php esc_attr_e( 'Documentation', 'cta-manager' ); ?>">
+		<a class="cta-support-link" href="#" data-open-docs-modal title="<?php esc_attr_e( 'Documentation', 'cta-manager' ); ?>">
 			<span class="dashicons dashicons-book-alt"></span>
 		</a>
 		<?php if ( ! ( class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled() ) ) : ?>

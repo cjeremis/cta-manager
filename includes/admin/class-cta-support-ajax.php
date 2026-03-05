@@ -58,99 +58,19 @@ class CTA_Support_AJAX {
 
 	/**
 	 * Sync remote support replies into local notifications for a user.
-	 * Called before returning notifications so users see new replies in the panel.
+	 * Free plugin should not fetch or sync ticket replies. Reply sync is handled
+	 * exclusively by CTA Manager Pro extended support.
 	 *
 	 * @param int $user_id
 	 * @return void
 	 */
 	public function sync_notifications_for_user( int $user_id ): void {
-		if ( ! class_exists( 'CTA_Notifications' ) ) {
-			return;
+		if ( class_exists( 'CTA_Pro_Extended_Support' )
+			&& class_exists( 'CTA_Pro_Feature_Gate' )
+			&& CTA_Pro_Feature_Gate::is_pro_enabled()
+		) {
+			CTA_Pro_Extended_Support::get_instance()->sync_notifications_for_user( $user_id );
 		}
-
-		// Pro required
-		if ( ! class_exists( 'CTA_Pro_Feature_Gate' ) || ! CTA_Pro_Feature_Gate::is_pro_enabled() ) {
-			return;
-		}
-
-		$user = get_user_by( 'id', $user_id );
-		if ( ! $user || ! $user->user_email ) {
-			return;
-		}
-
-		// Fetch tickets for this user
-		$response = $this->api_request( 'GET', '/tickets', [
-			'customer_email' => $user->user_email,
-			'limit'          => 50,
-			'offset'         => 0,
-		] );
-
-		if ( is_wp_error( $response ) || empty( $response['tickets'] ) ) {
-			return;
-		}
-
-		$notifications = CTA_Notifications::get_instance();
-		$last_meta     = get_user_meta( $user_id, self::USER_REPLY_META_KEY, true );
-		$last_meta     = is_array( $last_meta ) ? $last_meta : [];
-
-		foreach ( $response['tickets'] as $ticket ) {
-			$ticket_id    = (int) ( $ticket['id'] ?? 0 );
-			$ticket_num   = $ticket['ticket_number'] ?? $ticket_id;
-			$ticket_title = $ticket['subject'] ?? __( 'Support Ticket', 'cta-manager' );
-
-			if ( ! $ticket_id ) {
-				continue;
-			}
-
-			// Get replies for this ticket
-				$replies = $this->api_request( 'GET', "{$this->api_base_url}/tickets/{$ticket_id}/replies", [
-					'customer_email' => $user->user_email,
-				] );
-
-			if ( is_wp_error( $replies ) || empty( $replies['replies'] ) ) {
-				continue;
-			}
-
-				$last_seen_reply = isset( $last_meta[ $ticket_id ] ) ? (int) $last_meta[ $ticket_id ] : 0;
-				$new_last_seen  = $last_seen_reply;
-
-				foreach ( $replies['replies'] as $reply ) {
-					$reply_id = (int) ( $reply['id'] ?? 0 );
-					if ( ! $reply_id || $reply_id <= $last_seen_reply ) {
-						continue;
-					}
-
-					$author_email  = isset( $reply['author_email'] ) ? strtolower( $reply['author_email'] ) : '';
-					$is_admin_reply = $author_email !== strtolower( $user->user_email );
-					$display_name  = $is_admin_reply ? 'TopDevAmerica' : ( $reply['author_name'] ?? 'You' );
-
-					// Create notification for new reply
-					$notifications->add_notification(
-						'support_reply_' . $ticket_id . '_' . $reply_id,
-						sprintf( __( 'New Reply on Ticket #%s', 'cta-manager' ), $ticket_num ),
-						$display_name . ': ' . mb_substr( $reply['message'] ?? '', 0, 140 ),
-						'email-alt',
-					[
-						[
-							'label' => __( 'View Ticket', 'cta-manager' ),
-							'url'   => admin_url( 'admin.php?page=cta-manager-support' ),
-						],
-					],
-					$user_id
-				);
-
-				if ( $reply_id > $new_last_seen ) {
-					$new_last_seen = $reply_id;
-				}
-			}
-
-			// Update last seen reply id for this ticket
-			if ( $new_last_seen > $last_seen_reply ) {
-				$last_meta[ $ticket_id ] = $new_last_seen;
-			}
-		}
-
-		update_user_meta( $user_id, self::USER_REPLY_META_KEY, $last_meta );
 	}
 
     /**

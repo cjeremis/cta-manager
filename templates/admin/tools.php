@@ -141,8 +141,11 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 						<!-- Import Mode Column -->
 						<?php $is_pro = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled(); ?>
 						<div class="cta-form-group cta-import-setting">
-							<label for="cta-import-mode">
+							<label for="cta-import-mode" style="display: flex; align-items: center; gap: 8px;">
 								<?php esc_html_e( 'Mode', 'cta-manager' ); ?>
+								<?php if ( ! $is_pro ) : ?>
+									<?php cta_pro_badge_inline(); ?>
+								<?php endif; ?>
 							</label>
 							<input type="hidden" name="import[mode]" value="replace" />
 							<select id="cta-import-mode" class="cta-select" disabled>
@@ -193,12 +196,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 				</div>
 				</form>
 
-				<!-- Import Preview (shown after file selection) -->
-				<div id="cta-import-preview" class="cta-import-preview" style="display: none;">
-					<h3><?php esc_html_e( 'Import Preview', 'cta-manager' ); ?></h3>
-					<pre id="cta-preview-content" class="cta-json-preview"><code></code></pre>
 				</div>
-			</div>
 		</div>
 
 		<!-- Demo Data Management -->
@@ -285,7 +283,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 
 			<div class="cta-demo-row">
 				<div class="cta-demo-actions">
-					<button type="button" id="cta-open-reset-modal" class="cta-button cta-button-danger"<?php echo ! $has_data ? ' disabled' : ''; ?>>
+					<button type="button" id="cta-open-reset-modal" class="cta-button-danger"<?php echo ! $has_data ? ' disabled' : ''; ?>>
 						<span class="dashicons dashicons-trash"></span>
 						<?php esc_html_e( 'Reset Data', 'cta-manager' ); ?>
 					</button>
@@ -592,7 +590,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 
 		<p class="cta-import-hint">
 			<span class="dashicons dashicons-info"></span>
-			<?php esc_html_e( 'Demo data is managed separately from the Demo Data section.', 'cta-manager' ); ?>
+			<?php esc_html_e( 'This will permanently delete all selected data, including any demo data.', 'cta-manager' ); ?>
 		</p>
 	</div>
 	<?php
@@ -624,6 +622,47 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 	];
 	include __DIR__ . '/partials/modal.php';
 	unset( $modal, $body_html, $footer_html );
+	?>
+
+	<?php
+	// Reset Data Confirmation Modal
+	ob_start();
+	?>
+	<div class="cta-import-demo-options">
+		<div class="cta-info-box cta-info-box--danger" style="margin-bottom: var(--cta-spacing-md);">
+			<span class="cta-info-box__icon dashicons dashicons-warning"></span>
+			<div>
+				<p class="cta-info-box__title"><?php esc_html_e( 'This action cannot be undone', 'cta-manager' ); ?></p>
+				<p class="cta-info-box__body" id="cta-reset-confirm-message"></p>
+			</div>
+		</div>
+	</div>
+	<?php
+	$confirm_body_html = ob_get_clean();
+
+	ob_start();
+	?>
+	<div style="display: flex; justify-content: flex-end; align-items: center; width: 100%; gap: var(--cta-spacing-sm);">
+		<button type="button" id="cta-reset-confirm-cancel" class="cta-button cta-button-secondary">
+			<?php esc_html_e( 'Cancel', 'cta-manager' ); ?>
+		</button>
+		<button type="button" id="cta-reset-confirm-yes" class="cta-button cta-button-danger">
+			<span class="dashicons dashicons-trash"></span>
+			<?php esc_html_e( 'Yes, Reset Data', 'cta-manager' ); ?>
+		</button>
+	</div>
+	<?php
+	$confirm_footer_html = ob_get_clean();
+	$modal = [
+		'id'          => 'cta-reset-confirm-modal',
+		'title_html'  => '<span class="dashicons dashicons-warning"></span>' . esc_html__( 'Confirm Reset', 'cta-manager' ),
+		'body_html'   => $confirm_body_html,
+		'footer_html' => $confirm_footer_html,
+		'size_class'  => 'cta-modal-sm',
+		'display'     => 'none',
+	];
+	include __DIR__ . '/partials/modal.php';
+	unset( $modal, $confirm_body_html, $confirm_footer_html );
 	?>
 
 	<?php

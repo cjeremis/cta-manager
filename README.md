@@ -180,6 +180,31 @@ add_filter( 'cta_can_add_cta', function( $can_add ) {
 
 ---
 
+## External Services & Legal Disclosures
+
+CTA Manager and CTA Manager Pro connect to TopDevAmerica services for support and Pro license validation.
+
+- Support API base URL: `https://topdevamerica.com/wp-json/support-manager/v1`
+- Triggered when:
+  - Submitting support tickets
+  - Fetching support reply notifications (when enabled)
+- Data that may be transmitted:
+  - Account email
+  - Ticket content
+  - Optional diagnostics (site/system details, browser/user-agent, IP)
+  - License key + domain for Pro license validation
+
+Live support reply sync defaults:
+- Free: Off by default
+- Pro: On by default
+- Users can disable live sync in plugin settings.
+
+Legal pages:
+- Privacy Policy: https://topdevamerica.com/privacy-policy
+- Terms of Service: https://topdevamerica.com/terms
+
+---
+
 ## Upgrading to Pro
 
 CTA Manager Pro unlocks advanced features including:

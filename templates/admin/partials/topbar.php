@@ -51,6 +51,20 @@ const CTA_TOPBAR_MENU_CONFIG = [
 		'condition' => 'requires_pro',
 	],
 	[
+		'type'      => 'link',
+		'slug'      => 'pro-ab-testing',
+		'label'     => 'A/B Testing',
+		'classes'   => [ 'cta-topbar-link' ],
+		'condition' => 'requires_pro',
+	],
+	[
+		'type'      => 'link',
+		'slug'      => 'integrations',
+		'label'     => 'Integrations',
+		'classes'   => [ 'cta-topbar-link' ],
+		'condition' => 'requires_pro',
+	],
+	[
 		'type'    => 'link',
 		'slug'    => 'settings',
 		'label'   => 'Settings',

@@ -22,7 +22,7 @@ class CTA_Sanitizer {
 	public const VALID_ANIMATIONS = [ 'none', 'slide-in', 'fade-in', 'slide-out', 'fade-out' ];
 	public const VALID_DISMISS_BEHAVIORS = [ 'session', 'page', 'always' ];
 	public const VALID_TRIGGER_TYPES = [ 'time', 'scroll' ];
-	public const VALID_STATUSES   = [ 'publish', 'schedule', 'draft', 'trashed', 'archived' ];
+	public const VALID_STATUSES   = [ 'publish', 'scheduled', 'draft', 'trash', 'archived' ];
 
 	/**
 	 * Sanitize all settings
@@ -300,6 +300,17 @@ class CTA_Sanitizer {
 			if ( isset( $settings['data_management']['delete_on_uninstall'] ) ) {
 				$sanitized['data_management']['delete_on_uninstall'] = self::sanitize_boolean(
 					$settings['data_management']['delete_on_uninstall']
+				);
+			}
+		}
+
+		// Support section
+		if ( isset( $settings['support'] ) && is_array( $settings['support'] ) ) {
+			$sanitized['support'] = [];
+
+			if ( isset( $settings['support']['live_notifications_enabled'] ) ) {
+				$sanitized['support']['live_notifications_enabled'] = self::sanitize_boolean(
+					$settings['support']['live_notifications_enabled']
 				);
 			}
 		}

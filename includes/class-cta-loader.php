@@ -74,6 +74,8 @@ class CTA_Loader {
 		$this->add_action( 'wp_ajax_cta_validate_import', [ CTA_Export_Import::get_instance(), 'ajax_validate_import' ] );
 		$this->add_action( 'wp_ajax_cta_import_demo_data_selective', [ CTA_Demo_Data::get_instance(), 'ajax_import_demo_data_selective' ] );
 		$this->add_action( 'wp_ajax_cta_empty_trash', [ CTA_Manager::get_instance(), 'ajax_empty_trash' ] );
+		$this->add_action( 'wp_ajax_cta_toggle_status', [ CTA_Manager::get_instance(), 'ajax_toggle_status' ] );
+		$this->add_action( 'wp_ajax_cta_change_status', [ CTA_Manager::get_instance(), 'ajax_change_status' ] );
 		$this->add_action( 'admin_post_cta_export_settings', [ CTA_Export_Import::get_instance(), 'handle_export_request' ] );
 		$this->add_action( 'admin_post_cta_import_settings', [ CTA_Export_Import::get_instance(), 'handle_import_request' ] );
 		$this->add_action( 'admin_post_cta_import_demo_data', [ CTA_Demo_Data::get_instance(), 'handle_import_demo_data' ] );
@@ -135,6 +137,9 @@ class CTA_Loader {
 	private function define_public_hooks(): void {
 		$public = CTA_Public::get_instance();
 
+		// Shared styles (admin bar, etc.) on ALL frontend pages
+		$this->add_action( 'wp_enqueue_scripts', [ CTA_Manager_Enqueue::get_instance(), 'enqueue_admin_bar_styles' ], 1 );
+
 		$this->add_action( 'wp_enqueue_scripts', [ $public, 'enqueue_styles' ] );
 		$this->add_action( 'wp_enqueue_scripts', [ $public, 'enqueue_scripts' ] );
 		$this->add_shortcode( 'cta-manager', [ CTA_Shortcode::get_instance(), 'render' ] );
@@ -145,8 +150,6 @@ class CTA_Loader {
 		$this->add_action( 'wp_ajax_cta_track_page_view', [ CTA_Click_Tracker::get_instance(), 'track_page_view' ] );
 		$this->add_action( 'wp_ajax_nopriv_cta_track_page_view', [ CTA_Click_Tracker::get_instance(), 'track_page_view' ] );
 
-		// Initialize advanced embedding
-		CTA_Advanced_Embedding::get_instance();
 	}
 
 	/**

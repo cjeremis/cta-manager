@@ -40,7 +40,7 @@ class CTA_Public {
 		// Public styles (minimized)
 		wp_enqueue_style(
 			'cta-public',
-			CTA_PLUGIN_URL . 'assets/css/minimized/public/public.min.css',
+			CTA_PLUGIN_URL . 'assets/minimized/css/public/public.min.css',
 			[],
 			CTA_VERSION,
 			'all'
@@ -51,7 +51,8 @@ class CTA_Public {
 	 * Enqueue public scripts
 	 *
 	 * Uses webpack-compiled minimized bundles.
-	 * - public.js: Main public bundle (tracker)
+	 * - tracker.js: Public tracking bundle (clicks, impressions, page views)
+	 * - public.js: Main public bundle (popup and page wiring)
 	 *
 	 * Respects the "Load CTA Scripts in Footer" performance setting:
 	 * - When enabled: Scripts load in footer for better page load performance
@@ -62,28 +63,25 @@ class CTA_Public {
 	public function enqueue_scripts(): void {
 		$data = CTA_Data::get_instance();
 
-		$has_cta = false;
-		foreach ( $data->get_ctas() as $cta ) {
-			if ( ! empty( $cta['enabled'] ) ) {
-				$has_cta = true;
-				break;
-			}
-		}
-
-		if ( ! $has_cta ) {
-			return;
-		}
-
 		// Check performance setting for footer loading (Pro feature)
 		$settings = $data->get_settings();
 		$load_in_footer = ! empty( $settings['performance']['load_scripts_footer'] );
 		$debug_enabled = ! empty( $settings['debug']['enabled'] );
 
+		// Public tracker bundle
+		wp_enqueue_script(
+			'cta-tracker',
+			CTA_PLUGIN_URL . 'assets/minimized/js/public/tracker.min.js',
+			[],
+			CTA_VERSION,
+			$load_in_footer
+		);
+
 		// Main public bundle
 		wp_enqueue_script(
 			'cta-public',
-			CTA_PLUGIN_URL . 'assets/js/minimized/public/public.min.js',
-			[ 'jquery' ],
+			CTA_PLUGIN_URL . 'assets/minimized/js/public/public.min.js',
+			[ 'jquery', 'cta-tracker' ],
 			CTA_VERSION,
 			$load_in_footer
 		);
@@ -102,7 +100,7 @@ class CTA_Public {
 		$auto_impressions_enabled = apply_filters( 'cta_auto_impressions_enabled', true );
 
 		wp_localize_script(
-			'cta-public',
+			'cta-tracker',
 			'ctaTrackerVars',
 			[
 				'nonce'                  => wp_create_nonce( 'cta_public_nonce' ),

@@ -28,8 +28,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A/B testing + analytics', 'cta-manager' ); ?></li>
 	<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Custom CSS and HTML', 'cta-manager' ); ?></li>
 	<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Device targeting rules', 'cta-manager' ); ?></li>
-	<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'GA4 integration + subdomains', 'cta-manager' ); ?></li>
 </ul>
+
+<a href="#" class="cta-pro-see-all-features" data-open-modal="#cta-features-modal">
+	<?php esc_html_e( 'See all features', 'cta-manager' ); ?> &rarr;
+</a>
 
 <!-- MODAL_FOOTER -->
 <div class="cta-pro-modal-actions">

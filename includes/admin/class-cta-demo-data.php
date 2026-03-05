@@ -23,7 +23,7 @@ class CTA_Demo_Data {
 	 * @return array|null Decoded demo data or null if not found/invalid
 	 */
 	private function load_demo_data() {
-		$demo_file = CTA_PLUGIN_DIR . 'data/demo-data.json';
+		$demo_file = CTA_PLUGIN_DIR . 'includes/admin/data/demo-data.json';
 
 		if ( ! file_exists( $demo_file ) ) {
 			return null;
@@ -41,7 +41,7 @@ class CTA_Demo_Data {
 	 * @return bool
 	 */
 	public function demo_data_exists(): bool {
-		$demo_file = CTA_PLUGIN_DIR . 'data/demo-data.json';
+		$demo_file = CTA_PLUGIN_DIR . 'includes/admin/data/demo-data.json';
 		return file_exists( $demo_file );
 	}
 
@@ -474,6 +474,10 @@ class CTA_Demo_Data {
 		$ctas_to_import = $ctas_data[ $tier_key ];
 		$data           = CTA_Data::get_instance();
 		$count          = 0;
+
+		// Delete existing demo CTAs before importing to prevent duplicates
+		$repo = CTA_Repository::get_instance();
+		$repo->delete_demo_ctas();
 
 		foreach ( $ctas_to_import as $cta ) {
 			// Remove original ID to create new entry

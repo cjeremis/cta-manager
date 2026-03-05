@@ -42,7 +42,7 @@ class CTA_Advanced_Embedding {
 		$cta_classes_raw = trim( $cta['cta_classes'] ?? '' );
 		if ( '' !== $cta_classes_raw ) {
 			$cta_classes = [];
-			$cta_classes_list = preg_split( '/\s*,\s*/', $cta_classes_raw );
+			$cta_classes_list = preg_split( '/[\s,]+/', $cta_classes_raw );
 			foreach ( $cta_classes_list as $cta_class ) {
 				$cta_class = sanitize_html_class( $cta_class );
 				if ( '' !== $cta_class ) {
@@ -93,7 +93,7 @@ class CTA_Advanced_Embedding {
 		$wrapper_classes_raw = trim( $cta['wrapper_classes'] ?? '' );
 		if ( '' !== $wrapper_classes_raw ) {
 			$wrapper_classes = [];
-			$wrapper_classes_list = preg_split( '/\s*,\s*/', $wrapper_classes_raw );
+			$wrapper_classes_list = preg_split( '/[\s,]+/', $wrapper_classes_raw );
 			foreach ( $wrapper_classes_list as $wrapper_class ) {
 				$wrapper_class = sanitize_html_class( $wrapper_class );
 				if ( '' !== $wrapper_class ) {

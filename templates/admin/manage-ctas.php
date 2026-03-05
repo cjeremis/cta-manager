@@ -58,7 +58,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 		unset( $icon, $title, $description, $action_url, $action_text, $action_class, $action_icon, $action_attrs );
 		?>
 	<?php else : ?>
-		<div class="cta-section">
+		<div class="cta-section" id="cta-list-section">
 			<?php
 			// Count CTAs by status (matching data-cta-status values in cta-card-item.php)
 			$published_count = 0;
@@ -91,7 +91,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 
 			ob_start();
 			?>
-			<button type="button" class="cta-button cta-button-primary cta-global-modal-trigger" data-open-modal="#cta-global-form-modal">
+			<button type="button" class="cta-button cta-button-primary cta-global-modal-trigger" id="cta-list-new-cta" data-open-modal="#cta-global-form-modal">
 				<span class="dashicons dashicons-plus-alt"></span>
 				<?php esc_html_e( 'New CTA', 'cta-manager' ); ?>
 			</button>
@@ -117,14 +117,19 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 					<span class="cta-status-separator">|</span>
 					<button type="button" class="cta-status-filter" data-filter="archived"><span class="cta-status-count"><?php echo esc_html( $archived_count ); ?></span> <?php esc_html_e( 'Archive', 'cta-manager' ); ?></button>
 				<?php endif; ?>
+				<?php if ( $demo_count > 0 ) : ?>
+					<span class="cta-status-separator">|</span>
+					<button type="button" class="cta-status-filter" data-filter="demo"><span class="cta-status-count"><?php echo esc_html( $demo_count ); ?></span> <?php esc_html_e( 'Demo', 'cta-manager' ); ?></button>
+				<?php endif; ?>
 			</span>
 			<?php
 			$title_raw = ob_get_clean();
+			$extra_class = "cta-list-header";
 			include CTA_PLUGIN_DIR . 'templates/admin/partials/section-header-with-actions.php';
 			unset( $actions_html, $title_raw );
 			?>
-			<div class="cta-manage-controls-row">
-				<div class="cta-manage-controls-row__search">
+			<div class="cta-manager-search-row-wrapper">
+				<div class="cta-manager-search-row">
 					<div class="cta-search-wrapper">
 						<input type="text" id="cta-search-input" class="cta-search-input" placeholder="<?php esc_attr_e( 'Search CTAs...', 'cta-manager' ); ?>" />
 						<button type="button" id="cta-search-icon" class="cta-search-icon" aria-label="<?php esc_attr_e( 'Search', 'cta-manager' ); ?>">
@@ -132,21 +137,11 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 						</button>
 					</div>
 				</div>
-				<button type="button" class="cta-button cta-button-primary cta-modal-trigger" data-open-modal="#cta-filters-modal">
+				<button type="button" class="cta-button cta-button-primary cta-modal-trigger" id="cta-filter-btn" data-open-modal="#cta-filters-modal">
 					<span class="dashicons dashicons-filter"></span>
 					<?php esc_html_e( 'Filters', 'cta-manager' ); ?>
 				</button>
 			</div>
-			<?php
-			$demo_count_is_hidden = $demo_count <= 0;
-			if ( ! $demo_count_is_hidden ) :
-				?>
-				<div class="cta-count-row">
-					<span class="cta-count-badge-warning-dark">
-						<?php echo esc_html( sprintf( _n( '%d Demo CTA', '%d Demo CTAs', $demo_count, 'cta-manager' ), $demo_count ) ); ?>
-					</span>
-				</div>
-			<?php endif; ?>
 			<div class="cta-cta-list">
 				<?php foreach ( $ctas as $cta ) : ?>
 					<?php
@@ -154,6 +149,7 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 					?>
 				<?php endforeach; ?>
 			</div>
+			<div class="cta-list-pagination-wrapper" id="cta-list-pagination"></div>
 			<div class="cta-filter-empty-state" id="cta-filter-empty-state" style="display: none;">
 				<div class="cta-filter-empty-state-content">
 					<span class="dashicons dashicons-filter"></span>

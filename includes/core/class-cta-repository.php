@@ -826,21 +826,11 @@ class CTA_Repository {
 	 *
 	 * @param int $id CTA ID
 	 *
-	 * @return bool|string True on success, 'demo_cta' if demo CTA, false on failure
+	 * @return bool
 	 */
-	public function trash( int $id ): bool|string {
+	public function trash( int $id ): bool {
 		if ( ! $this->table_exists() ) {
 			return false;
-		}
-
-		// Check if this is a demo CTA - demo CTAs bypass trash
-		$cta = $this->get( $id );
-		if ( ! $cta ) {
-			return false;
-		}
-
-		if ( ! empty( $cta['_demo'] ) ) {
-			return 'demo_cta';
 		}
 
 		$table = self::get_table_name();
@@ -915,21 +905,16 @@ class CTA_Repository {
 	 *
 	 * @param int $id CTA ID
 	 *
-	 * @return bool|string True on success, 'demo_cta' if demo CTA, false on failure
+	 * @return bool
 	 */
-	public function archive( int $id ): bool|string {
+	public function archive( int $id ): bool {
 		if ( ! $this->table_exists() ) {
 			return false;
 		}
 
-		// Check if this is a demo CTA - demo CTAs bypass archive
 		$cta = $this->get( $id );
 		if ( ! $cta ) {
 			return false;
-		}
-
-		if ( ! empty( $cta['_demo'] ) ) {
-			return 'demo_cta';
 		}
 
 		$table = self::get_table_name();
@@ -1147,6 +1132,11 @@ class CTA_Repository {
 			'link_target'     => $cta['link_target'] ?? '_self',
 			'link_target_new_tab' => $cta['link_target_new_tab'] ?? false,
 			'data_attributes' => $cta['data_attributes'] ?? [],
+			'aria_label'      => $cta['aria_label'] ?? '',
+			'aria_description' => $cta['aria_description'] ?? '',
+			'aria_controls'   => $cta['aria_controls'] ?? '',
+			'aria_expanded'   => $cta['aria_expanded'] ?? '',
+			'aria_role'       => $cta['aria_role'] ?? '',
 		];
 
 		return wp_json_encode( $content );
@@ -1240,6 +1230,9 @@ class CTA_Repository {
 			'icon_animation'         => $cta['icon_animation'] ?? 'none',
 			// Show icon (icons are Pro feature, default to false)
 			'show_icon'              => $cta['show_icon'] ?? false,
+			// Pro custom code
+			'custom_css'             => $cta['custom_css'] ?? '',
+			'custom_js'              => $cta['custom_js'] ?? '',
 		];
 
 		return wp_json_encode( $style );
@@ -1266,6 +1259,9 @@ class CTA_Repository {
 				'dismiss_behavior'   => 'session',
 			],
 			'blacklist_urls'    => $cta['blacklist_urls'] ?? [],
+			'gtm_tracking'      => $cta['gtm_tracking'] ?? [],
+			'ga4_tracking'      => $cta['ga4_tracking'] ?? [],
+			'posthog_tracking'  => $cta['posthog_tracking'] ?? [],
 		];
 
 		return wp_json_encode( $behavior );
@@ -1303,6 +1299,13 @@ class CTA_Repository {
 			'cta_classes'     => $cta['cta_classes'] ?? '',
 			'schedule_type'   => $cta['schedule_type'] ?? 'date_range',
 			'first_active_at' => $cta['first_active_at'] ?? '',
+			'include_times'          => ! empty( $cta['include_times'] ),
+			'schedule_start_hour'    => $cta['schedule_start_hour'] ?? '12',
+			'schedule_start_minute'  => $cta['schedule_start_minute'] ?? '00',
+			'schedule_start_period'  => $cta['schedule_start_period'] ?? 'AM',
+			'schedule_end_hour'      => $cta['schedule_end_hour'] ?? '11',
+			'schedule_end_minute'    => $cta['schedule_end_minute'] ?? '59',
+			'schedule_end_period'    => $cta['schedule_end_period'] ?? 'PM',
 		];
 
 		return wp_json_encode( $meta );
@@ -1369,6 +1372,11 @@ class CTA_Repository {
 			'link_target'     => $content['link_target'] ?? '_self',
 			'link_target_new_tab' => $content['link_target_new_tab'] ?? false,
 			'data_attributes' => $content['data_attributes'] ?? [],
+			'aria_label'      => $content['aria_label'] ?? '',
+			'aria_description' => $content['aria_description'] ?? '',
+			'aria_controls'   => $content['aria_controls'] ?? '',
+			'aria_expanded'   => $content['aria_expanded'] ?? '',
+			'aria_role'       => $content['aria_role'] ?? '',
 
 			// Style fields
 			'title_font_size'        => $style['title_font_size'] ?? '24px',
@@ -1444,6 +1452,8 @@ class CTA_Repository {
 			'button_animation'       => $style['button_animation'] ?? 'none',
 			'icon_animation'         => $style['icon_animation'] ?? 'none',
 			'show_icon'              => $style['show_icon'] ?? false,
+			'custom_css'             => $style['custom_css'] ?? '',
+			'custom_js'              => $style['custom_js'] ?? '',
 
 			// Behavior fields
 			'slide_in_settings' => $behavior['slide_in_settings'] ?? [
@@ -1458,6 +1468,9 @@ class CTA_Repository {
 				'dismiss_behavior'   => 'session',
 			],
 			'blacklist_urls'    => $behavior['blacklist_urls'] ?? [],
+			'gtm_tracking'      => $behavior['gtm_tracking'] ?? [],
+			'ga4_tracking'      => $behavior['ga4_tracking'] ?? [],
+			'posthog_tracking'  => $behavior['posthog_tracking'] ?? [],
 
 			// Meta fields
 			'_demo'           => $meta['_demo'] ?? false,
@@ -1467,6 +1480,13 @@ class CTA_Repository {
 			'cta_classes'     => $meta['cta_classes'] ?? '',
 			'schedule_type'   => $meta['schedule_type'] ?? 'date_range',
 			'first_active_at' => $meta['first_active_at'] ?? '',
+			'include_times'          => ! empty( $meta['include_times'] ),
+			'schedule_start_hour'    => $meta['schedule_start_hour'] ?? '12',
+			'schedule_start_minute'  => $meta['schedule_start_minute'] ?? '00',
+			'schedule_start_period'  => $meta['schedule_start_period'] ?? 'AM',
+			'schedule_end_hour'      => $meta['schedule_end_hour'] ?? '11',
+			'schedule_end_minute'    => $meta['schedule_end_minute'] ?? '59',
+			'schedule_end_period'    => $meta['schedule_end_period'] ?? 'PM',
 		];
 
 		return $cta;

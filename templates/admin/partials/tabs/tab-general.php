@@ -41,25 +41,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$current_status = $editing_cta['status'] ?? 'draft';
 				$is_editing = ! empty( $editing_cta );
 
-				// Base options for all CTAs
-				$base_options = [
-					'draft'    => __( 'Draft', 'cta-manager' ),
-					'publish'  => __( 'Publish', 'cta-manager' ),
-					'schedule' => __( 'Schedule', 'cta-manager' ),
+				$status_options = [
+					'draft'     => __( 'Draft', 'cta-manager' ),
+					'publish'   => __( 'Publish', 'cta-manager' ),
+					'scheduled' => __( 'Schedule', 'cta-manager' ),
+					'archived'  => __( 'Archive', 'cta-manager' ),
+					'trash'     => __( 'Trash', 'cta-manager' ),
 				];
 
-				// Additional options only for existing CTAs
-				$edit_options = [
-					'trashed'  => __( 'Trashed', 'cta-manager' ),
-					'archived' => __( 'Archived', 'cta-manager' ),
-				];
+				$edit_only = [ 'archived', 'trash' ];
 
-				$all_options = $is_editing ? array_merge( $base_options, $edit_options ) : $base_options;
-
-				foreach ( $all_options as $status_value => $status_label ) :
+				foreach ( $status_options as $status_value => $status_label ) :
 					$selected = ( $current_status === $status_value ) ? 'selected' : '';
+					$hidden   = ( ! $is_editing && in_array( $status_value, $edit_only, true ) ) ? 'hidden' : '';
+					$class    = in_array( $status_value, $edit_only, true ) ? 'cta-status-edit-only' : '';
 					?>
-					<option value="<?php echo esc_attr( $status_value ); ?>" <?php echo $selected; ?>>
+					<option value="<?php echo esc_attr( $status_value ); ?>" <?php echo $selected; ?> <?php echo $hidden; ?> class="<?php echo $class; ?>">
 						<?php echo esc_html( $status_label ); ?>
 					</option>
 				<?php endforeach; ?>
@@ -68,7 +65,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<!-- Schedule Section (shown when status is 'schedule') -->
-	<div class="cta-form-row cta-schedule-fields" style="<?php echo ( $current_status === 'schedule' ) ? '' : 'display: none;'; ?>">
+	<div class="cta-form-row cta-schedule-fields" style="<?php echo ( $current_status === 'scheduled' ) ? '' : 'display: none;'; ?>">
+
+		<!-- Business Hours Info (shown when schedule_type is 'business_hours') -->
+		<?php
+		$bh_schedule_type = $editing_cta['schedule_type'] ?? 'date_range';
+		$bh_settings_url  = admin_url( 'admin.php?page=cta-manager-settings#business-hours' );
+		?>
+		<div class="cta-business-hours-info" style="grid-column: 1 / -1;<?php echo 'business_hours' !== $bh_schedule_type ? ' display: none;' : ''; ?>">
+			<div class="cta-info-box cta-info-box--info" style="margin-bottom: 0;">
+				<span class="cta-info-box__icon dashicons dashicons-info"></span>
+				<div>
+					<p class="cta-info-box__body" style="margin: 0;">
+						<?php esc_html_e( 'This CTA will follow the business hours configured in Settings. Display will begin and end based on the start and end dates, and times if the Include Times toggle is enabled.', 'cta-manager' ); ?>
+						<a href="<?php echo esc_url( $bh_settings_url ); ?>" target="_blank" rel="noopener noreferrer" style="white-space: nowrap;">
+							<?php esc_html_e( 'View/edit Business Hours', 'cta-manager' ); ?> &rarr;
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
 		<!-- Schedule Type -->
 		<div class="cta-form-group">
 			<label for="cta-schedule-type">
@@ -198,7 +215,7 @@ jQuery(document).ready(function($) {
 		var $scheduleInputs = $scheduleFields.find('input[type="datetime-local"]');
 		var $scheduleProUpsell = $('.cta-schedule-pro-upsell');
 
-		if (status === 'schedule') {
+		if (status === 'scheduled') {
 			$scheduleFields.slideDown(200);
 			$scheduleInputs.prop('required', true);
 			$scheduleProUpsell.slideDown(200);
@@ -211,6 +228,16 @@ jQuery(document).ready(function($) {
 
 	// Trigger on page load in case of edit mode
 	$('#cta-status').trigger('change');
+
+	// Toggle business hours info based on schedule type
+	$('#cta-schedule-type').on('change', function() {
+		var $info = $('.cta-business-hours-info');
+		if ($(this).val() === 'business_hours') {
+			$info.slideDown(200);
+		} else {
+			$info.slideUp(200);
+		}
+	});
 
 	// Toggle time inputs based on "Include Times" checkbox
 	$('#cta-include-times').on('change', function() {

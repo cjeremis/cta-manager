@@ -33,9 +33,12 @@ if ( $help_modal_target && empty( $actions_html ) ) {
 	if ( false !== strpos( $help_attrs, 'data-docs-page=' ) ) {
 		$help_icon_classes[] = 'cta-docs-trigger';
 	}
+	$orig_extra_class = $extra_class;
 	$extra_class = implode( ' ', $help_icon_classes );
 	include __DIR__ . '/help-trigger.php';
 	unset( $text, $modal_target, $variant, $icon, $extra_class, $attrs, $help_icon_classes, $help_attrs );
+	$extra_class = $orig_extra_class;
+	unset( $orig_extra_class );
 	$actions_html = ob_get_clean();
 }
 ?>

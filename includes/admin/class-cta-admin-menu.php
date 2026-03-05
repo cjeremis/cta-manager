@@ -57,6 +57,18 @@ class CTA_Admin_Menu {
 			[ CTA_Manager::get_instance(), 'render' ]
 		);
 
+		$is_pro_enabled = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+		if ( $is_pro_enabled && class_exists( 'CTA_Pro_Analytics_Dashboard' ) ) {
+			add_submenu_page(
+				self::MENU_SLUG,
+				__( 'CTA Manager Analytics', 'cta-manager' ),
+				__( 'Analytics', 'cta-manager' ),
+				self::REQUIRED_CAP,
+				self::MENU_SLUG . '-analytics',
+				[ CTA_Pro_Analytics_Dashboard::get_instance(), 'render' ]
+			);
+		}
+
 		add_submenu_page(
 			self::MENU_SLUG,
 			__( 'CTA Manager Settings', 'cta-manager' ),
@@ -73,6 +85,55 @@ class CTA_Admin_Menu {
 			self::REQUIRED_CAP,
 			self::MENU_SLUG . '-tools',
 			[ CTA_Tools::get_instance(), 'render' ]
+		);
+
+		add_submenu_page(
+			self::MENU_SLUG,
+			__( 'CTA Manager Features', 'cta-manager' ),
+			__( 'Features', 'cta-manager' ),
+			self::REQUIRED_CAP,
+			self::MENU_SLUG . '-features',
+			[ self::class, 'handle_features_redirect' ]
+		);
+
+		// Notifications menu with badge count
+		$notification_count = 0;
+		if ( class_exists( 'CTA_Notifications' ) ) {
+			$notification_count = CTA_Notifications::get_instance()->get_notification_count();
+		}
+		$notifications_label = __( 'Notifications', 'cta-manager' );
+		if ( $notification_count > 0 ) {
+			$notifications_label .= sprintf(
+				' <span class="update-plugins count-%d"><span class="update-count">%d</span></span>',
+				$notification_count,
+				$notification_count
+			);
+		}
+		add_submenu_page(
+			self::MENU_SLUG,
+			__( 'CTA Manager Notifications', 'cta-manager' ),
+			$notifications_label,
+			self::REQUIRED_CAP,
+			self::MENU_SLUG . '-notifications',
+			[ self::class, 'handle_notifications_redirect' ]
+		);
+
+		add_submenu_page(
+			self::MENU_SLUG,
+			__( 'CTA Manager Support', 'cta-manager' ),
+			__( 'Support', 'cta-manager' ),
+			self::REQUIRED_CAP,
+			self::MENU_SLUG . '-support',
+			[ self::class, 'handle_support_redirect' ]
+		);
+
+		add_submenu_page(
+			self::MENU_SLUG,
+			__( 'CTA Manager Documentation', 'cta-manager' ),
+			__( 'Documentation', 'cta-manager' ),
+			self::REQUIRED_CAP,
+			self::MENU_SLUG . '-docs',
+			[ self::class, 'handle_docs_redirect' ]
 		);
 
 		$pro_config = self::get_pro_menu_config();
@@ -181,6 +242,46 @@ class CTA_Admin_Menu {
 	}
 
 	/**
+	 * Redirects the Features menu entry to the Dashboard with modal param.
+	 *
+	 * @return void
+	 */
+	public static function handle_features_redirect(): void {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=features&tab=overview' ) );
+		exit;
+	}
+
+	/**
+	 * Redirects the Support menu entry to the Dashboard with modal param.
+	 *
+	 * @return void
+	 */
+	public static function handle_support_redirect(): void {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=support' ) );
+		exit;
+	}
+
+	/**
+	 * Redirects the Notifications menu entry to the Dashboard with auto-open param.
+	 *
+	 * @return void
+	 */
+	public static function handle_notifications_redirect(): void {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=notifications' ) );
+		exit;
+	}
+
+	/**
+	 * Redirects the Documentation menu entry to the Dashboard with auto-open param.
+	 *
+	 * @return void
+	 */
+	public static function handle_docs_redirect(): void {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=docs' ) );
+		exit;
+	}
+
+	/**
 	 * Register admin bar menu
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance
@@ -194,61 +295,24 @@ class CTA_Admin_Menu {
 
 		$wp_admin_bar->add_node( [
 			'id'    => 'cta-manager',
-			'title' => '<span class="ab-icon dashicons dashicons-megaphone" style="font-family: dashicons; font-size: 20px; line-height: 1; margin-right: 6px;"></span>' . __( 'CTA Manager', 'cta-manager' ),
+			'title' => '<span class="ab-icon dashicons dashicons-megaphone"></span><span class="ab-label">' . __( 'CTAs', 'cta-manager' ) . '</span>',
 			'href'  => admin_url( 'admin.php?page=' . self::MENU_SLUG ),
 			'meta'  => [
 				'title' => __( 'CTA Manager', 'cta-manager' ),
 			],
 		] );
 
-		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-dashboard',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Dashboard', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG ),
-		] );
-
-		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-manage',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Manage CTAs', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta' ),
-		] );
-
-		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-settings',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Settings', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-settings' ),
-		] );
-
-		$wp_admin_bar->add_node( [
-			'id'     => 'cta-manager-tools',
-			'parent' => 'cta-manager',
-			'title'  => __( 'Tools', 'cta-manager' ),
-			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-tools' ),
-		] );
-
-		$pro_config = self::get_pro_menu_config();
-		if ( $pro_config ) {
-			$wp_admin_bar->add_node( [
-				'id'     => 'cta-manager-pro',
-				'parent' => 'cta-manager',
-				'title'  => '<span class="dashicons dashicons-' . esc_attr( $pro_config['icon'] ) . '" style="font-family: dashicons; font-size: 16px; line-height: 1; margin-right: 4px; vertical-align: middle; color: #f0b849;"></span><span style="color: #f0b849;">' . esc_html( $pro_config['label'] ) . '</span>',
-				'href'   => $pro_config['target_url'],
-			] );
-		}
-
-		// Active CTAs submenu
+		// Active CTAs submenu — first in the dropdown for quick access.
+		$manage_url  = admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta' );
 		$active_ctas = CTA_Data::get_instance()->get_active_ctas();
 		if ( ! empty( $active_ctas ) ) {
-			$manage_url = admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta' );
 
 			$wp_admin_bar->add_node( [
 				'id'     => 'cta-manager-active-ctas',
 				'parent' => 'cta-manager',
-				'title'  => '<span class="dashicons dashicons-admin-site-alt3" style="font-family: dashicons; font-size: 16px; line-height: 1; margin-right: 4px; vertical-align: middle;"></span>' . __( 'Active CTAs', 'cta-manager' ),
-				'href'   => $manage_url,
+				'title'  => '<span class="cta-ab-menu-icon dashicons dashicons-admin-site-alt3"></span>' . __( 'Active CTAs', 'cta-manager' ),
+				'href'   => false,
+				'meta'   => [ 'class' => 'cta-ab-has-icon' ],
 			] );
 
 			foreach ( $active_ctas as $cta ) {
@@ -272,7 +336,102 @@ class CTA_Admin_Menu {
 					'href'   => false,
 				] );
 			}
+
 		}
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-dashboard',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Dashboard', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-manage',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Manage CTAs', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-cta' ),
+		] );
+
+		$is_pro_enabled = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+		if ( $is_pro_enabled ) {
+			$wp_admin_bar->add_node( [
+				'id'     => 'cta-manager-analytics',
+				'parent' => 'cta-manager',
+				'title'  => __( 'Analytics', 'cta-manager' ),
+				'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-analytics' ),
+			] );
+		}
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-settings',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Settings', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-settings' ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-tools',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Tools', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '-tools' ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-features',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Features', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=features&tab=overview' ),
+		] );
+
+		// Notifications with badge
+		$ab_notification_count = 0;
+		if ( class_exists( 'CTA_Notifications' ) ) {
+			$ab_notification_count = CTA_Notifications::get_instance()->get_notification_count();
+		}
+		$notifications_title = __( 'Notifications', 'cta-manager' );
+		if ( $ab_notification_count > 0 ) {
+			$notifications_title .= ' <span class="cta-ab-notification-badge">' . $ab_notification_count . '</span>';
+		}
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-notifications',
+			'parent' => 'cta-manager',
+			'title'  => $notifications_title,
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=notifications' ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-support',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Support', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=support' ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'cta-manager-docs',
+			'parent' => 'cta-manager',
+			'title'  => __( 'Documentation', 'cta-manager' ),
+			'href'   => admin_url( 'admin.php?page=' . self::MENU_SLUG . '&modal=docs' ),
+		] );
+
+		$pro_config = self::get_pro_menu_config();
+		if ( $pro_config ) {
+			$wp_admin_bar->add_node( [
+				'id'     => 'cta-manager-pro',
+				'parent' => 'cta-manager',
+				'title'  => '<span class="cta-ab-menu-icon dashicons dashicons-' . esc_attr( $pro_config['icon'] ) . '"></span><span class="cta-ab-pro-label">' . esc_html( $pro_config['label'] ) . '</span>',
+				'href'   => $pro_config['target_url'],
+				'meta'   => [ 'class' => 'cta-ab-has-icon cta-ab-pro-item' ],
+			] );
+		}
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'ai-insights',
+			'parent' => 'cta-manager',
+			'title'  => '<span class="cta-ab-menu-icon dashicons dashicons-superhero"></span><span class="cta-ab-ai-insights-label">' . esc_html( 'AI Insights' ) . '</span>',
+			'href'   => esc_url( $manage_url . '&modal=features&tab=ai-automation' ),
+			'meta'   => [ 'class' => 'cta-ab-has-icon cta-ab-ai-insights-item' ],
+		] );
 	}
 
 }

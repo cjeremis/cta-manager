@@ -108,9 +108,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View impressions', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -124,9 +128,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View clicks', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -139,10 +147,14 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-value"><?php echo esc_html( ( $stats['avg_ctr'] ?? 0 ) . '%' ); ?></span>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Average CTR', 'cta-manager' ); ?>
-							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'ctr', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<?php if ( $is_pro_active ) : ?>
+									<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'overview', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View CTR analytics', 'cta-manager' ); ?>">
+										<span class="dashicons dashicons-chart-line"></span>
+									</a>
+								<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
-								</a>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -194,9 +206,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'unique_visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View visitors', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -205,7 +221,7 @@ if ( ! $has_ctas ) : ?>
 				<?php
 				$best_ctr_name = $stats['best_ctr_name'] ?? '--';
 				$best_ctr_id   = $stats['best_ctr_id'] ?? 0;
-				$best_ctr_analytics_url = ( $best_ctr_id && $is_pro_active ) ? add_query_arg( 'cta_id', $best_ctr_id, CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
+					$best_ctr_analytics_url = ( $best_ctr_id && $is_pro_active ) ? add_query_arg( [ 'tab' => 'overview', 'cta_id' => $best_ctr_id, 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
 				$best_ctr_edit_url = $best_ctr_id ? add_query_arg( [ 'action' => 'edit', 'id' => $best_ctr_id ], CTA_Admin_Menu::get_admin_url( 'cta' ) ) : '';
 				?>
 				<div class="cta-stat-card cta-stat-card--yellow">
@@ -221,6 +237,10 @@ if ( ! $has_ctas ) : ?>
 										<a href="<?php echo esc_url( $best_ctr_analytics_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics for this CTA', 'cta-manager' ); ?>">
 											<span class="dashicons dashicons-chart-line"></span>
 										</a>
+									<?php else : ?>
+										<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+											<span class="dashicons dashicons-chart-line"></span>
+										</button>
 									<?php endif; ?>
 									<a href="<?php echo esc_url( $best_ctr_edit_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'Edit this CTA', 'cta-manager' ); ?>">
 										<span class="dashicons dashicons-edit"></span>
@@ -246,9 +266,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View clicks', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -256,6 +280,122 @@ if ( ! $has_ctas ) : ?>
 			</div>
 		</div>
 	</div>
+
+	<?php
+	$ab_active_campaigns = [];
+	if ( $is_pro_active && class_exists( 'CTA_Pro_Database' ) ) {
+		global $wpdb;
+		$ab_tests_table = $wpdb->prefix . 'cta_manager_ab_tests';
+		$events_table   = $wpdb->prefix . 'cta_manager_events';
+
+		$ab_table_exists = ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $ab_tests_table ) ) === $ab_tests_table );
+		if ( $ab_table_exists ) {
+			$ab_active_campaigns = $wpdb->get_results(
+				"SELECT id, name, campaign_key, goal_event, traffic_split
+				FROM {$ab_tests_table}
+				WHERE status = 'active'
+				ORDER BY started_at DESC, created_at DESC
+				LIMIT 6",
+				ARRAY_A
+			);
+
+			foreach ( $ab_active_campaigns as $idx => $campaign ) {
+				$campaign_key = sanitize_title( (string) ( $campaign['campaign_key'] ?? '' ) );
+				if ( '' === $campaign_key ) {
+					$ab_active_campaigns[ $idx ]['metrics'] = [
+						'impressions' => 0,
+						'clicks' => 0,
+						'conversions' => 0,
+						'ctr' => 0,
+					];
+					continue;
+				}
+
+				$metric_row = $wpdb->get_row(
+					$wpdb->prepare(
+						"SELECT
+							SUM(CASE WHEN event_type = 'impression' THEN 1 ELSE 0 END) AS impressions,
+							SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) AS clicks,
+							SUM(CASE WHEN event_type = 'conversion' THEN 1 ELSE 0 END) AS conversions
+						FROM {$events_table}
+						WHERE experiment_key = %s
+						AND occurred_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)",
+						$campaign_key
+					),
+					ARRAY_A
+				);
+
+				$impressions = (int) ( $metric_row['impressions'] ?? 0 );
+				$clicks      = (int) ( $metric_row['clicks'] ?? 0 );
+				$conversions = (int) ( $metric_row['conversions'] ?? 0 );
+				$ctr         = $impressions > 0 ? round( ( $clicks / $impressions ) * 100, 2 ) : 0;
+
+				$ab_active_campaigns[ $idx ]['metrics'] = [
+					'impressions' => $impressions,
+					'clicks' => $clicks,
+					'conversions' => $conversions,
+					'ctr' => $ctr,
+				];
+			}
+		}
+	}
+	?>
+	<?php if ( ! empty( $ab_active_campaigns ) ) : ?>
+		<div class="cta-dashboard">
+			<div class="cta-dashboard-section">
+				<div class="cta-dashboard-section-header">
+					<h3><?php esc_html_e( 'A/B Test Campaigns', 'cta-manager' ); ?></h3>
+				</div>
+				<div class="cta-dashboard-card-grid">
+					<?php foreach ( $ab_active_campaigns as $campaign ) : ?>
+						<?php
+						$campaign_key = sanitize_title( (string) ( $campaign['campaign_key'] ?? '' ) );
+						$campaign_name = $campaign['name'] ?: __( 'Untitled Campaign', 'cta-manager' );
+						$analytics_url = add_query_arg(
+							[
+								'tab'      => 'ab-testing',
+								'campaign' => $campaign_key,
+								'period'   => '30d',
+							],
+							CTA_Admin_Menu::get_admin_url( 'analytics' )
+						);
+						$goal_event = sanitize_key( (string) ( $campaign['goal_event'] ?? 'click' ) );
+						$goal_label = ( 'conversion' === $goal_event ) ? __( 'Goal: Conversion', 'cta-manager' ) : __( 'Goal: Click', 'cta-manager' );
+						$metrics = $campaign['metrics'] ?? [];
+						?>
+						<div class="cta-stat-card cta-stat-card--purple">
+							<span class="dashicons dashicons-randomize cta-stat-icon"></span>
+							<div class="cta-stat-content">
+								<h4><?php echo esc_html( $campaign_name ); ?></h4>
+								<span class="cta-stat-value"><?php echo esc_html( number_format_i18n( (int) ( $metrics['ctr'] ?? 0 ), 2 ) ); ?>%</span>
+								<span class="cta-stat-meta"><?php esc_html_e( 'CTR (30 days)', 'cta-manager' ); ?></span>
+								<div class="cta-stat-slug-row">
+									<span class="cta-stat-slug">
+										<?php
+										echo esc_html(
+											sprintf(
+												/* translators: 1: impressions count, 2: clicks count */
+												__( '%1$s impressions • %2$s clicks', 'cta-manager' ),
+												number_format_i18n( (int) ( $metrics['impressions'] ?? 0 ) ),
+												number_format_i18n( (int) ( $metrics['clicks'] ?? 0 ) )
+											)
+										);
+										?>
+									</span>
+									<span class="cta-stat-actions">
+										<a href="<?php echo esc_url( $analytics_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View A/B campaign analytics', 'cta-manager' ); ?>">
+											<span class="dashicons dashicons-chart-line"></span>
+										</a>
+									</span>
+								</div>
+								<span class="cta-stat-meta"><?php echo esc_html( $goal_label ); ?></span>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
 
 	<!-- Detailed Analytics Sections -->
 	<div class="cta-dashboard">
@@ -268,7 +408,7 @@ if ( ! $has_ctas ) : ?>
 				$most_seen_name = $stats['most_seen_name'] ?? '--';
 				$most_seen_id   = $stats['most_seen_id'] ?? 0;
 				$most_seen_last_date = $stats['most_seen_last_date'] ?? '';
-				$most_seen_analytics_url  = ( $most_seen_id && $is_pro_active ) ? add_query_arg( 'cta_id', $most_seen_id, CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
+				$most_seen_analytics_url  = ( $most_seen_id && $is_pro_active ) ? add_query_arg( [ 'tab' => 'impressions', 'cta_id' => $most_seen_id, 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
 				$most_seen_edit_url = $most_seen_id ? add_query_arg( [ 'action' => 'edit', 'id' => $most_seen_id ], CTA_Admin_Menu::get_admin_url( 'cta' ) ) : '';
 				?>
 				<div class="cta-stat-card cta-stat-card--blue">
@@ -292,6 +432,10 @@ if ( ! $has_ctas ) : ?>
 										<a href="<?php echo esc_url( $most_seen_analytics_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics for this CTA', 'cta-manager' ); ?>">
 											<span class="dashicons dashicons-chart-line"></span>
 										</a>
+									<?php else : ?>
+										<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+											<span class="dashicons dashicons-chart-line"></span>
+										</button>
 									<?php endif; ?>
 									<a href="<?php echo esc_url( $most_seen_edit_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'Edit this CTA', 'cta-manager' ); ?>">
 										<span class="dashicons dashicons-edit"></span>
@@ -311,9 +455,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Views today', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions', 'period' => '24h' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'impressions', 'period' => '24h' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View today\'s impressions', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -326,9 +474,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View impressions', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -344,9 +496,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Daily impressions', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View impressions', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -372,7 +528,7 @@ if ( ! $has_ctas ) : ?>
 				<?php
 				$most_clicked_name = $stats['most_clicked_name'] ?? '--';
 				$most_clicked_id   = $stats['most_clicked_id'] ?? 0;
-				$most_clicked_analytics_url = ( $most_clicked_id && $is_pro_active ) ? add_query_arg( 'cta_id', $most_clicked_id, CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
+				$most_clicked_analytics_url = ( $most_clicked_id && $is_pro_active ) ? add_query_arg( [ 'tab' => 'clicks', 'cta_id' => $most_clicked_id, 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) : '';
 				$most_clicked_edit_url = $most_clicked_id ? add_query_arg( [ 'action' => 'edit', 'id' => $most_clicked_id ], CTA_Admin_Menu::get_admin_url( 'cta' ) ) : '';
 				?>
 				<div class="cta-stat-card cta-stat-card--pink">
@@ -388,6 +544,10 @@ if ( ! $has_ctas ) : ?>
 										<a href="<?php echo esc_url( $most_clicked_analytics_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics for this CTA', 'cta-manager' ); ?>">
 											<span class="dashicons dashicons-chart-line"></span>
 										</a>
+									<?php else : ?>
+										<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+											<span class="dashicons dashicons-chart-line"></span>
+										</button>
 									<?php endif; ?>
 									<a href="<?php echo esc_url( $most_clicked_edit_url ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'Edit this CTA', 'cta-manager' ); ?>">
 										<span class="dashicons dashicons-edit"></span>
@@ -407,9 +567,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Clicks today', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '24h' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'clicks', 'period' => '24h' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View today\'s clicks', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -422,9 +586,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View clicks', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -440,9 +608,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Clicks per day', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View clicks', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -492,10 +664,14 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-value"><?php echo esc_html( number_format_i18n( $stats['most_active_page_impressions'] ?? 0 ) ); ?></span>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'For Top CTA', 'cta-manager' ); ?>
-							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<?php if ( $is_pro_active ) : ?>
+									<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'pages', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View page analytics', 'cta-manager' ); ?>">
+										<span class="dashicons dashicons-chart-line"></span>
+									</a>
+								<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
-								</a>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -507,10 +683,14 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-value"><?php echo esc_html( number_format_i18n( $stats['most_active_page_clicks'] ?? 0 ) ); ?></span>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'For Top CTA', 'cta-manager' ); ?>
-							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<?php if ( $is_pro_active ) : ?>
+									<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'pages', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View page analytics', 'cta-manager' ); ?>">
+										<span class="dashicons dashicons-chart-line"></span>
+									</a>
+								<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
-								</a>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -522,10 +702,14 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-value"><?php echo esc_html( number_format_i18n( $stats['pages_with_ctas'] ?? 0 ) ); ?></span>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Pages with CTA activity', 'cta-manager' ); ?>
-							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( CTA_Admin_Menu::get_admin_url( 'analytics' ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<?php if ( $is_pro_active ) : ?>
+									<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'pages', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View page analytics', 'cta-manager' ); ?>">
+										<span class="dashicons dashicons-chart-line"></span>
+									</a>
+								<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
-								</a>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -551,9 +735,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Avg impressions', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'impressions', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View visitors', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -566,9 +754,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php echo esc_html( $window_7_label ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View visitors', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -586,9 +778,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Of unique visitors', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'ctr', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View visitors', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>
@@ -606,9 +802,13 @@ if ( ! $has_ctas ) : ?>
 						<span class="cta-stat-meta">
 							<?php esc_html_e( 'Avg visitor clicks', 'cta-manager' ); ?>
 							<?php if ( $is_pro_active ) : ?>
-								<a href="<?php echo esc_url( add_query_arg( [ 'metric' => 'clicks', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View analytics', 'cta-manager' ); ?>">
+								<a href="<?php echo esc_url( add_query_arg( [ 'tab' => 'visitors', 'period' => '7d' ], CTA_Admin_Menu::get_admin_url( 'analytics' ) ) ); ?>" class="cta-stat-action" title="<?php esc_attr_e( 'View visitors', 'cta-manager' ); ?>">
 									<span class="dashicons dashicons-chart-line"></span>
 								</a>
+							<?php else : ?>
+								<button type="button" class="cta-stat-action cta-stat-action--pro-teaser" data-open-features-page="analytics" title="<?php esc_attr_e( 'Pro feature — View details', 'cta-manager' ); ?>">
+									<span class="dashicons dashicons-chart-line"></span>
+								</button>
 							<?php endif; ?>
 						</span>
 					</div>

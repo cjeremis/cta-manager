@@ -235,11 +235,6 @@ $current_icon_animation   = $editing_cta['icon_animation'] ?? 'none';
 	<div class="cta-gradient-preview" style="background: linear-gradient(<?php echo esc_attr( $editing_cta['gradient_angle'] ?? '90' ); ?>deg, <?php echo esc_attr( $editing_cta['gradient_start'] ?? '#667eea' ); ?> <?php echo esc_attr( $editing_cta['gradient_start_position'] ?? '0' ); ?>%, <?php echo esc_attr( $editing_cta['gradient_end'] ?? '#764ba2' ); ?> <?php echo esc_attr( $editing_cta['gradient_end_position'] ?? '100' ); ?>%);"></div>
 </div>
 
-<!-- Close the row that was left open -->
-<div class="cta-form-row" style="display: none;">
-	</div>
-</div>
-
 <hr class="cta-section-separator" />
 
 <div class="cta-form-row">

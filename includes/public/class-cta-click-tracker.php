@@ -38,6 +38,7 @@ class CTA_Click_Tracker {
 		$cta_title = isset( $payload['cta_title'] ) ? sanitize_text_field( $payload['cta_title'] ) : '';
 		$page_url = isset( $payload['page_url'] ) ? esc_url_raw( $payload['page_url'] ) : '';
 		$page_title = isset( $payload['page_title'] ) ? sanitize_text_field( $payload['page_title'] ) : '';
+		$event_meta = $this->resolve_event_meta( $payload, $cta_id );
 		$context = $this->build_request_context();
 
 		$data    = CTA_Data::get_instance();
@@ -54,6 +55,8 @@ class CTA_Click_Tracker {
 				'device'     => $context['device'],
 				'visitor_id' => $context['visitor_id'],
 				'session_id' => $context['session_id'],
+				'experiment_key' => $event_meta['experiment_key'],
+				'variant'        => $event_meta['variant'],
 				'context'    => [],
 			]
 		);
@@ -141,6 +144,7 @@ class CTA_Click_Tracker {
 			$cta_title = isset( $payload['cta_title'] ) ? sanitize_text_field( $payload['cta_title'] ) : '';
 			$page_url = isset( $payload['page_url'] ) ? esc_url_raw( $payload['page_url'] ) : '';
 			$page_title = isset( $payload['page_title'] ) ? sanitize_text_field( $payload['page_title'] ) : '';
+			$event_meta = $this->resolve_event_meta( $payload, $cta_id );
 
 			$result = $result && $data->record_analytics_event(
 				[
@@ -155,6 +159,8 @@ class CTA_Click_Tracker {
 					'device'     => $context['device'],
 					'visitor_id' => $context['visitor_id'],
 					'session_id' => $context['session_id'],
+					'experiment_key' => $event_meta['experiment_key'],
+					'variant'        => $event_meta['variant'],
 					'context'    => [],
 				]
 			);
@@ -199,6 +205,7 @@ class CTA_Click_Tracker {
 			$cta_title  = isset( $payload['cta_title'] ) ? sanitize_text_field( $payload['cta_title'] ) : '';
 			$page_url   = isset( $payload['page_url'] ) ? esc_url_raw( $payload['page_url'] ) : '';
 			$page_title = isset( $payload['page_title'] ) ? sanitize_text_field( $payload['page_title'] ) : '';
+			$event_meta = $this->resolve_event_meta( $payload, $cta_id );
 
 			$result = $result && $data->record_analytics_event(
 				[
@@ -213,6 +220,8 @@ class CTA_Click_Tracker {
 					'device'     => $context['device'],
 					'visitor_id' => $context['visitor_id'],
 					'session_id' => $context['session_id'],
+					'experiment_key' => $event_meta['experiment_key'],
+					'variant'        => $event_meta['variant'],
 					'context'    => [],
 				]
 			);
@@ -305,5 +314,31 @@ class CTA_Click_Tracker {
 			return 'mobile';
 		}
 		return 'desktop';
+	}
+
+	/**
+	 * Resolve experiment metadata from payload with Pro A/B fallback.
+	 *
+	 * @param array $payload Raw payload.
+	 * @param int   $cta_id  CTA ID.
+	 *
+	 * @return array{experiment_key:string,variant:string}
+	 */
+	private function resolve_event_meta( array $payload, int $cta_id ): array {
+		$experiment_key = isset( $payload['experiment_key'] ) ? sanitize_text_field( (string) $payload['experiment_key'] ) : '';
+		$variant        = isset( $payload['variant'] ) ? sanitize_text_field( (string) $payload['variant'] ) : '';
+
+		if ( ( '' === $experiment_key || '' === $variant ) && class_exists( 'CTA_Pro_AB_Testing' ) ) {
+			$fallback = CTA_Pro_AB_Testing::get_instance()->get_event_meta_for_cta( $cta_id );
+			if ( is_array( $fallback ) ) {
+				$experiment_key = '' !== $experiment_key ? $experiment_key : sanitize_text_field( (string) ( $fallback['experiment_key'] ?? '' ) );
+				$variant        = '' !== $variant ? $variant : sanitize_text_field( (string) ( $fallback['variant'] ?? '' ) );
+			}
+		}
+
+		return [
+			'experiment_key' => $experiment_key,
+			'variant'        => $variant,
+		];
 	}
 }

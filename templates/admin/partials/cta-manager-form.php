@@ -98,9 +98,23 @@ $tabs = [
 		'is_active' => false,
 	],
 	[
+		'id'           => 'cta-tab-tracking',
+		'label'        => __( 'Tracking', 'cta-manager' ),
+		'icon'         => 'chart-bar',
+		'is_active'    => false,
+		'requires_pro' => true,
+	],
+	[
 		'id'           => 'cta-tab-advanced',
-		'label'        => __( 'Advanced', 'cta-manager' ),
-		'icon'         => 'admin-generic',
+		'label'        => __( 'Custom Styling', 'cta-manager' ),
+		'icon'         => 'art',
+		'is_active'    => false,
+		'requires_pro' => true,
+	],
+	[
+		'id'           => 'cta-tab-custom-js',
+		'label'        => __( 'Custom JS', 'cta-manager' ),
+		'icon'         => 'media-code',
 		'is_active'    => false,
 		'requires_pro' => true,
 	],
@@ -158,10 +172,30 @@ include CTA_PLUGIN_DIR . 'templates/admin/partials/cta-tabs-nav.php';
 		<?php include CTA_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-button.php'; ?>
 	</div>
 
+	<!-- Tracking Tab (Pro Only) -->
+	<?php if ( $is_pro && defined( 'CTA_PRO_PLUGIN_DIR' ) && file_exists( CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-tracking.php' ) ) : ?>
+	<div id="cta-tab-tracking" class="cta-tab-panel" role="tabpanel" aria-labelledby="cta-tab-tracking">
+		<?php include CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-tracking.php'; ?>
+	</div>
+	<?php endif; ?>
+
 	<!-- Advanced Tab (Pro Only) -->
 	<?php if ( $is_pro ) : ?>
 	<div id="cta-tab-advanced" class="cta-tab-panel" role="tabpanel" aria-labelledby="cta-tab-advanced">
-		<?php include CTA_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-advanced.php'; ?>
+		<?php
+		if ( defined( 'CTA_PRO_PLUGIN_DIR' ) && file_exists( CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-custom-styling.php' ) ) {
+			include CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-custom-styling.php';
+		} else {
+			include CTA_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-advanced.php';
+		}
+		?>
+	</div>
+	<?php endif; ?>
+
+	<!-- Custom JS Tab (Pro Only) -->
+	<?php if ( $is_pro && defined( 'CTA_PRO_PLUGIN_DIR' ) && file_exists( CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-custom-js.php' ) ) : ?>
+	<div id="cta-tab-custom-js" class="cta-tab-panel" role="tabpanel" aria-labelledby="cta-tab-custom-js">
+		<?php include CTA_PRO_PLUGIN_DIR . 'templates/admin/partials/tabs/tab-custom-js.php'; ?>
 	</div>
 	<?php endif; ?>
 

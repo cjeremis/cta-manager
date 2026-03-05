@@ -55,8 +55,14 @@ if ( $badge ) {
 	// Free implemented (green border)
 	$card_classes[] = 'is-free';
 }
+$search_parts = array_filter( [ $title, $description, implode( ' ', $features ), $details ] );
+$search_text  = mb_strtolower( implode( ' ', $search_parts ) );
 ?>
-<div class="<?php echo esc_attr( implode( ' ', $card_classes ) ); ?>">
+<div class="<?php echo esc_attr( implode( ' ', $card_classes ) ); ?>"
+	data-feature-plan="<?php echo esc_attr( $is_pro ? 'pro' : 'free' ); ?>"
+	data-feature-implemented="<?php echo $is_implemented ? '1' : '0'; ?>"
+	data-feature-title="<?php echo esc_attr( mb_strtolower( $title ) ); ?>"
+	data-feature-search="<?php echo esc_attr( $search_text ); ?>">
 	<div class="cta-feature-header">
 		<div class="cta-feature-icon"><?php echo esc_html( $icon ); ?></div>
 		<h4>
@@ -74,13 +80,6 @@ if ( $badge ) {
 			<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>
-	<?php if ( ! empty( $details ) || ! empty( $instructions ) ) : ?>
-		<div class="cta-feature-learn-more">
-			<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $docs_page ); ?>" data-feature-title="<?php echo esc_attr( $title ); ?>">
-				<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
-			</button>
-		</div>
-	<?php endif; ?>
 	<div class="cta-feature-footer">
 		<?php if ( $is_pro && $badge ) : ?>
 			<?php // Pro + Coming Soon: show both badges ?>
@@ -97,9 +96,14 @@ if ( $badge ) {
 			<span class="cta-free-badge"><?php echo esc_html( $feature_labels['badge_free'] ); ?></span>
 		<?php endif; ?>
 		<?php if ( ! empty( $hook_type ) ) : ?>
-			<span class="cta-badge cta-badge-info cta-hook-badge" style="margin-left:auto; background:#e3f2fd; color:#1976d2;">
+			<span class="cta-badge cta-badge-info cta-hook-badge" style="background:#e3f2fd; color:#1976d2;">
 				<?php echo esc_html( 'filter' === $hook_type ? __( 'Filter Hook', 'cta-manager' ) : __( 'Action Hook', 'cta-manager' ) ); ?>
 			</span>
+		<?php endif; ?>
+		<?php if ( ! empty( $details ) || ! empty( $instructions ) ) : ?>
+			<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $docs_page ); ?>" data-feature-title="<?php echo esc_attr( $title ); ?>">
+				<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
+			</button>
 		<?php endif; ?>
 	</div>
 </div>

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 // Page wrapper configuration
-$current_page       = 'upgrade';
+$current_page       = 'features';
 $header_title       = __( 'Unlock the Power of Pro', 'cta-manager' );
 $header_description = __( 'CTA Manager Pro delivers premium features to grow your business.', 'cta-manager' );
 $topbar_actions     = [];
@@ -98,6 +98,7 @@ $integrations = CTA_Features::get_all_integrations();
 								</ul>
 							<?php endif; ?>
 							<div class="cta-integration-footer">
+								<span class="cta-pro-badge"><?php esc_html_e( 'PRO', 'cta-manager' ); ?></span>
 								<?php if ( empty( $integration['implemented'] ) ) : ?>
 									<span class="cta-badge cta-badge-primary cta-pulse-primary"><?php esc_html_e( 'Coming Soon', 'cta-manager' ); ?></span>
 								<?php else : ?>

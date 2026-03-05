@@ -21,6 +21,12 @@ $is_pro      = apply_filters( 'cta_manager_pro_enabled', false );
 <!-- Pro Upsell Footer -->
 <?php include __DIR__ . '/pro-upsell-footer.php'; ?>
 
+<!-- Pro Integrations Marquee -->
+<?php include __DIR__ . '/integrations-marquee.php'; ?>
+
+<!-- Plugin Promo Section -->
+<?php include __DIR__ . '/plugin-promo.php'; ?>
+
 <div class="cta-footer">
 	<span>
 		<?php

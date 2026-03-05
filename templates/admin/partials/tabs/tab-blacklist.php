@@ -29,7 +29,7 @@ if ( ! is_array( $blacklist_urls ) ) {
 				</label>
 				<div class="cta-label-actions" style="display:flex; align-items:center; gap:8px;">
 					<span class="cta-count-badge-primary-dark" id="cta-blacklist-count"><?php echo esc_html( count( $blacklist_urls ) ); ?></span>
-					<button type="button" class="cta-button-secondary" id="cta-open-blacklist-modal" <?php disabled( ! $is_pro ); ?>>
+					<button type="button" class="cta-button-secondary" id="cta-open-blacklist-modal" data-form-id="cta-cta-form" <?php disabled( ! $is_pro ); ?>>
 						<?php esc_html_e( 'Manage', 'cta-manager' ); ?>
 					</button>
 				</div>

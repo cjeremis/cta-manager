@@ -22,10 +22,14 @@ if ( ! class_exists( 'CTA_Features' ) ) {
 $all_features = CTA_Features::get_all_features();
 $integrations = CTA_Features::get_all_integrations();
 
+// Check if user has Pro enabled
+$has_pro = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+$features_title = $has_pro ? esc_html__( 'CTA Manager Pro Features', 'cta-manager' ) : esc_html__( 'CTA Manager Features', 'cta-manager' );
+
 // Pass data to modal body template
 $modal = [
 	'id'           => 'cta-features-modal',
-	'title_html'   => '<span class="dashicons dashicons-awards"></span>' . esc_html__( 'CTA Manager Features', 'cta-manager' ),
+	'title_html'   => '<span class="dashicons dashicons-awards"></span>' . $features_title,
 	'template'     => CTA_PLUGIN_DIR . 'templates/admin/modals/features-modal.php',
 	'body_context' => [
 		'all_features'  => $all_features,

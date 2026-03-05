@@ -28,9 +28,11 @@ class CTA_Block {
 		}
 
 		$handle = 'cta-manager-block-editor';
+		$block_script_path = CTA_PLUGIN_DIR . 'assets/minimized/js/admin/cta-block.min.js';
+		$block_script_ver  = file_exists( $block_script_path ) ? (string) filemtime( $block_script_path ) : CTA_VERSION;
 		wp_register_script(
 			$handle,
-			CTA_PLUGIN_URL . 'assets/js/admin/modules/blocks/cta-block.js',
+			CTA_PLUGIN_URL . 'assets/minimized/js/admin/cta-block.min.js',
 			[
 				'wp-blocks',
 				'wp-element',
@@ -40,7 +42,7 @@ class CTA_Block {
 				'wp-block-editor',
 				'wp-api-fetch',
 			],
-			CTA_VERSION,
+			$block_script_ver,
 			true
 		);
 

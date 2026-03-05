@@ -80,7 +80,7 @@ class CTA_Features {
 			return self::$data_cache;
 		}
 
-		$file = CTA_PLUGIN_DIR . 'data/features.php';
+		$file = CTA_PLUGIN_DIR . 'includes/admin/data/features.php';
 		if ( file_exists( $file ) ) {
 			$data = include $file;
 			if ( is_array( $data ) ) {
@@ -537,7 +537,7 @@ class CTA_Features {
 					'docs_page'   => 'feature-orientation',
 				],
 			],
-			__( 'Testing & Optimization', 'cta-manager' ) => [
+			__( 'Experimentation', 'cta-manager' ) => [
 				// Pro - Available
 				[
 					'id'          => 'ab-testing',
@@ -877,7 +877,7 @@ class CTA_Features {
 			__( 'Layout & Display', 'cta-manager' )       => [ 'icon' => 'visibility', 'order' => 2 ],
 			__( 'Embedding & Scheduling', 'cta-manager' ) => [ 'icon' => 'calendar-alt', 'order' => 3 ],
 			__( 'Targeting & Rules', 'cta-manager' )      => [ 'icon' => 'filter', 'order' => 4 ],
-			__( 'Testing & Optimization', 'cta-manager' ) => [ 'icon' => 'chart-line', 'order' => 5 ],
+			__( 'Experimentation', 'cta-manager' ) => [ 'icon' => 'chart-line', 'order' => 5 ],
 			__( 'Analytics', 'cta-manager' )              => [ 'icon' => 'chart-bar', 'order' => 6 ],
 		];
 
@@ -918,6 +918,18 @@ class CTA_Features {
 			'label'       => __( 'Integrations', 'cta-manager' ),
 			'description' => __( 'Connect CTA Manager with your favorite tools and services', 'cta-manager' ),
 		];
+	}
+
+	/**
+	 * Get the dashicon slug for a given integration category name.
+	 *
+	 * @param string $category_name The integration category name.
+	 * @return string Dashicon slug (without 'dashicons-' prefix).
+	 */
+	public static function get_integration_category_icon( string $category_name ): string {
+		$data = self::load_data_file();
+		$map  = $data['integration_categories'] ?? [];
+		return $map[ $category_name ] ?? 'admin-plugins';
 	}
 
 	/**

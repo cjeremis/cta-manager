@@ -44,9 +44,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$selected_type = $editing_cta['type'] ?? 'phone';
 		?>
 		<select id="cta-type" name="cta_type" class="cta-select" required>
-			<?php foreach ( $cta_type_options as $option ) : ?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $selected_type, $option['value'] ); ?>>
-					<?php echo esc_html( $option['label'] ); ?>
+			<?php foreach ( $cta_type_options as $option ) :
+				$is_disabled = ! empty( $option['disabled'] );
+				$label       = $is_disabled ? $option['label'] . ' — ' . __( 'Coming Soon', 'cta-manager' ) : $option['label'];
+			?>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $selected_type, $option['value'] ); ?> <?php disabled( $is_disabled ); ?>>
+					<?php echo esc_html( $label ); ?>
 				</option>
 			<?php endforeach; ?>
 		</select>

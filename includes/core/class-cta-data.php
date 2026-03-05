@@ -61,6 +61,8 @@ class CTA_Data {
 	 * @return array
 	 */
 	private function get_default_settings_array(): array {
+		$support_sync_default = class_exists( 'CTA_Pro_Feature_Gate' ) && CTA_Pro_Feature_Gate::is_pro_enabled();
+
 		$defaults = [
 			'analytics'       => [
 				'enabled'   => true,
@@ -80,6 +82,9 @@ class CTA_Data {
 			],
 			'debug'          => [
 				'enabled' => false,
+			],
+			'support'        => [
+				'live_notifications_enabled' => $support_sync_default,
 			],
 		];
 
@@ -2136,67 +2141,33 @@ class CTA_Data {
 		$reset_analytics     = isset( $reset['analytics'] ) && '1' === $reset['analytics'];
 		$reset_notifications = isset( $reset['notifications'] ) && '1' === $reset['notifications'];
 
-		// Reset CTAs (excluding demo data - demo data is managed separately)
+		// Reset CTAs
 		if ( $reset_ctas && class_exists( 'CTA_Repository' ) ) {
 			$repo = CTA_Repository::get_instance();
 			if ( $repo->table_exists() ) {
-				$all_ctas = $repo->get_all();
-				foreach ( $all_ctas as $cta ) {
-					// Skip demo CTAs - they are managed separately
-					if ( ! empty( $cta['_demo'] ) ) {
-						continue;
-					}
-					$repo->delete( (int) $cta['id'] );
-				}
+				$repo->truncate();
 			}
 		}
 
 		// Reset Settings
 		if ( $reset_settings ) {
-			$settings_repo = $this->get_settings_repo();
-			if ( $settings_repo ) {
-				$settings_repo->truncate();
+			$settings_table = CTA_Settings_Repository::get_table_name();
+			if ( CTA_Database::table_exists( $settings_table ) ) {
+				CTA_Database::truncate( $settings_table );
 			}
 		}
 
 		// Reset Analytics
 		if ( $reset_analytics ) {
-			global $wpdb;
 			$events_repo  = CTA_Events_Repository::get_instance();
 			$events_table = CTA_Events_Repository::get_table_name();
 			if ( CTA_Database::table_exists( $events_table ) ) {
-				// Get demo CTA IDs to preserve their events
-				$cta_repo     = CTA_Repository::get_instance();
-				$demo_cta_ids = $cta_repo->get_demo_cta_ids();
-
-				if ( empty( $demo_cta_ids ) ) {
-					// No demo CTAs - truncate all events
-					$events_repo->truncate();
-				} else {
-					// Delete events NOT associated with demo CTAs
-					$placeholders = implode( ',', array_fill( 0, count( $demo_cta_ids ), '%d' ) );
-					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-					$wpdb->query(
-						$wpdb->prepare(
-							"DELETE FROM {$events_table} WHERE cta_id NOT IN ({$placeholders})",
-							...$demo_cta_ids
-						)
-					);
-				}
+				$events_repo->truncate();
 			}
 
-			// Delete non-demo visitors (preserve demo visitors 1-12)
 			$visitors_table = CTA_Database::table( CTA_Database::TABLE_VISITORS );
 			if ( CTA_Database::table_exists( $visitors_table ) ) {
-				// Delete all visitors except demo visitors (IDs 1-12)
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-				$wpdb->query(
-					$wpdb->prepare(
-						"DELETE FROM {$visitors_table} WHERE id < %d OR id > %d",
-						1,
-						12
-					)
-				);
+				CTA_Database::truncate( $visitors_table );
 			}
 		}
 
