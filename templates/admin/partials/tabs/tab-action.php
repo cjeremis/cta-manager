@@ -36,22 +36,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'value' => 'email',
 				'label' => __( 'Email', 'cta-manager' ),
 			],
+			// Coming soon
+			[
+				'value'   => 'custom',
+				'label'   => __( 'Custom CTA', 'cta-manager' ),
+				'disabled' => true,
+			],
 		];
 
 		// Allow pro plugin to extend CTA types
 		$cta_type_options = apply_filters( 'cta_type_options', $cta_type_options, $editing_cta );
 
 		$selected_type = $editing_cta['type'] ?? 'phone';
+
+		$available_options    = array_values( array_filter( $cta_type_options, fn( $o ) => empty( $o['disabled'] ) ) );
+		$coming_soon_options  = array_values( array_filter( $cta_type_options, fn( $o ) => ! empty( $o['disabled'] ) ) );
+		usort( $coming_soon_options, fn( $a, $b ) => strcmp( $a['label'], $b['label'] ) );
 		?>
 		<select id="cta-type" name="cta_type" class="cta-select" required>
-			<?php foreach ( $cta_type_options as $option ) :
-				$is_disabled = ! empty( $option['disabled'] );
-				$label       = $is_disabled ? $option['label'] . ' — ' . __( 'Coming Soon', 'cta-manager' ) : $option['label'];
-			?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $selected_type, $option['value'] ); ?> <?php disabled( $is_disabled ); ?>>
-					<?php echo esc_html( $label ); ?>
+			<?php foreach ( $available_options as $option ) : ?>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $selected_type, $option['value'] ); ?>>
+					<?php echo esc_html( $option['label'] ); ?>
 				</option>
 			<?php endforeach; ?>
+			<?php if ( ! empty( $coming_soon_options ) ) : ?>
+				<optgroup label="<?php esc_attr_e( 'Coming Soon', 'cta-manager' ); ?>">
+					<?php foreach ( $coming_soon_options as $option ) : ?>
+						<option value="<?php echo esc_attr( $option['value'] ); ?>" disabled>
+							<?php echo esc_html( $option['label'] ); ?>
+						</option>
+					<?php endforeach; ?>
+				</optgroup>
+			<?php endif; ?>
 		</select>
 	</div>
 

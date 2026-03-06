@@ -294,7 +294,7 @@ $all_features = [
 		],
 		[
 			'icon'        => '🛠️',
-			'title'       => __( 'Custom CTA Type', 'cta-manager' ),
+			'title'       => __( 'Custom CTA', 'cta-manager' ),
 			'description' => __( 'Register your own CTA type with custom HTML templates, JavaScript behaviors, and PHP hooks for specialized use cases the built-in types don\'t cover', 'cta-manager' ),
 			'features'    => [
 				__( 'Register custom type names', 'cta-manager' ),
@@ -309,7 +309,7 @@ $all_features = [
 				__( 'Register your custom type using the PHP filter cta_manager_registered_types, adding your type slug and display label so it appears in the Action Type dropdown.', 'cta-manager' ),
 				__( 'Attach JavaScript behaviors for initialization and click handling using the CTA Manager JS API.', 'cta-manager' ),
 				__( 'Use PHP filters to modify the final HTML output or inject custom fields into the CTA data object before rendering.', 'cta-manager' ),
-				__( 'Save and embed your custom CTA type using the standard shortcode or Gutenberg block -- analytics tracking is automatic.', 'cta-manager' ),
+				__( 'Save and embed your custom CTA using the standard shortcode or Gutenberg block -- analytics tracking is automatic.', 'cta-manager' ),
 			],
 			'plan'        => 'pro',
 			'implemented' => false,
@@ -1977,26 +1977,6 @@ $integrations = [
 			],
 			'implemented' => true,
 		],
-			[
-				'image'       => $icons_path . 'new-relic.svg',
-			'title'       => __( 'New Relic', 'cta-manager' ),
-			'description' => __( 'Monitor CTA performance and page load impact', 'cta-manager' ),
-			'features'    => [
-				__( 'Real user monitoring', 'cta-manager' ),
-				__( 'Performance alerting', 'cta-manager' ),
-				__( 'Error tracking', 'cta-manager' ),
-				__( 'Custom NRQL dashboards', 'cta-manager' ),
-				__( 'Render time benchmarking', 'cta-manager' ),
-			],
-			'details'     => __( 'The New Relic integration provides performance monitoring and error tracking for your CTAs, enabling you to understand how CTA rendering impacts page load times, identify JavaScript errors that might prevent CTAs from displaying or functioning correctly, monitor real user performance metrics across different geographies and devices, and correlate CTA events with broader application performance data. New Relic\'s Real User Monitoring captures detailed performance data including time to first CTA render, JavaScript execution time for CTA initialization, network timing for CTA asset loading, and overall page performance impact. Performance alerting enables you to automatically detect when CTA load times exceed thresholds, error rates spike (indicating a bug), or specific error patterns emerge. This integration is essential for performance-sensitive sites and debugging production issues.', 'cta-manager' ),
-			'instructions'=> [
-				__( 'Ensure New Relic\'s Browser agent is installed on your website, then enable the New Relic integration in CTA Manager settings to configure automatic reporting of timing metrics (ctaRenderTime, ctaAssetLoadTime) and custom events.', 'cta-manager' ),
-				__( 'Analyze data in New Relic by navigating to Browser > (app) > Page Views for aggregate performance, or use Query Builder to write NRQL queries like "SELECT average(ctaRenderTime) FROM PageViewTiming WHERE appName = \'YourApp\' SINCE 1 day ago TIMESERIES".', 'cta-manager' ),
-				__( 'Create Custom Dashboards (Dashboards > Create Dashboard) with NRQL query widgets for CTA render time trends, error rates, engagement by device, and slowest CTAs; set up Alerts for proactive monitoring when performance degrades.', 'cta-manager' ),
-				__( 'Use Errors Inbox (Browser > Errors) to track JavaScript errors affecting CTAs, filter by "cta" in error messages, examine stack traces and frequency, and use Session Replay links to watch error recreations.', 'cta-manager' ),
-			],
-				'implemented' => true,
-			],
 	],
 	__( 'SEO & Optimization', 'cta-manager' ) => [
 		[
@@ -2348,19 +2328,6 @@ $integrations = [
 	],
 	__( 'Infrastructure', 'cta-manager' ) => [
 		[
-			'image'       => $icons_path . 'redis.svg',
-			'title'       => __( 'Redis', 'cta-manager' ),
-			'description' => __( 'High-performance CTA caching and real-time analytics with Redis', 'cta-manager' ),
-			'features'    => [
-				__( 'CTA configuration caching', 'cta-manager' ),
-				__( 'Real-time impression counters', 'cta-manager' ),
-				__( 'Session-based targeting store', 'cta-manager' ),
-				__( 'Cache hit/miss rate monitoring', 'cta-manager' ),
-				__( 'Pub/Sub event broadcasting', 'cta-manager' ),
-			],
-			'implemented' => false,
-		],
-		[
 			'image'       => $icons_path . 'datadog.svg',
 			'title'       => __( 'Datadog', 'cta-manager' ),
 			'description' => __( 'Monitor CTA render performance, error rates, and infrastructure health with Datadog', 'cta-manager' ),
@@ -2370,6 +2337,39 @@ $integrations = [
 				__( 'Custom metric dashboards', 'cta-manager' ),
 				__( 'APM trace integration', 'cta-manager' ),
 				__( 'Infrastructure correlation', 'cta-manager' ),
+			],
+			'implemented' => false,
+		],
+		[
+			'image'       => $icons_path . 'new-relic.svg',
+			'title'       => __( 'New Relic', 'cta-manager' ),
+			'description' => __( 'Monitor CTA performance and page load impact', 'cta-manager' ),
+			'features'    => [
+				__( 'Real user monitoring', 'cta-manager' ),
+				__( 'Performance alerting', 'cta-manager' ),
+				__( 'Error tracking', 'cta-manager' ),
+				__( 'Custom NRQL dashboards', 'cta-manager' ),
+				__( 'Render time benchmarking', 'cta-manager' ),
+			],
+			'details'     => __( 'The New Relic integration provides performance monitoring and error tracking for your CTAs, enabling you to understand how CTA rendering impacts page load times, identify JavaScript errors that might prevent CTAs from displaying or functioning correctly, monitor real user performance metrics across different geographies and devices, and correlate CTA events with broader application performance data. New Relic\'s Real User Monitoring captures detailed performance data including time to first CTA render, JavaScript execution time for CTA initialization, network timing for CTA asset loading, and overall page performance impact. Performance alerting enables you to automatically detect when CTA load times exceed thresholds, error rates spike (indicating a bug), or specific error patterns emerge. This integration is essential for performance-sensitive sites and debugging production issues.', 'cta-manager' ),
+			'instructions'=> [
+				__( 'Ensure New Relic\'s Browser agent is installed on your website, then enable the New Relic integration in CTA Manager settings to configure automatic reporting of timing metrics (ctaRenderTime, ctaAssetLoadTime) and custom events.', 'cta-manager' ),
+				__( 'Analyze data in New Relic by navigating to Browser > (app) > Page Views for aggregate performance, or use Query Builder to write NRQL queries like "SELECT average(ctaRenderTime) FROM PageViewTiming WHERE appName = \'YourApp\' SINCE 1 day ago TIMESERIES".', 'cta-manager' ),
+				__( 'Create Custom Dashboards (Dashboards > Create Dashboard) with NRQL query widgets for CTA render time trends, error rates, engagement by device, and slowest CTAs; set up Alerts for proactive monitoring when performance degrades.', 'cta-manager' ),
+				__( 'Use Errors Inbox (Browser > Errors) to track JavaScript errors affecting CTAs, filter by "cta" in error messages, examine stack traces and frequency, and use Session Replay links to watch error recreations.', 'cta-manager' ),
+			],
+			'implemented' => true,
+		],
+		[
+			'image'       => $icons_path . 'redis.svg',
+			'title'       => __( 'Redis', 'cta-manager' ),
+			'description' => __( 'High-performance CTA caching and real-time analytics with Redis', 'cta-manager' ),
+			'features'    => [
+				__( 'CTA configuration caching', 'cta-manager' ),
+				__( 'Real-time impression counters', 'cta-manager' ),
+				__( 'Session-based targeting store', 'cta-manager' ),
+				__( 'Cache hit/miss rate monitoring', 'cta-manager' ),
+				__( 'Pub/Sub event broadcasting', 'cta-manager' ),
 			],
 			'implemented' => false,
 		],

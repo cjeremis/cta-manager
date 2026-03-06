@@ -333,10 +333,6 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 	ob_start();
 	?>
 	<div class="cta-import-demo-options">
-		<p class="cta-import-intro">
-			<?php esc_html_e( 'Select which data to include in your export file.', 'cta-manager' ); ?>
-		</p>
-
 		<div class="cta-import-toggle-group">
 			<!-- Settings Toggle -->
 			<div class="cta-import-toggle-row">
@@ -508,10 +504,6 @@ include __DIR__ . '/partials/page-wrapper-start.php';
 		<input type="hidden" name="action" value="cta_reset_data" />
 	</form>
 	<div class="cta-import-demo-options">
-		<p class="cta-import-intro">
-			<?php esc_html_e( 'Select which data to permanently delete.', 'cta-manager' ); ?>
-		</p>
-
 		<div class="cta-info-box cta-info-box--danger" style="margin-bottom: var(--cta-spacing-md);">
 			<span class="cta-info-box__icon dashicons dashicons-warning"></span>
 			<div>

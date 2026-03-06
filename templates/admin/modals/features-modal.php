@@ -112,7 +112,7 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 						class="cta-sidebar-modal-menu-link is-active"
 						data-features-page="overview"
 					>
-						<span class="dashicons dashicons-dashboard"></span>
+						<img src="<?php echo esc_url( $hero_img ); ?>" alt="" class="cta-sidebar-modal-menu-logo" loading="lazy" />
 						<?php esc_html_e( 'Overview', 'cta-manager' ); ?>
 					</button>
 				</li>
@@ -169,7 +169,9 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 			<div class="cta-sidebar-modal-sticky-header-left">
 				<div class="cta-sidebar-modal-sticky-title">
 					<span class="cta-sidebar-modal-sticky-icon" data-sticky-icon></span>
-					<h3 data-sticky-title><?php esc_html_e( 'Features', 'cta-manager' ); ?></h3>
+					<div class="cta-sidebar-modal-sticky-title-text">
+						<h3 data-sticky-title><?php esc_html_e( 'Overview', 'cta-manager' ); ?></h3>
+						</div>
 					<span class="cta-sidebar-modal-sticky-badge" data-sticky-badge style="display: none;"></span>
 				</div>
 			</div>
@@ -232,7 +234,7 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 						<div class="cta-overview-pillar-icon"><?php echo esc_html( $pillar['icon'] ); ?></div>
 						<h4><?php echo esc_html( $pillar['title'] ); ?></h4>
 						<p><?php echo esc_html( $pillar['desc'] ); ?></p>
-						<button type="button" class="cta-learn-more-button cta-overview-pillar-link" data-docs-page="<?php echo esc_attr( $pillar['docs_page'] ); ?>" data-feature-title="<?php echo esc_attr( $pillar['title'] ); ?>">
+						<button type="button" class="cta-learn-more-button cta-button-primary cta-overview-pillar-link" data-open-modal="#cta-docs-modal" data-docs-page="<?php echo esc_attr( $pillar['docs_page'] ); ?>" data-feature-title="<?php echo esc_attr( $pillar['title'] ); ?>">
 							<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 						</button>
 					</div>
@@ -272,13 +274,12 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 								</div>
 								<p><?php echo esc_html( $vf['tagline'] ); ?></p>
 							</div>
-							<button type="button" class="cta-learn-more-button cta-overview-vanguard-link" data-docs-page="<?php echo esc_attr( $vf['docs_page'] ); ?>" data-feature-title="<?php echo esc_attr( $vf['title'] ); ?>">
+							<button type="button" class="cta-learn-more-button cta-button-primary cta-overview-vanguard-link" data-open-modal="#cta-docs-modal" data-docs-page="<?php echo esc_attr( $vf['docs_page'] ); ?>" data-feature-title="<?php echo esc_attr( $vf['title'] ); ?>">
 								<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 							</button>
 						</div>
 					<?php endforeach; ?>
 				</div>
-				<p class="cta-overview-vanguard-note"><?php esc_html_e( 'And this is only a fraction of what\'s coming with Pro.', 'cta-manager' ); ?></p>
 			</div>
 
 			<!-- Plugin Ecosystem -->
@@ -487,11 +488,6 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 
 		<!-- Integrations Page -->
 		<div class="cta-sidebar-modal-page" data-features-page-content="integrations">
-			<div class="cta-sidebar-modal-page-header">
-				<h3><?php echo esc_html( $integrations_meta['label'] ); ?></h3>
-				<p><?php echo esc_html( $integrations_meta['description'] ); ?></p>
-			</div>
-
 			<?php if ( ! $user_has_pro ) : ?>
 				<div class="cta-features-pro-cta">
 					<span class="cta-features-pro-cta-glow"></span>
@@ -548,11 +544,9 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 										<?php else : ?>
 											<span class="cta-badge cta-badge-success"><?php echo esc_html( $labels['badge_available'] ); ?></span>
 										<?php endif; ?>
-										<?php if ( ! empty( $integration['details'] ) || ! empty( $integration['instructions'] ) ) : ?>
-											<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $integration['docs_page'] ?? '' ); ?>" data-feature-title="<?php echo esc_attr( $integration['title'] ); ?>" data-category-type="integration">
+											<button type="button" class="cta-learn-more-button cta-button-primary" data-open-modal="#cta-docs-modal" data-docs-page="<?php echo esc_attr( $integration['docs_page'] ?? '' ); ?>" data-feature-title="<?php echo esc_attr( $integration['title'] ); ?>" data-category-type="integration">
 												<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 											</button>
-										<?php endif; ?>
 									</div>
 								</div>
 							<?php endforeach; ?>
@@ -804,9 +798,12 @@ $resolve_docs_page = static function( array $titles, string $fallback ) use ( $d
 			window.CTADocsModal.collapseAllAccordions();
 			window.CTADocsModal.showPage(targetPage);
 			window.CTADocsModal.setActiveLink($targetLink.length ? $targetLink : $docsModal.find('[data-docs-page="welcome"]').first());
-
-			$docsModal.fadeIn(150);
-			jQuery('body').addClass('cta-modal-open');
+			if (window.ctaModalAPI && typeof window.ctaModalAPI.open === 'function') {
+				window.ctaModalAPI.open($docsModal, { trigger: learnMoreBtn });
+			} else {
+				$docsModal.fadeIn(150);
+				jQuery('body').addClass('cta-modal-open');
+			}
 		} else if (window.CTAManager && window.CTAManager.openDocumentationModalToPage) {
 			if (docsPage && hasPageContent(docsPage)) {
 				window.CTAManager.openDocumentationModalToPage(targetPage);

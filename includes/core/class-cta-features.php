@@ -106,7 +106,7 @@ class CTA_Features {
 			__( 'Email CTA', 'cta-manager' )                => 'email',
 			__( 'Popup CTA', 'cta-manager' )                => 'popup',
 			__( 'Slide-in CTA', 'cta-manager' )             => 'slide-in',
-			__( 'Custom CTA Type', 'cta-manager' )          => 'custom',
+			__( 'Custom CTA', 'cta-manager' )          => 'custom',
 			__( 'Button Layout', 'cta-manager' )            => 'button-layout',
 			__( 'CTA Cards', 'cta-manager' )                => 'cta-cards',
 			__( 'Customizable Cards', 'cta-manager' )       => 'customizable-cards',
@@ -302,7 +302,7 @@ class CTA_Features {
 				[
 					'id'          => 'custom',
 					'icon'        => '🛠️',
-					'title'       => __( 'Custom CTA Type', 'cta-manager' ),
+					'title'       => __( 'Custom CTA', 'cta-manager' ),
 					'description' => __( 'Build fully custom CTA behaviors', 'cta-manager' ),
 					'features'    => [
 						__( 'Custom HTML templates', 'cta-manager' ),

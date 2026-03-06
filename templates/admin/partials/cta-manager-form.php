@@ -331,7 +331,8 @@ jQuery(document).ready(function($) {
 		}
 
 		var ctaType = $container.find('#cta-type').val() || $('#cta-type').val();
-		var layout = $container.find('#cta-layout').val() || $('#cta-layout').val();
+		var storedLayout = $container.find('#cta-layout-value').val() || $('#cta-layout-value').val();
+		var layout = storedLayout || $container.find('#cta-layout').val() || $('#cta-layout').val();
 
 		// Content tab - enabled only for card layouts (not button-only) AND Pro is active
 		var $contentTabLink = $container.find('.cta-tab-link[data-tab-target="cta-tab-content"]');
@@ -384,7 +385,7 @@ jQuery(document).ready(function($) {
 	updateConditionalTabs();
 
 	// Run when CTA type or layout changes
-	$(document).on('change', '#cta-type, #cta-layout', updateConditionalTabs);
+	$(document).on('change', '#cta-type, #cta-layout, #cta-card-layout, #cta-layout-value', updateConditionalTabs);
 
 	// Also run when form is initialized in modal
 	$(document).on('ctc:initCtaForm', function(e, $form) {

@@ -101,7 +101,7 @@ $search_text  = mb_strtolower( implode( ' ', $search_parts ) );
 			</span>
 		<?php endif; ?>
 		<?php if ( ! empty( $details ) || ! empty( $instructions ) ) : ?>
-			<button type="button" class="cta-learn-more-button" data-docs-page="<?php echo esc_attr( $docs_page ); ?>" data-feature-title="<?php echo esc_attr( $title ); ?>">
+			<button type="button" class="cta-learn-more-button cta-button-primary" data-open-modal="#cta-docs-modal" data-docs-page="<?php echo esc_attr( $docs_page ); ?>" data-feature-title="<?php echo esc_attr( $title ); ?>">
 				<?php esc_html_e( 'Learn More', 'cta-manager' ); ?>
 			</button>
 		<?php endif; ?>

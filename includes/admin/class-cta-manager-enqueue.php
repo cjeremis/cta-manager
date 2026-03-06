@@ -42,6 +42,21 @@ class CTA_Manager_Enqueue {
 			CTA_VERSION,
 			true
 		);
+
+		// Provide a minimal localization object for non-CTA admin screens.
+		// Full CTA page-specific localization is still provided in enqueue_scripts().
+		wp_localize_script(
+			'cta-admin',
+			'ctaAdminVars',
+			[
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'cta_admin_nonce' ),
+				'i18n'    => [
+					'next' => __( 'Next', 'cta-manager' ),
+					'skip' => __( 'Skip', 'cta-manager' ),
+				],
+			]
+		);
 	}
 
 	/**

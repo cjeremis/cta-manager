@@ -3896,6 +3896,39 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
 		min-width: 0;
 	}
 
+	#cta-docs-modal .cta-docs-page-summary {
+		display: inline-flex;
+		flex-direction: column;
+		min-width: 0;
+		flex: 1 1 auto;
+		margin-right: 4px;
+	}
+
+	#cta-docs-modal .cta-docs-sticky-title {
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 1.2;
+		color: #111827;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 420px;
+	}
+
+	#cta-docs-modal .cta-docs-sticky-description {
+		font-size: 13px;
+		line-height: 1.3;
+		color: #64748b;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 520px;
+	}
+
+	#cta-docs-modal .cta-docs-sticky-source-hidden {
+		display: none !important;
+	}
+
 	#cta-docs-modal .cta-docs-category-badge {
 		display: inline-flex;
 		align-items: center;
@@ -3991,8 +4024,24 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
 	#cta-docs-modal .cta-docs-page-static-header {
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
-		margin: 10px 0 14px;
+		justify-content: space-between;
+		border-bottom: 2px solid #e2e8f0;
+		padding: 20px 0 15px 0;
+		margin-bottom: 15px;
+		position: sticky;
+		top: 0;
+		background: #fff;
+		z-index: 5;
+	}
+
+	#cta-docs-modal .cta-docs-section-title-wrapper .cta-docs-header-tools,
+	#cta-docs-modal .cta-docs-page-static-header .cta-docs-header-tools {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex: 1;
+		min-width: 0;
+		gap: 8px;
 	}
 
 	#cta-docs-modal .cta-modal-maximize {
@@ -4140,11 +4189,11 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
     }
   }
 
-  function openTargetModal(target) {
+  function openTargetModal(target, triggerEl) {
     if (!target || target === '#cta-docs-modal') return;
 
     if (window.ctaModalAPI && typeof window.ctaModalAPI.open === 'function') {
-      window.ctaModalAPI.open(target);
+      window.ctaModalAPI.open(target, { trigger: triggerEl });
       return;
     }
 
@@ -4275,13 +4324,6 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
       }
     });
 
-    document.addEventListener('click', function(e) {
-      const openDocsTrigger = e.target.closest('[data-open-modal="#cta-docs-modal"]');
-      if (openDocsTrigger) {
-        setMaximizedState(false);
-      }
-    });
-
     document.addEventListener('ctaModalClosed', function(e, $modal, modalId) {
       if (isDocsModalEventTarget($modal, modalId)) {
         setMaximizedState(false);
@@ -4290,7 +4332,7 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
 
     document.addEventListener('ctaModalOpened', function(e, $modal, modalId) {
       if (isDocsModalEventTarget($modal, modalId)) {
-        setMaximizedState(false);
+        syncMaximizeButtonState();
       }
     });
 
@@ -4614,9 +4656,13 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
       tools = document.createElement('div');
       tools.className = 'cta-docs-header-tools';
       tools.innerHTML = '' +
+        '<span class="cta-docs-page-summary">' +
+          '<span class="cta-docs-sticky-title">Welcome</span>' +
+          '<span class="cta-docs-sticky-description" style="display:none;"></span>' +
+        '</span>' +
         '<span class="cta-docs-category-badge">' +
           '<span class="dashicons dashicons-book-alt" aria-hidden="true"></span>' +
-          '<span class="cta-docs-category-text">Documentation</span>' +
+          '<span class="cta-docs-category-text">Welcome</span>' +
         '</span>' +
         '<span class="cta-docs-page-nav">' +
           '<button type="button" class="cta-docs-page-nav-btn is-prev" data-docs-nav-direction="prev">' +
@@ -4631,6 +4677,64 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
       hostEl.appendChild(tools);
     }
     return tools;
+  }
+
+  function getStickyPageTitle(pageEl, pageId, fallbackTitle) {
+    const titleEl = pageEl.querySelector('.cta-docs-section-title') || pageEl.querySelector('.cta-docs-section h2');
+    const title = titleEl ? titleEl.textContent.trim() : '';
+    if (title) {
+      return title;
+    }
+    if (pageId === 'welcome') {
+      return 'Welcome';
+    }
+    return fallbackTitle || 'Documentation';
+  }
+
+  function getStickyPageDescription(pageEl) {
+    const explicitDesc = pageEl.querySelector('.cta-docs-section-description');
+    if (explicitDesc && explicitDesc.textContent.trim()) {
+      return explicitDesc.textContent.trim();
+    }
+
+    const section = pageEl.querySelector('.cta-docs-section');
+    if (!section) {
+      return '';
+    }
+
+    const children = Array.from(section.children);
+    for (const child of children) {
+      if (child.tagName && child.tagName.toLowerCase() === 'p') {
+        const text = child.textContent.trim();
+        if (text) {
+          return text;
+        }
+      }
+    }
+    return '';
+  }
+
+  function syncStickySourceVisibility(pageEl) {
+    const docsModal = getDocsModal();
+    if (!docsModal) {
+      return;
+    }
+
+    docsModal.querySelectorAll('.cta-docs-sticky-source-hidden').forEach(function(el) {
+      el.classList.remove('cta-docs-sticky-source-hidden');
+    });
+
+    const titleWrapper = pageEl.querySelector('.cta-docs-section-title-wrapper');
+    if (titleWrapper) {
+      titleWrapper.querySelectorAll('.cta-docs-title-icon, .cta-docs-section-title, .cta-docs-page-title-badge').forEach(function(el) {
+        el.classList.add('cta-docs-sticky-source-hidden');
+      });
+    }
+
+    const descEl = pageEl.querySelector('.cta-docs-section-description');
+    if (descEl) {
+      descEl.classList.add('cta-docs-sticky-source-hidden');
+    }
   }
 
   function renderHeaderNavigation(pageId) {
@@ -4685,12 +4789,23 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
     const categoryMeta = getCategoryMeta(currentEntry.link, pageId);
     const badgeIcon = tools.querySelector('.cta-docs-category-badge .dashicons');
     const badgeText = tools.querySelector('.cta-docs-category-text');
+    const stickyTitle = tools.querySelector('.cta-docs-sticky-title');
+    const stickyDescription = tools.querySelector('.cta-docs-sticky-description');
     if (badgeIcon) {
       badgeIcon.className = 'dashicons ' + categoryMeta.iconClass;
     }
     if (badgeText) {
       badgeText.textContent = categoryMeta.title;
     }
+    if (stickyTitle) {
+      stickyTitle.textContent = getStickyPageTitle(targetPage, pageId, categoryMeta.title);
+    }
+    if (stickyDescription) {
+      const descText = getStickyPageDescription(targetPage);
+      stickyDescription.textContent = descText;
+      stickyDescription.style.display = descText ? '' : 'none';
+    }
+    syncStickySourceVisibility(targetPage);
 
     const prevButton = tools.querySelector('.cta-docs-page-nav-btn.is-prev');
     const nextButton = tools.querySelector('.cta-docs-page-nav-btn.is-next');
@@ -4829,10 +4944,7 @@ add_filter('cta_pro_url_targeting', 'my_late_function', 20, 3);</code></pre>
       const targetModal = modalShortcut.getAttribute('data-open-modal');
       if (targetModal && targetModal !== docsModalSelector) {
         e.preventDefault();
-        closeDocsModal();
-        setTimeout(function() {
-          openTargetModal(targetModal);
-        }, 180);
+        openTargetModal(targetModal, modalShortcut);
         return;
       }
     }

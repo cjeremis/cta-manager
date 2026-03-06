@@ -153,7 +153,8 @@ if ( is_string( $support_modal_template ) && file_exists( $support_modal_templat
 	var modalTargets = [
 		'#cta-global-form-modal',
 		'#cta-features-modal',
-		'#cta-new-ticket-modal'
+		'#cta-new-ticket-modal',
+		'#cta-tools-export-data-modal'
 	];
 	var docsModalId = 'cta-docs-modal';
 
@@ -259,7 +260,7 @@ if ( is_string( $support_modal_template ) && file_exists( $support_modal_templat
 				return;
 			}
 			ensureMaximizeButton(modalEl);
-			setMaximized(modalEl, false);
+			syncMaximizeIcon(modalEl);
 		});
 
 		document.addEventListener('ctaModalClosed', function(e, $modal) {

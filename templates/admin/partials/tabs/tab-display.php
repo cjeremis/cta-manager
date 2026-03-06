@@ -22,23 +22,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php esc_html_e( 'Layout', 'cta-manager' ); ?>
 			</label>
 			<?php
-			// Base layout options (free version)
-			$layout_options = [
-				[
-					'value' => 'button',
-					'label' => __( 'Button only', 'cta-manager' ),
-				],
+			$stored_layout = $editing_cta['layout'] ?? 'button';
+			$card_layout_options = [
+				'card-left'   => __( 'Text Left', 'cta-manager' ),
+				'card-right'  => __( 'Text Right', 'cta-manager' ),
+				'card-top'    => __( 'Text Above', 'cta-manager' ),
+				'card-bottom' => __( 'Text Below', 'cta-manager' ),
 			];
-
-			// Allow pro plugin to extend layout options
-			$layout_options = apply_filters( 'cta_layout_options', $layout_options, $editing_cta );
-
-			$selected_layout = $editing_cta['layout'] ?? 'button';
+			$is_card_layout = isset( $card_layout_options[ $stored_layout ] );
+			$selected_layout = $is_card_layout ? 'card' : 'button';
+			$selected_card_layout = $is_card_layout ? $stored_layout : 'card-left';
 			?>
-			<select id="cta-layout" name="cta_layout" class="cta-select" required>
-				<?php foreach ( $layout_options as $option ) : ?>
-					<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $selected_layout, $option['value'] ); ?>>
-						<?php echo esc_html( $option['label'] ); ?>
+			<select id="cta-layout" name="cta_layout_ui" class="cta-select" data-is-pro="<?php echo $is_pro ? '1' : '0'; ?>" required>
+				<option value="button" <?php selected( $selected_layout, 'button' ); ?>>
+					<?php esc_html_e( 'Button', 'cta-manager' ); ?>
+				</option>
+				<option value="card" data-requires-pro="1" <?php selected( $selected_layout, 'card' ); ?>>
+					<?php esc_html_e( 'Card', 'cta-manager' ); ?>
+				</option>
+			</select>
+			<input type="hidden" id="cta-layout-value" name="cta_layout" value="<?php echo esc_attr( $stored_layout ); ?>" />
+		</div>
+
+		<div class="cta-form-group" id="cta-card-layout-group" style="<?php echo 'card' === $selected_layout ? '' : 'display:none;'; ?>">
+			<label for="cta-card-layout">
+				<?php esc_html_e( 'Card Layout', 'cta-manager' ); ?>
+			</label>
+			<select id="cta-card-layout" name="cta_card_layout" class="cta-select">
+				<?php foreach ( $card_layout_options as $layout_value => $layout_label ) : ?>
+					<option value="<?php echo esc_attr( $layout_value ); ?>" <?php selected( $selected_card_layout, $layout_value ); ?>>
+						<?php echo esc_html( $layout_label ); ?>
 					</option>
 				<?php endforeach; ?>
 			</select>
